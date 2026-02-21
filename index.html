@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AAA Мебели Бургас — Премиум мебели по поръчка</title>
+    <meta name="description" content="Производство на качествени кухни, гардероби и корпусна мебел от ДСП и МДФ в Бургас.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{--bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--gold:#c9a84c;--gold-l:#e2c97e;--gold-d:#a68a3a;--t1:#f0ece2;--t2:#a09a8c;--t3:#6b6560;--brd:#2a2520;--brd2:#3a3530;--tr:0.4s cubic-bezier(.25,.46,.45,.94)}
+        *{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:'Raleway',sans-serif;line-height:1.7;color:var(--t1);background:var(--bg);overflow-x:hidden}
+        ::selection{background:var(--gold);color:var(--bg)}
+        ::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--gold-d);border-radius:4px}
+
+        /* HEADER */
+        header{position:fixed;width:100%;top:0;z-index:1000;padding:1rem 0;transition:all .5s;background:rgba(10,10,10,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--brd)}
+        header.at-top{background:transparent;border-bottom:none;padding:1.2rem 0}
+        nav{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:0 2.5rem}
+        .logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;letter-spacing:3px;color:var(--gold);text-decoration:none;cursor:pointer}
+        .logo span{font-weight:400;color:var(--t1);font-size:.8rem;display:block;letter-spacing:5px;text-transform:uppercase;margin-top:-2px}
+
+        .nav-links{display:flex;list-style:none;gap:0;align-items:center}
+        .nav-links li a,.tab-btn{color:var(--t2);text-decoration:none;font-size:.78rem;font-weight:500;letter-spacing:2px;text-transform:uppercase;transition:all var(--tr);cursor:pointer;padding:.6rem 1.2rem;background:none;border:none;font-family:'Raleway',sans-serif;position:relative;white-space:nowrap}
+        .tab-btn::after{content:'';position:absolute;bottom:0;left:50%;width:0;height:1px;background:var(--gold);transition:all var(--tr);transform:translateX(-50%)}
+        .tab-btn:hover,.tab-btn.active{color:var(--gold)}
+        .tab-btn.active::after{width:70%}
+
+        .nav-right{display:flex;align-items:center;gap:1rem}
+        .language-switcher{display:flex;gap:.3rem}
+        .lang-btn{background:transparent;border:1px solid var(--brd2);color:var(--t3);padding:.3rem .6rem;cursor:pointer;font-family:'Raleway',sans-serif;font-weight:600;font-size:.7rem;letter-spacing:1px;transition:all var(--tr)}
+        .lang-btn:hover{border-color:var(--gold);color:var(--gold)}
+        .lang-btn.active{background:var(--gold);border-color:var(--gold);color:var(--bg)}
+        .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001;padding:5px}
+        .burger span{display:block;width:26px;height:2px;background:var(--gold);transition:all .3s}
+        .burger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+        .burger.active span:nth-child(2){opacity:0}
+        .burger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+        .mobile-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:998}
+        .mobile-overlay.active{display:block}
+
+        /* HERO */
+        .hero{position:relative;height:100vh;min-height:600px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+        .hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1556912173-46c336c7fd55?w=1920&h=1080&fit=crop') center/cover no-repeat;filter:brightness(.25) saturate(.6);transform:scale(1.05);animation:hz 20s ease-in-out infinite alternate}
+        @keyframes hz{to{transform:scale(1.15)}}
+        .hero-ov{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,10,.3),rgba(10,10,10,.1) 40%,rgba(10,10,10,.6) 80%,rgba(10,10,10,1))}
+        .hero-c{position:relative;z-index:2;text-align:center;max-width:900px;padding:0 2rem}
+        .hero-badge{display:inline-block;font-size:.7rem;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold-d);padding:.5rem 1.6rem;margin-bottom:2rem;opacity:0;animation:fu 1s .3s forwards}
+        .hero-c h1{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,6vw,4.8rem);font-weight:700;line-height:1.15;margin-bottom:1.5rem;opacity:0;animation:fu 1s .6s forwards}
+        .hero-c h1 em{font-style:italic;color:var(--gold)}
+        .hero-c>p{font-size:1.1rem;color:var(--t2);max-width:600px;margin:0 auto 2.5rem;font-weight:300;opacity:0;animation:fu 1s .9s forwards}
+        .hero-acts{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;opacity:0;animation:fu 1s 1.2s forwards}
+        .btn-p{display:inline-flex;align-items:center;padding:.9rem 2.2rem;background:var(--gold);color:var(--bg);text-decoration:none;font-weight:600;font-size:.8rem;letter-spacing:2px;text-transform:uppercase;transition:all var(--tr);border:none;cursor:pointer;font-family:'Raleway',sans-serif}
+        .btn-p:hover{background:var(--gold-l);transform:translateY(-2px);box-shadow:0 15px 40px rgba(201,168,76,.2)}
+        .btn-o{display:inline-flex;align-items:center;padding:.9rem 2.2rem;background:transparent;color:var(--t1);text-decoration:none;font-weight:500;font-size:.8rem;letter-spacing:2px;text-transform:uppercase;border:1px solid var(--brd2);transition:all var(--tr);cursor:pointer;font-family:'Raleway',sans-serif}
+        .btn-o:hover{border-color:var(--gold);color:var(--gold)}
+        .hero-scroll{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:.5rem;color:var(--t3);font-size:.68rem;letter-spacing:3px;text-transform:uppercase;opacity:0;animation:fu 1s 1.5s forwards}
+        .hero-scroll .line{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);animation:sl 2s ease-in-out infinite}
+        @keyframes sl{0%,100%{opacity:.3;transform:scaleY(.5)}50%{opacity:1;transform:scaleY(1)}}
+        @keyframes fu{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+        /* TAB CONTENT */
+        .tab-page{display:none;animation:fadeTab .5s ease}
+        .tab-page.active{display:block}
+        @keyframes fadeTab{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+
+        /* SECTION COMMON */
+        .sec{padding:6rem 2.5rem}
+        .sec-in{max-width:1200px;margin:0 auto}
+        .sec-lab{font-size:.7rem;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:block}
+        .sec-t{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:600;margin-bottom:1.5rem;line-height:1.2}
+        .sec-d{color:var(--t2);font-size:1rem;max-width:600px;font-weight:300;line-height:1.8}
+        .sec-h{margin-bottom:3.5rem}
+        .sec-h.c{text-align:center}
+        .sec-h.c .sec-d{margin:0 auto}
+        .div-line{width:60px;height:1px;background:var(--gold);margin:1.5rem 0}
+        .sec-h.c .div-line{margin:1.5rem auto}
+        .reveal{opacity:0;transform:translateY(35px);transition:all .7s cubic-bezier(.25,.46,.45,.94)}
+        .reveal.v{opacity:1;transform:translateY(0)}
+
+        /* ABOUT */
+        .about-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+        .a-card{background:var(--bg3);border:1px solid var(--brd);padding:2.2rem;transition:all var(--tr);position:relative;overflow:hidden}
+        .a-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity var(--tr)}
+        .a-card:hover{border-color:var(--brd2);transform:translateY(-5px)}
+        .a-card:hover::before{opacity:1}
+        .a-card .ic{font-size:2rem;margin-bottom:1.2rem;display:block}
+        .a-card h3{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:600;margin-bottom:.8rem}
+        .a-card p{color:var(--t2);font-size:.9rem;font-weight:300;line-height:1.8}
+
+        /* PROCESS */
+        .proc-g{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
+        .proc-c{text-align:center;padding:1.5rem 1rem}
+        .proc-n{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:var(--brd);margin-bottom:.8rem;line-height:1}
+        .proc-c h3{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:.6rem;color:var(--gold)}
+        .proc-c p{color:var(--t2);font-size:.85rem;font-weight:300;line-height:1.7}
+
+        /* GALLERY */
+        .gal-g{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+        .gal-i{position:relative;overflow:hidden;cursor:pointer;aspect-ratio:4/3}
+        .gal-i img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.25,.46,.45,.94),filter .5s;filter:brightness(.7) saturate(.8)}
+        .gal-i:hover img{transform:scale(1.08);filter:brightness(.9) saturate(1)}
+        .gal-ov{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1.8rem;background:linear-gradient(to top,rgba(10,10,10,.85),transparent 60%);opacity:0;transition:opacity var(--tr)}
+        .gal-i:hover .gal-ov{opacity:1}
+        .gal-ov h3{font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:.2rem}
+        .gal-ov p{color:var(--t2);font-size:.8rem;font-weight:300}
+
+        /* LIGHTBOX */
+        .lb{display:none;position:fixed;z-index:9999;inset:0;background:rgba(10,10,10,.97);backdrop-filter:blur(20px)}
+        .lb.active{display:flex;align-items:center;justify-content:center}
+        .lb-c{position:relative;max-width:85%;max-height:85%}
+        .lb-c img{width:100%;height:auto;max-height:85vh;object-fit:contain}
+        .lb-cap{position:absolute;bottom:-50px;left:0;right:0;text-align:center}
+        .lb-cap h3{font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:.2rem}
+        .lb-cap p{color:var(--t2);font-size:.85rem}
+        .lb-x{position:absolute;top:20px;right:30px;color:var(--t2);font-size:30px;cursor:pointer;transition:color .3s;z-index:10000}
+        .lb-x:hover{color:var(--gold)}
+        .lb-nav{position:absolute;top:50%;transform:translateY(-50%);color:var(--t2);font-size:28px;cursor:pointer;padding:20px;user-select:none;transition:color .3s}
+        .lb-nav:hover{color:var(--gold)}
+        .lb-p{left:15px}.lb-n{right:15px}
+
+        /* CONSTRUCTOR */
+        .con-steps{display:grid;gap:1.5rem}
+        .stp{background:var(--bg3);border:1px solid var(--brd);padding:2.2rem}
+        .stp-h{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}
+        .stp-num{width:40px;height:40px;border:1px solid var(--gold);color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1rem;font-weight:600;flex-shrink:0}
+        .stp-t{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--t1)}
+        .opt-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem}
+        .opt-c{border:1px solid var(--brd);padding:1.5rem 1rem;text-align:center;cursor:pointer;transition:all var(--tr);background:var(--bg)}
+        .opt-c:hover{border-color:var(--gold-d);transform:translateY(-3px)}
+        .opt-c.sel{border-color:var(--gold);background:rgba(201,168,76,.08)}
+        .opt-ic{font-size:2rem;margin-bottom:.5rem}
+        .opt-nm{font-family:'Playfair Display',serif;font-weight:600;color:var(--t1);margin-bottom:.2rem;font-size:.95rem}
+        .opt-pr{color:var(--gold);font-size:.78rem;letter-spacing:1px}
+        .dim-in{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-top:.5rem}
+        .inp-g{display:flex;flex-direction:column}
+        .inp-g label{margin-bottom:.4rem;color:var(--t2);font-weight:500;font-size:.82rem;letter-spacing:1px}
+        .inp-g input,.inp-g select{padding:.8rem .9rem;border:1px solid var(--brd);background:var(--bg);color:var(--t1);font-family:'Raleway',sans-serif;font-size:.9rem;transition:border-color var(--tr)}
+        .inp-g input:focus,.inp-g select:focus{outline:none;border-color:var(--gold)}
+        .inp-g input::placeholder{color:var(--t3)}
+        .inp-g select option{background:var(--bg3);color:var(--t1)}
+        .sum-box{background:linear-gradient(135deg,#1a1510,#0f0d0a);border:1px solid var(--gold-d);padding:2.2rem;margin-top:1.5rem}
+        .sum-box h3{font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:1.5rem;color:var(--gold)}
+        .sum-i{display:flex;justify-content:space-between;margin-bottom:.8rem;padding-bottom:.8rem;border-bottom:1px solid var(--brd);color:var(--t2);font-size:.9rem}
+        .sum-i span:last-child{color:var(--t1);font-weight:500}
+        .sum-i:last-of-type{border-bottom:none;font-size:1.1rem;margin-top:.4rem;color:var(--gold)}
+        .sum-i:last-of-type span:last-child{color:var(--gold);font-family:'Playfair Display',serif;font-weight:700;font-size:1.3rem}
+        .con-sub{width:100%;padding:1.1rem;background:var(--gold);color:var(--bg);border:none;font-family:'Raleway',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all var(--tr);margin-top:1.2rem}
+        .con-sub:hover{background:var(--gold-l);transform:translateY(-2px);box-shadow:0 15px 40px rgba(201,168,76,.15)}
+
+        /* SERVICES */
+        .srv-g{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+        .srv-c{background:var(--bg3);border:1px solid var(--brd);padding:2.2rem;transition:all var(--tr);position:relative}
+        .srv-c::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--gold);transition:width .6s}
+        .srv-c:hover::after{width:100%}
+        .srv-c:hover{border-color:var(--brd2);transform:translateY(-3px)}
+        .srv-em{font-size:1.6rem;margin-bottom:1rem;display:block}
+        .srv-c h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--t1);margin-bottom:.7rem}
+        .srv-c p{color:var(--t2);font-size:.85rem;font-weight:300;line-height:1.8}
+
+        /* TESTIMONIALS */
+        .tes-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+        .tes-c{background:var(--bg3);border:1px solid var(--brd);padding:2.2rem}
+        .tes-q{font-family:'Playfair Display',serif;font-size:2.8rem;color:var(--gold-d);line-height:1;margin-bottom:.8rem}
+        .tes-txt{color:var(--t2);font-size:.9rem;font-style:italic;font-weight:300;line-height:1.8;margin-bottom:1.2rem}
+        .tes-a{font-weight:600;color:var(--t1);font-size:.85rem}
+        .tes-r{color:var(--gold);font-size:.75rem;letter-spacing:1px}
+        .tes-s{color:var(--gold);font-size:.8rem;letter-spacing:2px;margin-top:.4rem}
+
+        /* FAQ */
+        .faq-l{max-width:800px;margin:0 auto}
+        .faq-i{border-bottom:1px solid var(--brd)}
+        .faq-q{width:100%;display:flex;justify-content:space-between;align-items:center;padding:1.3rem 0;background:none;border:none;color:var(--t1);font-family:'Raleway',sans-serif;font-size:1rem;font-weight:500;cursor:pointer;text-align:left;transition:color var(--tr)}
+        .faq-q:hover{color:var(--gold)}
+        .faq-ic{color:var(--gold);font-size:1.2rem;transition:transform .3s;flex-shrink:0;margin-left:1rem}
+        .faq-i.act .faq-ic{transform:rotate(45deg)}
+        .faq-ans{max-height:0;overflow:hidden;transition:max-height .4s,padding .4s}
+        .faq-i.act .faq-ans{max-height:200px;padding-bottom:1.3rem}
+        .faq-ans p{color:var(--t2);font-size:.9rem;font-weight:300;line-height:1.8}
+
+        /* CONTACT */
+        .con-g{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem}
+        .con-info{display:flex;flex-direction:column;gap:1.8rem}
+        .con-it{display:flex;align-items:flex-start;gap:1rem}
+        .con-ic{width:44px;height:44px;border:1px solid var(--brd);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+        .con-ic svg{width:18px;height:18px;fill:var(--gold)}
+        .con-it strong{display:block;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--t3);font-weight:500;margin-bottom:.2rem}
+        .con-it .val{color:var(--t1);font-size:.95rem}
+        .con-form{background:var(--bg3);border:1px solid var(--brd);padding:2.2rem}
+        .con-form h3{font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:1.8rem}
+        .fg{margin-bottom:1.3rem}
+        .fg label{display:block;margin-bottom:.4rem;font-size:.78rem;letter-spacing:1px;text-transform:uppercase;color:var(--t2);font-weight:500}
+        .fg input,.fg textarea{width:100%;padding:.8rem .9rem;border:1px solid var(--brd);background:var(--bg);color:var(--t1);font-family:'Raleway',sans-serif;font-size:.9rem;transition:border-color var(--tr)}
+        .fg input:focus,.fg textarea:focus{outline:none;border-color:var(--gold)}
+        .fg textarea{resize:vertical;min-height:110px}
+        .sub-btn{width:100%;padding:1rem;background:var(--gold);color:var(--bg);border:none;font-family:'Raleway',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all var(--tr)}
+        .sub-btn:hover{background:var(--gold-l);transform:translateY(-2px)}
+
+        /* FOOTER */
+        footer{background:var(--bg);border-top:1px solid var(--brd);padding:2.5rem}
+        .foot-in{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+        .foot-logo{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold);letter-spacing:2px}
+        .foot-txt{color:var(--t3);font-size:.82rem}
+
+        /* WHATSAPP */
+        .wa{position:fixed;bottom:2rem;right:2rem;z-index:999;width:58px;height:58px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.3);transition:all .3s;text-decoration:none;opacity:0;transform:scale(0);animation:wap .5s 2s forwards}
+        .wa:hover{transform:scale(1.1);box-shadow:0 6px 30px rgba(37,211,102,.4)}
+        .wa svg{width:28px;height:28px;fill:#fff}
+        @keyframes wap{to{opacity:1;transform:scale(1)}}
+
+        /* RESPONSIVE */
+        @media(max-width:1024px){
+            .about-g,.srv-g,.tes-g{grid-template-columns:1fr 1fr}
+            .proc-g,.gal-g{grid-template-columns:1fr 1fr}
+        }
+        @media(max-width:768px){
+            .sec{padding:4rem 1.5rem}
+            .burger{display:flex}
+            .nav-links{position:fixed;top:0;right:-100%;width:80%;max-width:300px;height:100vh;background:var(--bg);border-left:1px solid var(--brd);flex-direction:column;justify-content:center;align-items:center;gap:.5rem;transition:right .4s;padding:2rem;z-index:999}
+            .nav-links.open{right:0}
+            .tab-btn{padding:.8rem 1.5rem;font-size:.85rem}
+            .nav-right{gap:.5rem}
+            .about-g,.srv-g,.tes-g,.gal-g{grid-template-columns:1fr}
+            .proc-g{grid-template-columns:1fr 1fr}
+            .con-g{grid-template-columns:1fr;gap:2rem}
+            .hero-c h1{font-size:2rem}
+            .foot-in{flex-direction:column;text-align:center;gap:.8rem}
+        }
+        @media(max-width:480px){
+            .proc-g,.opt-g{grid-template-columns:1fr}
+            .hero-acts{flex-direction:column;align-items:center}
+            .btn-p,.btn-o{width:100%;justify-content:center}
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-overlay" id="mo"></div>
+    <header id="hdr" class="at-top">
+        <nav>
+            <div class="logo" id="logoBtn">AAA<span>Мебели</span></div>
+            <ul class="nav-links" id="navLinks">
+                <li><button class="tab-btn active" data-tab="home" data-bg="Начало" data-ru="Главная">Начало</button></li>
+                <li><button class="tab-btn" data-tab="gallery" data-bg="Галерия" data-ru="Галерея">Галерия</button></li>
+                <li><button class="tab-btn" data-tab="constructor" data-bg="Конструктор" data-ru="Конструктор">Конструктор</button></li>
+                <li><button class="tab-btn" data-tab="services" data-bg="Услуги" data-ru="Услуги">Услуги</button></li>
+                <li><button class="tab-btn" data-tab="contact" data-bg="Контакти" data-ru="Контакты">Контакти</button></li>
+            </ul>
+            <div class="nav-right">
+                <div class="language-switcher"><button class="lang-btn active" data-lang="bg">BG</button><button class="lang-btn" data-lang="ru">RU</button></div>
+                <div class="burger" id="burger"><span></span><span></span><span></span></div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ═══ HERO (always visible) ═══ -->
+    <section class="hero" id="heroSection">
+        <div class="hero-bg"></div><div class="hero-ov"></div>
+        <div class="hero-c">
+            <div class="hero-badge" data-bg="Бургас, България" data-ru="Бургас, Болгария">Бургас, България</div>
+            <h1 data-bg="Мебели по поръчка с <em>безупречен</em> вкус" data-ru="Мебель на заказ с <em>безупречным</em> вкусом">Мебели по поръчка с <em>безупречен</em> вкус</h1>
+            <p data-bg="Проектираме и изработваме уникални кухни, гардероби и корпусна мебел от ДСП и МДФ. Всеки проект е създаден специално за Вас." data-ru="Проектируем и изготавливаем уникальные кухни, гардеробы и корпусную мебель. Каждый проект создан специально для Вас.">Проектираме и изработваме уникални кухни, гардероби и корпусна мебел от ДСП и МДФ. Всеки проект е създаден специално за Вас.</p>
+            <div class="hero-acts">
+                <button class="btn-p" onclick="switchTab('constructor')" data-bg="Конструктор Мебели" data-ru="Конструктор Мебели">Конструктор Мебели</button>
+                <button class="btn-o" onclick="switchTab('gallery')" data-bg="Нашите Проекти" data-ru="Наши Проекты">Нашите Проекти</button>
+            </div>
+        </div>
+        <div class="hero-scroll"><span data-bg="Разгледайте" data-ru="Смотрите">Разгледайте</span><div class="line"></div></div>
+    </section>
+
+    <!-- ═══ TAB: HOME ═══ -->
+    <div class="tab-page active" id="tab-home">
+        <section class="sec" style="background:var(--bg)">
+            <div class="sec-in">
+                <div class="sec-h c reveal"><span class="sec-lab" data-bg="За Нас" data-ru="О Нас">За Нас</span><h2 class="sec-t" data-bg="Качество, внимание към детайла, традиция" data-ru="Качество, внимание к деталям, традиции">Качество, внимание към детайла, традиция</h2><div class="div-line"></div><p class="sec-d" data-bg="Ние сме специализирана фирма за производство на мебели по индивидуален проект в Бургас. С дългогодишен опит създаваме мебели, които отговарят на Вашите очаквания." data-ru="Мы — компания по производству мебели по индивидуальному проекту в Бургасе. С многолетним опытом создаём мебель, соответствующую Вашим ожиданиям.">Ние сме специализирана фирма за производство на мебели по индивидуален проект в Бургас. С дългогодишен опит създаваме мебели, които отговарят на Вашите очаквания.</p></div>
+                <div class="about-g">
+                    <div class="a-card reveal"><span class="ic">✦</span><h3 data-bg="Индивидуален Дизайн" data-ru="Индивидуальный Дизайн">Индивидуален Дизайн</h3><p data-bg="Всеки проект е уникален и съобразен с Вашите желания и пространство." data-ru="Каждый проект уникален и учитывает Ваши пожелания и пространство.">Всеки проект е уникален и съобразен с Вашите желания и пространство.</p></div>
+                    <div class="a-card reveal"><span class="ic">◆</span><h3 data-bg="Качествени Материали" data-ru="Качественные Материалы">Качествени Материали</h3><p data-bg="Използваме първокласни ДСП и МДФ от водещи европейски производители." data-ru="Используем первоклассные ДСП и МДФ от ведущих европейских производителей.">Използваме първокласни ДСП и МДФ от водещи европейски производители.</p></div>
+                    <div class="a-card reveal"><span class="ic">▲</span><h3 data-bg="Професионално Изпълнение" data-ru="Профессиональное Исполнение">Професионално Изпълнение</h3><p data-bg="Опитни майстори с дългогодишна практика гарантират резултата." data-ru="Опытные мастера с многолетней практикой гарантируют результат.">Опитни майстори с дългогодишна практика гарантират резултата.</p></div>
+                </div>
+            </div>
+        </section>
+        <section class="sec" style="background:var(--bg2)">
+            <div class="sec-in">
+                <div class="sec-h c reveal"><span class="sec-lab" data-bg="Как Работим" data-ru="Как Мы Работаем">Как Работим</span><h2 class="sec-t" data-bg="Процес на Работа" data-ru="Процесс Работы">Процес на Работа</h2><div class="div-line"></div></div>
+                <div class="proc-g reveal">
+                    <div class="proc-c"><div class="proc-n">01</div><h3 data-bg="Консултация" data-ru="Консультация">Консултация</h3><p data-bg="Обсъждаме идеи, замерваме пространството." data-ru="Обсуждаем идеи, замеряем пространство.">Обсъждаме идеи, замерваме пространството.</p></div>
+                    <div class="proc-c"><div class="proc-n">02</div><h3 data-bg="3D Проект" data-ru="3D Проект">3D Проект</h3><p data-bg="Детайлна 3D визуализация на крайния резултат." data-ru="Детальная 3D визуализация результата.">Детайлна 3D визуализация на крайния резултат.</p></div>
+                    <div class="proc-c"><div class="proc-n">03</div><h3 data-bg="Производство" data-ru="Производство">Производство</h3><p data-bg="Прецизна изработка от качествени материали." data-ru="Точное изготовление из качественных материалов.">Прецизна изработка от качествени материали.</p></div>
+                    <div class="proc-c"><div class="proc-n">04</div><h3 data-bg="Монтаж" data-ru="Монтаж">Монтаж</h3><p data-bg="Доставка и монтаж с гаранция." data-ru="Доставка и монтаж с гарантией.">Доставка и монтаж с гаранция.</p></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ═══ TAB: GALLERY ═══ -->
+    <div class="tab-page" id="tab-gallery">
+        <section class="sec" style="background:var(--bg)">
+            <div class="sec-in">
+                <div class="sec-h c reveal"><span class="sec-lab" data-bg="Портфолио" data-ru="Портфолио">Портфолио</span><h2 class="sec-t" data-bg="Нашите Проекти" data-ru="Наши Проекты">Нашите Проекти</h2><div class="div-line"></div><p class="sec-d" data-bg="Вижте част от завършените ни проекти. Всяка мебел е уникална." data-ru="Посмотрите часть завершённых проектов.">Вижте част от завършените ни проекти. Всяка мебел е уникална.</p></div>
+                <div class="gal-g reveal">
+                    <div class="gal-i" data-idx="0"><img src="IMG_3683.jpeg" alt="TV стена с витрини и камина" loading="lazy"><div class="gal-ov"><h3 data-bg="TV Стена с Камина" data-ru="ТВ-стена с Камином">TV Стена с Камина</h3><p data-bg="Вградена стена с витрини и електрическа камина" data-ru="Встроенная стена с витринами и электрокамином">Вградена стена с витрини и електрическа камина</p></div></div>
+                    <div class="gal-i" data-idx="1"><img src="camphoto_1804928587.jpeg" alt="Кухня с остров" loading="lazy"><div class="gal-ov"><h3 data-bg="Кухня с Остров" data-ru="Кухня с Островом">Кухня с Остров</h3><p data-bg="Луксозна кухня с мраморен остров" data-ru="Роскошная кухня с мраморным островом">Луксозна кухня с мраморен остров</p></div></div>
+                    <div class="gal-i" data-idx="2"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop" alt="Гардероб" loading="lazy"><div class="gal-ov"><h3 data-bg="Вграден Гардероб" data-ru="Встроенный Гардероб">Вграден Гардероб</h3><p data-bg="Оптимизирано пространство" data-ru="Оптимизированное пространство">Оптимизирано пространство</p></div></div>
+                    <div class="gal-i" data-idx="3"><img src="https://images.unsplash.com/photo-1556911220-bff31c812dba?w=800&h=600&fit=crop" alt="Кухня" loading="lazy"><div class="gal-ov"><h3 data-bg="Класическа Кухня" data-ru="Классическая Кухня">Класическа Кухня</h3><p data-bg="Елегантна с дървесни елементи" data-ru="Элегантная с деревом">Елегантна с дървесни елементи</p></div></div>
+                    <div class="gal-i" data-idx="4"><img src="https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=800&h=600&fit=crop" alt="Шкаф" loading="lazy"><div class="gal-ov"><h3 data-bg="Модерен Шкаф" data-ru="Современный Шкаф">Модерен Шкаф</h3><p data-bg="Минималистичен дизайн" data-ru="Минималистичный дизайн">Минималистичен дизайн</p></div></div>
+                    <div class="gal-i" data-idx="5"><img src="https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=800&h=600&fit=crop" alt="Кухня" loading="lazy"><div class="gal-ov"><h3 data-bg="Скандинавски Стил" data-ru="Скандинавский Стиль">Скандинавски Стил</h3><p data-bg="Светла и уютна кухня" data-ru="Светлая и уютная">Светла и уютна кухня</p></div></div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div id="lb" class="lb"><span class="lb-x">&times;</span><span class="lb-nav lb-p">&#10094;</span><div class="lb-c"><img id="lb-img" src="" alt=""><div class="lb-cap"><h3 id="lb-t"></h3><p id="lb-d"></p></div></div><span class="lb-nav lb-n">&#10095;</span></div>
+
+    <!-- ═══ TAB: CONSTRUCTOR ═══ -->
+    <div class="tab-page" id="tab-constructor">
+        <section class="sec" style="background:var(--bg)">
+            <div class="sec-in">
+                <div class="sec-h c reveal"><span class="sec-lab" data-bg="Конфигуратор" data-ru="Конфигуратор">Конфигуратор</span><h2 class="sec-t" data-bg="Конструктор Мебели" data-ru="Конструктор Мебели">Конструктор Мебели</h2><div class="div-line"></div><p class="sec-d" data-bg="Създайте вашата мебел за 4 стъпки и получете ориентировъчна цена." data-ru="Создайте мебель за 4 шага и получите ориентировочную цену.">Създайте вашата мебел за 4 стъпки и получете ориентировъчна цена.</p></div>
+                <div class="con-steps reveal">
+                    <div class="stp"><div class="stp-h"><div class="stp-num">1</div><h3 class="stp-t" data-bg="Изберете Тип" data-ru="Выберите Тип">Изберете Тип</h3></div>
+                        <div class="opt-g">
+                            <div class="opt-c" data-type="kitchen" data-base-price="1534"><div class="opt-ic">🏠</div><div class="opt-nm" data-bg="Кухня" data-ru="Кухня">Кухня</div><div class="opt-pr">от 1534 €</div></div>
+                            <div class="opt-c" data-type="wardrobe" data-base-price="767"><div class="opt-ic">👔</div><div class="opt-nm" data-bg="Гардероб" data-ru="Гардероб">Гардероб</div><div class="opt-pr">от 767 €</div></div>
+                            <div class="opt-c" data-type="closet" data-base-price="409"><div class="opt-ic">📦</div><div class="opt-nm" data-bg="Шкаф" data-ru="Шкаф">Шкаф</div><div class="opt-pr">от 409 €</div></div>
+                            <div class="opt-c" data-type="other" data-base-price="256"><div class="opt-ic">🪑</div><div class="opt-nm" data-bg="Друго" data-ru="Другое">Друго</div><div class="opt-pr">от 256 €</div></div>
+                        </div></div>
+                    <div class="stp"><div class="stp-h"><div class="stp-num">2</div><h3 class="stp-t" data-bg="Размери (мм)" data-ru="Размеры (мм)">Размери (мм)</h3></div>
+                        <div class="dim-in">
+                            <div class="inp-g"><label data-bg="Дължина" data-ru="Длина">Дължина</label><input type="number" id="c-len" placeholder="2500" min="500" max="6000" step="10"></div>
+                            <div class="inp-g"><label data-bg="Височина" data-ru="Высота">Височина</label><input type="number" id="c-hei" placeholder="2200" min="500" max="3000" step="10"></div>
+                            <div class="inp-g"><label data-bg="Дълбочина" data-ru="Глубина">Дълбочина</label><input type="number" id="c-dep" placeholder="600" min="300" max="1000" step="10"></div>
+                        </div></div>
+                    <div class="stp"><div class="stp-h"><div class="stp-num">3</div><h3 class="stp-t" data-bg="Материал" data-ru="Материал">Материал</h3></div>
+                        <div class="opt-g">
+                            <div class="opt-c" data-material="dsp" data-price-mult="1.0"><div class="opt-ic">🪵</div><div class="opt-nm">ДСП</div><div class="opt-pr" data-bg="Стандарт" data-ru="Стандарт">Стандарт</div></div>
+                            <div class="opt-c" data-material="mdf" data-price-mult="1.3"><div class="opt-ic">🌲</div><div class="opt-nm">МДФ</div><div class="opt-pr">+30%</div></div>
+                        </div></div>
+                    <div class="stp"><div class="stp-h"><div class="stp-num">4</div><h3 class="stp-t" data-bg="Цвят" data-ru="Цвет">Цвят</h3></div>
+                        <div class="inp-g"><label data-bg="Изберете Цвят" data-ru="Выберите Цвет">Изберете Цвят</label>
+                            <select id="c-color"><option value="" data-bg="Изберете..." data-ru="Выберите...">Изберете...</option><option value="white" data-bg="Бял" data-ru="Белый">Бял</option><option value="black" data-bg="Черен" data-ru="Чёрный">Черен</option><option value="gray" data-bg="Сив" data-ru="Серый">Сив</option><option value="beige" data-bg="Бежов" data-ru="Бежевый">Бежов</option><option value="wood-light" data-bg="Светло Дърво" data-ru="Светлое Дерево">Светло Дърво</option><option value="wood-dark" data-bg="Тъмно Дърво" data-ru="Тёмное Дерево">Тъмно Дърво</option><option value="custom" data-bg="Друг" data-ru="Другой">Друг</option></select></div></div>
+                </div>
+                <div class="sum-box reveal">
+                    <h3 data-bg="Вашата Поръчка" data-ru="Ваш Заказ">Вашата Поръчка</h3>
+                    <div class="sum-i"><span data-bg="Тип:" data-ru="Тип:">Тип:</span><span id="s-type">—</span></div>
+                    <div class="sum-i"><span data-bg="Размери:" data-ru="Размеры:">Размери:</span><span id="s-dim">—</span></div>
+                    <div class="sum-i"><span data-bg="Материал:" data-ru="Материал:">Материал:</span><span id="s-mat">—</span></div>
+                    <div class="sum-i"><span data-bg="Цвят:" data-ru="Цвет:">Цвят:</span><span id="s-col">—</span></div>
+                    <div class="sum-i"><span data-bg="Приблизителна Цена:" data-ru="Ориентировочная Цена:">Приблизителна Цена:</span><span id="s-price">—</span></div>
+                    <button class="con-sub" id="conSubmit" data-bg="Изпрати Запитване" data-ru="Отправить Запрос">Изпрати Запитване</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ═══ TAB: SERVICES ═══ -->
+    <div class="tab-page" id="tab-services">
+        <section class="sec" style="background:var(--bg)">
+            <div class="sec-in">
+                <div class="sec-h c reveal"><span class="sec-lab" data-bg="Какво Предлагаме" data-ru="Что Мы Предлагаем">Какво Предлагаме</span><h2 class="sec-t" data-bg="Нашите Услуги" data-ru="Наши Услуги">Нашите Услуги</h2><div class="div-line"></div></div>
+                <div class="srv-g">
+                    <div class="srv-c reveal"><span class="srv-em">🏠</span><h3 data-bg="Кухни по Поръчка" data-ru="Кухни на Заказ">Кухни по Поръчка</h3><p data-bg="Модерни и класически кухни, съобразени с Вашето пространство и стил." data-ru="Современные и классические кухни под Ваше пространство.">Модерни и класически кухни, съобразени с Вашето пространство и стил.</p></div>
+                    <div class="srv-c reveal"><span class="srv-em">👔</span><h3 data-bg="Гардероби" data-ru="Гардеробы">Гардероби</h3><p data-bg="Вградени и свободностоящи с индивидуален дизайн." data-ru="Встроенные и отдельностоящие с индивидуальным дизайном.">Вградени и свободностоящи с индивидуален дизайн.</p></div>
+                    <div class="srv-c reveal"><span class="srv-em">📦</span><h3 data-bg="Шкафове" data-ru="Шкафы">Шкафове</h3><p data-bg="За антре, спалня, детска стая. Плъзгащи и обикновени врати." data-ru="Для прихожей, спальни, детской. Раздвижные и обычные двери.">За антре, спалня, детска стая. Плъзгащи и обикновени врати.</p></div>
+                    <div class="srv-c reveal"><span class="srv-em">🪑</span><h3 data-bg="Корпусна Мебел" data-ru="Корпусная Мебель">Корпусна Мебел</h3><p data-bg="Комоди, TV шкафове, етажерки по Ваш проект." data-ru="Комоды, ТВ-шкафы, стеллажи по Вашему проекту.">Комоди, TV шкафове, етажерки по Ваш проект.</p></div>
+                    <div class="srv-c reveal"><span class="srv-em">📐</span><h3 data-bg="3D Проектиране" data-ru="3D Проектирование">3D Проектиране</h3><p data-bg="Безплатна 3D визуализация преди изработка." data-ru="Бесплатная 3D визуализация перед изготовлением.">Безплатна 3D визуализация преди изработка.</p></div>
+                    <div class="srv-c reveal"><span class="srv-em">🚚</span><h3 data-bg="Доставка и Монтаж" data-ru="Доставка и Монтаж">Доставка и Монтаж</h3><p data-bg="Професионална доставка и монтаж с гаранция." data-ru="Профессиональная доставка и монтаж с гарантией.">Професионална доставка и монтаж с гаранция.</p></div>
+                </div>
+            </div>
+        </section>
+        <section class="sec" style="background:var(--bg2)">
+            <div class="sec-in">
+                <div class="sec-h c reveal"><span class="sec-lab" data-bg="Отзиви" data-ru="Отзывы">Отзиви</span><h2 class="sec-t" data-bg="Какво Казват Клиентите" data-ru="Что Говорят Клиенты">Какво Казват Клиентите</h2><div class="div-line"></div></div>
+                <div class="tes-g reveal">
+                    <div class="tes-c"><div class="tes-q">&ldquo;</div><p class="tes-txt" data-bg="Изключително доволни сме от кухнята. Качеството е на високо ниво." data-ru="Невероятно довольны кухней. Качество на высшем уровне.">Изключително доволни сме от кухнята. Качеството е на високо ниво.</p><div class="tes-a">Мария К.</div><div class="tes-r" data-bg="Кухня по поръчка" data-ru="Кухня на заказ">Кухня по поръчка</div><div class="tes-s">★★★★★</div></div>
+                    <div class="tes-c"><div class="tes-q">&ldquo;</div><p class="tes-txt" data-bg="Професионален екип, спазват сроковете. Гардеробът е перфектен." data-ru="Профессиональная команда, соблюдают сроки. Гардероб идеален.">Професионален екип, спазват сроковете. Гардеробът е перфектен.</p><div class="tes-a">Георги П.</div><div class="tes-r" data-bg="Вграден гардероб" data-ru="Встроенный гардероб">Вграден гардероб</div><div class="tes-s">★★★★★</div></div>
+                    <div class="tes-c"><div class="tes-q">&ldquo;</div><p class="tes-txt" data-bg="Препоръчвам! Отлично съотношение цена-качество." data-ru="Рекомендую! Отличное соотношение цена-качество.">Препоръчвам! Отлично съотношение цена-качество.</p><div class="tes-a">Елена Д.</div><div class="tes-r" data-bg="Шкаф и комод" data-ru="Шкаф и комод">Шкаф и комод</div><div class="tes-s">★★★★★</div></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ═══ TAB: CONTACT ═══ -->
+    <div class="tab-page" id="tab-contact">
+        <section class="sec" style="background:var(--bg)">
+            <div class="sec-in">
+                <div class="sec-h c reveal"><span class="sec-lab" data-bg="Контакти" data-ru="Контакты">Контакти</span><h2 class="sec-t" data-bg="Свържете се с Нас" data-ru="Свяжитесь с Нами">Свържете се с Нас</h2><div class="div-line"></div><p class="sec-d" data-bg="Готови сме да обсъдим Вашия проект." data-ru="Мы готовы обсудить Ваш проект.">Готови сме да обсъдим Вашия проект.</p></div>
+                <div class="con-g">
+                    <div class="con-info reveal">
+                        <div class="con-it"><div class="con-ic"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></div><div><strong data-bg="Телефон" data-ru="Телефон">Телефон</strong><div class="val">+359 087 903 5458</div></div></div>
+                        <div class="con-it"><div class="con-ic"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div><div><strong>Email</strong><div class="val" style="color:var(--t2);font-style:italic" data-bg="Ще бъде добавен скоро" data-ru="Будет добавлен скоро">Ще бъде добавен скоро</div></div></div>
+                        <div class="con-it"><div class="con-ic"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div><div><strong data-bg="Локация" data-ru="Расположение">Локация</strong><div class="val" data-bg="Бургас, България" data-ru="Бургас, Болгария">Бургас, България</div></div></div>
+                        <div class="con-it"><div class="con-ic"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg></div><div><strong data-bg="Работно Време" data-ru="Рабочее Время">Работно Време</strong><div class="val" data-bg="Пон–Пет: 10:00–18:00" data-ru="Пн–Пт: 10:00–18:00">Пон–Пет: 10:00–18:00</div></div></div>
+                    </div>
+                    <div class="con-form reveal">
+                        <h3 data-bg="Заявка за Оферта" data-ru="Запрос на Расчёт">Заявка за Оферта</h3>
+                        <form id="cForm">
+                            <div class="fg"><label data-bg="Вашето Име *" data-ru="Ваше Имя *">Вашето Име *</label><input type="text" required></div>
+                            <div class="fg"><label data-bg="Телефон *" data-ru="Телефон *">Телефон *</label><input type="tel" required></div>
+                            <div class="fg"><label>Email</label><input type="email"></div>
+                            <div class="fg"><label data-bg="Вашето Запитване *" data-ru="Ваш Запрос *">Вашето Запитване *</label><textarea required data-bg="Опишете какъв вид мебел Ви интересува..." data-ru="Опишите, какой вид мебели Вас интересует..."></textarea></div>
+                            <button type="submit" class="sub-btn" data-bg="Изпрати Запитване" data-ru="Отправить Запрос">Изпрати Запитване</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="sec" style="background:var(--bg2)">
+            <div class="sec-in">
+                <div class="sec-h c reveal"><span class="sec-lab" data-bg="Въпроси" data-ru="Вопросы">Въпроси</span><h2 class="sec-t" data-bg="Често Задавани Въпроси" data-ru="Часто Задаваемые Вопросы">Често Задавани Въпроси</h2><div class="div-line"></div></div>
+                <div class="faq-l reveal">
+                    <div class="faq-i"><button class="faq-q"><span data-bg="Колко време отнема изработката?" data-ru="Сколько времени занимает изготовление?">Колко време отнема изработката?</span><span class="faq-ic">+</span></button><div class="faq-ans"><p data-bg="Средно 2-4 седмици. Сложни кухни — до 5-6 седмици." data-ru="В среднем 2-4 недели. Сложные кухни — до 5-6 недель.">Средно 2-4 седмици. Сложни кухни — до 5-6 седмици.</p></div></div>
+                    <div class="faq-i"><button class="faq-q"><span data-bg="Какви материали използвате?" data-ru="Какие материалы используете?">Какви материали използвате?</span><span class="faq-ic">+</span></button><div class="faq-ans"><p data-bg="Първокласни ДСП и МДФ от Egger, Kronospan и др." data-ru="Первоклассные ДСП и МДФ от Egger, Kronospan и др.">Първокласни ДСП и МДФ от Egger, Kronospan и др.</p></div></div>
+                    <div class="faq-i"><button class="faq-q"><span data-bg="Безплатен оглед и замерване?" data-ru="Бесплатный осмотр и замер?">Безплатен оглед и замерване?</span><span class="faq-ic">+</span></button><div class="faq-ans"><p data-bg="Да, безплатно в Бургас и околността." data-ru="Да, бесплатно в Бургасе и окрестностях.">Да, безплатно в Бургас и околността.</p></div></div>
+                    <div class="faq-i"><button class="faq-q"><span data-bg="Каква гаранция давате?" data-ru="Какая гарантия?">Каква гаранция давате?</span><span class="faq-ic">+</span></button><div class="faq-ans"><p data-bg="2 години гаранция за материали и изработка." data-ru="2 года гарантия на материалы и изготовление.">2 години гаранция за материали и изработка.</p></div></div>
+                    <div class="faq-i"><button class="faq-q"><span data-bg="Доставка извън Бургас?" data-ru="Доставка за пределы Бургаса?">Доставка извън Бургас?</span><span class="faq-ic">+</span></button><div class="faq-ans"><p data-bg="Основно в Бургас. Извън града — свържете се за оферта." data-ru="В основном Бургас. За пределами — свяжитесь для оферты.">Основно в Бургас. Извън града — свържете се за оферта.</p></div></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer><div class="foot-in"><div class="foot-logo">AAA Мебели</div><p class="foot-txt" data-bg="© 2025 AAA Мебели Бургас. Всички права запазени." data-ru="© 2025 AAA Мебели Бургас. Все права защищены.">© 2025 AAA Мебели Бургас. Всички права запазени.</p></div></footer>
+    <a href="https://wa.me/3590879035458?text=Здравейте!%20Интересувам%20се%20от%20мебели%20по%20поръчка." class="wa" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+
+<script>
+// ═══ TAB SYSTEM ═══
+const heroEl = document.getElementById('heroSection');
+const hdr = document.getElementById('hdr');
+function switchTab(tab) {
+    document.querySelectorAll('.tab-page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    document.querySelector('[data-tab="'+tab+'"]').classList.add('active');
+    heroEl.style.display = tab === 'home' ? '' : 'none';
+    hdr.classList.toggle('at-top', tab === 'home' && window.scrollY < 80);
+    window.scrollTo({top: 0, behavior: 'instant'});
+    // re-trigger reveal for new tab
+    setTimeout(() => {
+        document.querySelectorAll('#tab-'+tab+' .reveal').forEach(el => rObs.observe(el));
+    }, 50);
+    // close mobile menu
+    if (navLinks.classList.contains('open')) toggleMenu();
+}
+document.querySelectorAll('.tab-btn').forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
+document.getElementById('logoBtn').addEventListener('click', () => switchTab('home'));
+
+// ═══ HEADER SCROLL ═══
+window.addEventListener('scroll', () => {
+    const isHome = document.getElementById('tab-home').classList.contains('active');
+    if (isHome) hdr.classList.toggle('at-top', window.scrollY < 80);
+});
+
+// ═══ BURGER ═══
+const burger = document.getElementById('burger');
+const navLinks = document.getElementById('navLinks');
+const mo = document.getElementById('mo');
+function toggleMenu() {
+    burger.classList.toggle('active');
+    navLinks.classList.toggle('open');
+    mo.classList.toggle('active');
+    document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
+}
+burger.addEventListener('click', toggleMenu);
+mo.addEventListener('click', toggleMenu);
+
+// ═══ REVEAL ═══
+const rObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('v'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => rObs.observe(el));
+
+// ═══ FAQ ═══
+document.querySelectorAll('.faq-q').forEach(b => b.addEventListener('click', () => {
+    const item = b.parentElement;
+    const act = item.classList.contains('act');
+    document.querySelectorAll('.faq-i').forEach(i => i.classList.remove('act'));
+    if (!act) item.classList.add('act');
+}));
+
+// ═══ LIGHTBOX ═══
+const lb=document.getElementById('lb'),lbImg=document.getElementById('lb-img'),lbT=document.getElementById('lb-t'),lbD=document.getElementById('lb-d');
+let ci=0;
+const gd=[
+    {s:'IMG_3683.jpeg',t:'TV Стена с Камина',d:'Вградена стена с витрини и камина'},
+    {s:'camphoto_1804928587.jpeg',t:'Кухня с Остров',d:'Луксозна кухня с мраморен остров'},
+    {s:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=900&fit=crop',t:'Вграден Гардероб',d:'Оптимизирано пространство'},
+    {s:'https://images.unsplash.com/photo-1556911220-bff31c812dba?w=1200&h=900&fit=crop',t:'Класическа Кухня',d:'Елегантна кухня'},
+    {s:'https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=1200&h=900&fit=crop',t:'Модерен Шкаф',d:'Минималистичен'},
+    {s:'https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=1200&h=900&fit=crop',t:'Скандинавски Стил',d:'Светла кухня'}
+];
+function lbShow(i){lbImg.src=gd[i].s;lbT.textContent=gd[i].t;lbD.textContent=gd[i].d;}
+document.querySelectorAll('.gal-i').forEach(el=>el.addEventListener('click',()=>{ci=+el.dataset.idx;lbShow(ci);lb.classList.add('active');document.body.style.overflow='hidden';}));
+function lbClose(){lb.classList.remove('active');document.body.style.overflow='';}
+document.querySelector('.lb-x').addEventListener('click',lbClose);
+document.querySelector('.lb-n').addEventListener('click',()=>{ci=(ci+1)%gd.length;lbShow(ci);});
+document.querySelector('.lb-p').addEventListener('click',()=>{ci=(ci-1+gd.length)%gd.length;lbShow(ci);});
+lb.addEventListener('click',e=>{if(e.target===lb)lbClose();});
+document.addEventListener('keydown',e=>{if(!lb.classList.contains('active'))return;if(e.key==='Escape')lbClose();if(e.key==='ArrowRight'){ci=(ci+1)%gd.length;lbShow(ci);}if(e.key==='ArrowLeft'){ci=(ci-1+gd.length)%gd.length;lbShow(ci);}});
+
+// ═══ CONTACT FORM ═══
+document.getElementById('cForm').addEventListener('submit',function(e){e.preventDefault();alert(curLang==='ru'?'Спасибо! Мы свяжемся с Вами.':'Благодарим! Ще се свържем с Вас скоро.');this.reset();});
+
+// ═══ LANGUAGE ═══
+let curLang='bg';
+function setLang(lang){
+    curLang=lang;
+    document.querySelectorAll('[data-bg]').forEach(el=>{
+        const v=el.getAttribute('data-'+lang);
+        if(!v)return;
+        if(el.tagName==='INPUT'||el.tagName==='TEXTAREA')el.placeholder=v;
+        else el.innerHTML=v;
+    });
+    document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+    updSum();
+}
+document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
+
+// ═══ CONSTRUCTOR ═══
+const tN={bg:{kitchen:'Кухня',wardrobe:'Гардероб',closet:'Шкаф',other:'Друго'},ru:{kitchen:'Кухня',wardrobe:'Гардероб',closet:'Шкаф',other:'Другое'}};
+const mN={bg:{dsp:'ДСП',mdf:'МДФ'},ru:{dsp:'ДСП',mdf:'МДФ'}};
+const cN={bg:{white:'Бял',black:'Черен',gray:'Сив',beige:'Бежов','wood-light':'Светло Дърво','wood-dark':'Тъмно Дърво',custom:'Друг'},ru:{white:'Белый',black:'Чёрный',gray:'Серый',beige:'Бежевый','wood-light':'Светлое Дерево','wood-dark':'Тёмное Дерево',custom:'Другой'}};
+const cs={type:null,mat:null,l:0,h:0,d:0,col:null,bp:0,mm:1};
+
+document.querySelectorAll('[data-type]').forEach(c=>c.addEventListener('click',function(){document.querySelectorAll('[data-type]').forEach(x=>x.classList.remove('sel'));this.classList.add('sel');cs.type=this.dataset.type;cs.bp=+this.dataset.basePrice;updSum();}));
+document.querySelectorAll('[data-material]').forEach(c=>c.addEventListener('click',function(){document.querySelectorAll('[data-material]').forEach(x=>x.classList.remove('sel'));this.classList.add('sel');cs.mat=this.dataset.material;cs.mm=+this.dataset.priceMult;updSum();}));
+document.getElementById('c-len').addEventListener('input',function(){cs.l=+this.value||0;updSum();});
+document.getElementById('c-hei').addEventListener('input',function(){cs.h=+this.value||0;updSum();});
+document.getElementById('c-dep').addEventListener('input',function(){cs.d=+this.value||0;updSum();});
+document.getElementById('c-color').addEventListener('change',function(){cs.col=this.value;updSum();});
+
+function calcP(){if(!cs.type||!cs.mat)return 0;const v=(cs.l*cs.h*cs.d)/1e9;return Math.round(cs.bp*cs.mm+Math.max(1,v*2000));}
+function updSum(){
+    document.getElementById('s-type').textContent=cs.type?tN[curLang][cs.type]:'—';
+    document.getElementById('s-dim').textContent=(cs.l&&cs.h&&cs.d)?cs.l+'×'+cs.h+'×'+cs.d+' мм':'—';
+    document.getElementById('s-mat').textContent=cs.mat?mN[curLang][cs.mat]:'—';
+    document.getElementById('s-col').textContent=cs.col?cN[curLang][cs.col]:'—';
+    const p=calcP();document.getElementById('s-price').textContent=p>0?p+' €':'—';
+}
+
+const N8N='https://alexiiasa.app.n8n.cloud/webhook/furniture-order';
+document.getElementById('conSubmit').addEventListener('click',async()=>{
+    const a=curLang==='ru';
+    if(!cs.type){alert(a?'Выберите тип!':'Моля, изберете тип!');return;}
+    if(!cs.mat){alert(a?'Выберите материал!':'Моля, изберете материал!');return;}
+    if(!cs.l||!cs.h||!cs.d){alert(a?'Укажите размеры!':'Моля, въведете размери!');return;}
+    const ct=cs.col?cN[curLang][cs.col]:(a?'Не выбран':'Не е избран'),p=calcP();
+    try{await fetch(N8N,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:tN[curLang][cs.type],dimensions:cs.l+'×'+cs.h+'×'+cs.d+' мм',material:mN[curLang][cs.mat],color:ct,price:p+' €',timestamp:new Date().toLocaleString('bg-BG'),language:a?'Русский':'Български'})});}catch(e){}
+    alert((a?'Запрос отправлен':'Заявката е изпратена')+':\n\n'+(a?'Тип':'Тип')+': '+tN[curLang][cs.type]+'\n'+(a?'Размеры':'Размери')+': '+cs.l+'×'+cs.h+'×'+cs.d+' мм\n'+(a?'Материал':'Материал')+': '+mN[curLang][cs.mat]+'\n'+(a?'Цвет':'Цвят')+': '+ct+'\n\n'+(a?'Цена':'Цена')+': '+p+' €\n\n'+(a?'Мы свяжемся с Вами!':'Ще се свържем с Вас!'));
+    document.querySelectorAll('.opt-c.sel').forEach(c=>c.classList.remove('sel'));
+    ['c-len','c-hei','c-dep'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('c-color').value='';
+    Object.assign(cs,{type:null,mat:null,l:0,h:0,d:0,col:null,bp:0,mm:1});updSum();
+});
+</script>
+</body>
+</html>
