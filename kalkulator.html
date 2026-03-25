@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Калькулятор Кухни</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f0f0f;--bg2:#161616;--bg3:#1e1e1e;--bg4:#252525;
+  --brd:#2e2e2e;--brd2:#3a3a3a;
+  --t1:#f0f0f0;--t2:#b0b0b0;--t3:#707070;
+  --gold:#c9a84c;--gold2:#e8c86a;--gold-bg:rgba(201,168,76,.1);
+  --green:#4a9c6e;--green-bg:rgba(74,156,110,.1);
+  --red:#c0504a;--red-bg:rgba(192,80,74,.1);
+  --blue:#4a7cbc;--blue-bg:rgba(74,124,188,.1);
+  --r:4px;--tr:.2s ease;
+}
+body{background:var(--bg);color:var(--t1);font-family:'Segoe UI',system-ui,sans-serif;font-size:14px;min-height:100vh}
+
+/* LAYOUT */
+.app{display:grid;grid-template-columns:340px 1fr;min-height:100vh}
+.sidebar{background:var(--bg2);border-right:1px solid var(--brd);overflow-y:auto;padding:0}
+.main{padding:24px;overflow-y:auto}
+
+/* HEADER */
+.sidebar-header{padding:20px;border-bottom:1px solid var(--brd);position:sticky;top:0;background:var(--bg2);z-index:10}
+.sidebar-header h1{font-size:1rem;font-weight:700;color:var(--t1);letter-spacing:.03em}
+.sidebar-header p{color:var(--t3);font-size:.75rem;margin-top:3px}
+
+/* SECTION */
+.s-section{border-bottom:1px solid var(--brd)}
+.s-section-head{padding:12px 20px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none;transition:background var(--tr)}
+.s-section-head:hover{background:var(--bg3)}
+.s-section-head h2{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t3)}
+.s-section-head .arr{color:var(--t3);transition:transform var(--tr);font-size:.7rem}
+.s-section.open .arr{transform:rotate(180deg)}
+.s-section-body{display:none;padding:4px 20px 16px}
+.s-section.open .s-section-body{display:block}
+
+/* PRICE ROW */
+.p-row{display:grid;grid-template-columns:1fr 90px;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--brd)}
+.p-row:last-child{border-bottom:none}
+.p-row label{color:var(--t2);font-size:.82rem;line-height:1.3}
+.p-row .unit{color:var(--t3);font-size:.7rem;display:block;margin-top:1px}
+.p-input{background:var(--bg4);border:1px solid var(--brd2);color:var(--t1);padding:5px 8px;font-size:.82rem;width:100%;text-align:right;border-radius:var(--r);transition:border-color var(--tr)}
+.p-input:focus{outline:none;border-color:var(--gold)}
+.p-row-full{padding:6px 0;border-bottom:1px solid var(--brd)}
+.p-row-full:last-child{border-bottom:none}
+.p-row-full label{color:var(--t2);font-size:.82rem;display:block;margin-bottom:4px}
+.p-row-2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.p-sub{color:var(--t3);font-size:.7rem;margin-bottom:3px}
+
+/* MAIN */
+.main-title{font-size:1.1rem;font-weight:700;margin-bottom:20px;color:var(--t1)}
+
+/* CALC GRID */
+.calc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:20px}
+
+/* CARD */
+.card{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--r);padding:16px}
+.card-title{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);margin-bottom:12px}
+
+/* OPTION BUTTONS */
+.opt-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.opt-btn{background:var(--bg3);border:1px solid var(--brd2);color:var(--t2);padding:6px 12px;cursor:pointer;font-size:.8rem;border-radius:var(--r);transition:all var(--tr);white-space:nowrap}
+.opt-btn:hover{border-color:var(--gold);color:var(--t1)}
+.opt-btn.sel{background:var(--gold-bg);border-color:var(--gold);color:var(--gold)}
+
+/* LENGTH INPUT */
+.len-wrap{display:flex;align-items:center;gap:8px}
+.len-input{background:var(--bg3);border:1px solid var(--brd2);color:var(--t1);padding:8px 12px;font-size:1.1rem;font-weight:700;width:100px;text-align:center;border-radius:var(--r);transition:border-color var(--tr)}
+.len-input:focus{outline:none;border-color:var(--gold)}
+.len-unit{color:var(--t3);font-size:.85rem}
+
+/* CHECKBOX */
+.chk-row{display:flex;align-items:center;gap:8px;padding:4px 0;cursor:pointer}
+.chk-row input{accent-color:var(--gold);width:15px;height:15px;cursor:pointer}
+.chk-row span{color:var(--t2);font-size:.82rem}
+
+/* RESULTS */
+.results{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--r);padding:20px;margin-top:0}
+.results-title{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);margin-bottom:16px}
+
+.breakdown{display:grid;gap:0;margin-bottom:16px;border:1px solid var(--brd);border-radius:var(--r);overflow:hidden}
+.br-row{display:grid;grid-template-columns:1fr 90px 90px;padding:8px 12px;border-bottom:1px solid var(--brd);font-size:.82rem}
+.br-row:last-child{border-bottom:none}
+.br-row.head{background:var(--bg3);color:var(--t3);font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.br-row.sub{background:var(--bg);padding-left:24px;color:var(--t2)}
+.br-row.sep{background:var(--bg3);padding:4px 12px}
+.br-row .name{color:var(--t2)}
+.br-row .val{text-align:right;color:var(--t1)}
+.br-row .val.muted{color:var(--t3)}
+.br-row.total-row{background:var(--gold-bg);border-top:2px solid var(--gold)}
+.br-row.total-row .name{color:var(--gold);font-weight:700;font-size:.9rem}
+.br-row.total-row .val{color:var(--gold);font-weight:700;font-size:.9rem}
+
+.summary-boxes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.sum-box{background:var(--bg3);border:1px solid var(--brd);border-radius:var(--r);padding:14px;text-align:center}
+.sum-box .sb-val{font-size:1.4rem;font-weight:800;color:var(--gold);letter-spacing:-.02em}
+.sum-box .sb-label{color:var(--t3);font-size:.72rem;margin-top:3px;line-height:1.3}
+
+.alert{background:var(--bg3);border:1px solid var(--brd2);border-radius:var(--r);padding:16px;color:var(--t3);text-align:center;font-size:.85rem}
+
+/* SAVE BTN */
+.save-btn{width:100%;padding:9px;background:var(--gold-bg);border:1px solid var(--gold);color:var(--gold);font-size:.8rem;font-weight:700;cursor:pointer;letter-spacing:.05em;border-radius:var(--r);margin-top:12px;transition:all var(--tr)}
+.save-btn:hover{background:var(--gold);color:var(--bg)}
+.saved-msg{color:var(--green);font-size:.75rem;text-align:center;margin-top:6px;height:16px;transition:opacity .3s}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--brd);margin:8px 0}
+
+/* NOTE */
+.note{color:var(--t3);font-size:.75rem;font-style:italic;line-height:1.5;margin-top:8px}
+
+@media(max-width:900px){
+  .app{grid-template-columns:1fr}
+  .sidebar{border-right:none;border-bottom:1px solid var(--brd)}
+  .summary-boxes{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:500px){
+  .summary-boxes{grid-template-columns:1fr 1fr}
+  .calc-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ═══ SIDEBAR: SETTINGS ═══ -->
+<div class="sidebar">
+  <div class="sidebar-header">
+    <h1>⚙ Настройки цен</h1>
+    <p>Цены в € за 1 погонный метр</p>
+  </div>
+
+  <!-- CORPUS -->
+  <div class="s-section open" id="sec-corpus">
+    <div class="s-section-head" onclick="toggleSection('sec-corpus')">
+      <h2>Корпус (ДСП 18мм)</h2>
+      <span class="arr">▼</span>
+    </div>
+    <div class="s-section-body">
+      <div class="p-row">
+        <label>Низы H=720мм<span class="unit">корпус + задняя стенка</span></label>
+        <input class="p-input" id="p-corp-low" type="number" value="120" min="0">
+      </div>
+      <div class="p-row">
+        <label>Верха H=720мм</label>
+        <input class="p-input" id="p-corp-up720" type="number" value="80" min="0">
+      </div>
+      <div class="p-row">
+        <label>Верха H=920мм</label>
+        <input class="p-input" id="p-corp-up920" type="number" value="95" min="0">
+      </div>
+      <div class="p-row">
+        <label>Наценка цветной корпус<span class="unit">% от стоимости корпуса</span></label>
+        <input class="p-input" id="p-corp-color-pct" type="number" value="15" min="0">
+      </div>
+    </div>
+  </div>
+
+  <!-- FACADES -->
+  <div class="s-section open" id="sec-facades">
+    <div class="s-section-head" onclick="toggleSection('sec-facades')">
+      <h2>Фасады</h2>
+      <span class="arr">▼</span>
+    </div>
+    <div class="s-section-body">
+      <div class="p-row-full">
+        <label>ДСП (ПДЧ)</label>
+        <div class="p-row-2">
+          <div><div class="p-sub">мин</div><input class="p-input" id="p-fac-dsp-min" type="number" value="535" min="0"></div>
+          <div><div class="p-sub">макс</div><input class="p-input" id="p-fac-dsp-max" type="number" value="646" min="0"></div>
+        </div>
+      </div>
+      <div class="p-row-full">
+        <label>МДФ плёнка (PVC)</label>
+        <div class="p-row-2">
+          <div><div class="p-sub">мин</div><input class="p-input" id="p-fac-pvc-min" type="number" value="638" min="0"></div>
+          <div><div class="p-sub">макс</div><input class="p-input" id="p-fac-pvc-max" type="number" value="860" min="0"></div>
+        </div>
+      </div>
+      <div class="p-row-full">
+        <label>МДФ-пластик (HPL/акрил)</label>
+        <div class="p-row-2">
+          <div><div class="p-sub">мин</div><input class="p-input" id="p-fac-hpl-min" type="number" value="714" min="0"></div>
+          <div><div class="p-sub">макс</div><input class="p-input" id="p-fac-hpl-max" type="number" value="1014" min="0"></div>
+        </div>
+      </div>
+      <div class="p-row-full">
+        <label>МДФ-эмаль (лак/краска)</label>
+        <div class="p-row-2">
+          <div><div class="p-sub">мин</div><input class="p-input" id="p-fac-enamel-min" type="number" value="842" min="0"></div>
+          <div><div class="p-sub">макс</div><input class="p-input" id="p-fac-enamel-max" type="number" value="1320" min="0"></div>
+        </div>
+      </div>
+      <p class="note">* Цены фасадов уже включают петли Hettich и корпус. Если корпус считается отдельно — укажите только стоимость фасадов.</p>
+    </div>
+  </div>
+
+  <!-- COUNTERTOP -->
+  <div class="s-section open" id="sec-top">
+    <div class="s-section-head" onclick="toggleSection('sec-top')">
+      <h2>Столешница</h2>
+      <span class="arr">▼</span>
+    </div>
+    <div class="s-section-body">
+      <div class="p-row">
+        <label>Постформинг</label>
+        <input class="p-input" id="p-top-pf" type="number" value="90" min="0">
+      </div>
+      <div class="p-row">
+        <label>Термоплот (ДСП)</label>
+        <input class="p-input" id="p-top-tp" type="number" value="60" min="0">
+      </div>
+      <div class="p-row">
+        <label>HPL-панель</label>
+        <input class="p-input" id="p-top-hpl" type="number" value="180" min="0">
+      </div>
+      <div class="p-row">
+        <label>Кварцевый агломерат</label>
+        <input class="p-input" id="p-top-quartz" type="number" value="320" min="0">
+      </div>
+    </div>
+  </div>
+
+  <!-- BACKSPLASH -->
+  <div class="s-section open" id="sec-back">
+    <div class="s-section-head" onclick="toggleSection('sec-back')">
+      <h2>Фартук / стеновая панель</h2>
+      <span class="arr">▼</span>
+    </div>
+    <div class="s-section-body">
+      <div class="p-row">
+        <label>Термогръб (ДСП)</label>
+        <input class="p-input" id="p-back-tg" type="number" value="40" min="0">
+      </div>
+      <div class="p-row">
+        <label>Закалённое стекло</label>
+        <input class="p-input" id="p-back-glass" type="number" value="110" min="0">
+      </div>
+      <div class="p-row">
+        <label>Плитка (керамика)</label>
+        <input class="p-input" id="p-back-tile" type="number" value="60" min="0">
+      </div>
+      <div class="p-row">
+        <label>HPL-панель</label>
+        <input class="p-input" id="p-back-hpl" type="number" value="90" min="0">
+      </div>
+    </div>
+  </div>
+
+  <!-- EXTRAS -->
+  <div class="s-section" id="sec-extras">
+    <div class="s-section-head" onclick="toggleSection('sec-extras')">
+      <h2>Дополнения</h2>
+      <span class="arr">▼</span>
+    </div>
+    <div class="s-section-body">
+      <div class="p-row">
+        <label>LED подсветка</label>
+        <input class="p-input" id="p-led" type="number" value="60" min="0">
+      </div>
+      <div class="p-row">
+        <label>Ручки (средние)</label>
+        <input class="p-input" id="p-handles" type="number" value="25" min="0">
+      </div>
+      <div class="p-row">
+        <label>Доводчики (soft-close)</label>
+        <input class="p-input" id="p-softclose" type="number" value="20" min="0">
+      </div>
+      <div class="p-row">
+        <label>Выдвижные ящики (за л.м)</label>
+        <input class="p-input" id="p-drawers" type="number" value="80" min="0">
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:16px 20px">
+    <button class="save-btn" onclick="savePrices()">💾 Сохранить настройки</button>
+    <div class="saved-msg" id="saved-msg" style="opacity:0"></div>
+  </div>
+</div>
+
+<!-- ═══ MAIN: CALCULATOR ═══ -->
+<div class="main">
+  <div class="main-title">Калькулятор Кухни</div>
+
+  <div class="calc-grid">
+
+    <!-- LENGTH -->
+    <div class="card">
+      <div class="card-title">Длина кухни</div>
+      <div class="len-wrap">
+        <input class="len-input" id="c-len" type="number" value="3.0" min="0.5" max="20" step="0.1" oninput="calc()">
+        <span class="len-unit">погонных метров</span>
+      </div>
+    </div>
+
+    <!-- CORPUS TYPE -->
+    <div class="card">
+      <div class="card-title">Материал корпуса</div>
+      <div class="opt-row">
+        <button class="opt-btn sel" data-g="corp" data-v="white" onclick="sel(this,'corp')">Белый (стандарт)</button>
+        <button class="opt-btn" data-g="corp" data-v="color" onclick="sel(this,'corp')">Цветной (+%)</button>
+      </div>
+    </div>
+
+    <!-- UPPER HEIGHT -->
+    <div class="card">
+      <div class="card-title">Высота верхних шкафов</div>
+      <div class="opt-row">
+        <button class="opt-btn sel" data-g="upH" data-v="720" onclick="sel(this,'upH')">720 мм</button>
+        <button class="opt-btn" data-g="upH" data-v="920" onclick="sel(this,'upH')">920 мм</button>
+      </div>
+      <p class="note">Нижние всегда H=720мм</p>
+    </div>
+
+    <!-- FACADE -->
+    <div class="card">
+      <div class="card-title">Тип фасадов</div>
+      <div class="opt-row">
+        <button class="opt-btn sel" data-g="fac" data-v="dsp" onclick="sel(this,'fac')">ДСП (ПДЧ)</button>
+        <button class="opt-btn" data-g="fac" data-v="pvc" onclick="sel(this,'fac')">МДФ-PVC</button>
+        <button class="opt-btn" data-g="fac" data-v="hpl" onclick="sel(this,'fac')">МДФ-HPL</button>
+        <button class="opt-btn" data-g="fac" data-v="enamel" onclick="sel(this,'fac')">МДФ-эмаль</button>
+      </div>
+    </div>
+
+    <!-- COUNTERTOP -->
+    <div class="card">
+      <div class="card-title">Столешница</div>
+      <div class="opt-row">
+        <button class="opt-btn sel" data-g="top" data-v="pf" onclick="sel(this,'top')">Постформинг</button>
+        <button class="opt-btn" data-g="top" data-v="tp" onclick="sel(this,'top')">Термоплот</button>
+        <button class="opt-btn" data-g="top" data-v="hpl" onclick="sel(this,'top')">HPL</button>
+        <button class="opt-btn" data-g="top" data-v="quartz" onclick="sel(this,'top')">Кварц</button>
+      </div>
+    </div>
+
+    <!-- BACKSPLASH -->
+    <div class="card">
+      <div class="card-title">Фартук / стеновая панель</div>
+      <div class="opt-row">
+        <button class="opt-btn sel" data-g="back" data-v="tg" onclick="sel(this,'back')">Термогръб</button>
+        <button class="opt-btn" data-g="back" data-v="glass" onclick="sel(this,'back')">Стекло</button>
+        <button class="opt-btn" data-g="back" data-v="tile" onclick="sel(this,'back')">Плитка</button>
+        <button class="opt-btn" data-g="back" data-v="hpl" onclick="sel(this,'back')">HPL</button>
+      </div>
+    </div>
+
+    <!-- EXTRAS -->
+    <div class="card">
+      <div class="card-title">Дополнения</div>
+      <label class="chk-row"><input type="checkbox" id="x-led" onchange="calc()"><span>LED подсветка</span></label>
+      <label class="chk-row"><input type="checkbox" id="x-handles" onchange="calc()"><span>Ручки</span></label>
+      <label class="chk-row"><input type="checkbox" id="x-softclose" onchange="calc()"><span>Доводчики soft-close</span></label>
+      <label class="chk-row"><input type="checkbox" id="x-drawers" onchange="calc()"><span>Выдвижные ящики</span></label>
+    </div>
+
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results">
+    <div class="results-title">Расчёт</div>
+    <div id="result-area"><div class="alert">Выберите параметры — результат появится здесь</div></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// ═══ STATE ═══
+const state = { corp:'white', upH:'720', fac:'dsp', top:'pf', back:'tg' };
+
+// ═══ UI ═══
+function sel(btn, group){
+  document.querySelectorAll(`[data-g="${group}"]`).forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  state[group] = btn.dataset.v;
+  calc();
+}
+
+function toggleSection(id){
+  const s = document.getElementById(id);
+  s.classList.toggle('open');
+}
+
+// ═══ GET PRICE ═══
+function p(id){ return parseFloat(document.getElementById(id).value)||0; }
+
+function getPrices(){
+  return {
+    corpLow:    p('p-corp-low'),
+    corpUp720:  p('p-corp-up720'),
+    corpUp920:  p('p-corp-up920'),
+    corpColorPct: p('p-corp-color-pct'),
+    fac: {
+      dsp:    { min:p('p-fac-dsp-min'),    max:p('p-fac-dsp-max') },
+      pvc:    { min:p('p-fac-pvc-min'),    max:p('p-fac-pvc-max') },
+      hpl:    { min:p('p-fac-hpl-min'),    max:p('p-fac-hpl-max') },
+      enamel: { min:p('p-fac-enamel-min'), max:p('p-fac-enamel-max') },
+    },
+    top:  { pf:p('p-top-pf'), tp:p('p-top-tp'), hpl:p('p-top-hpl'), quartz:p('p-top-quartz') },
+    back: { tg:p('p-back-tg'), glass:p('p-back-glass'), tile:p('p-back-tile'), hpl:p('p-back-hpl') },
+    led:       p('p-led'),
+    handles:   p('p-handles'),
+    softclose: p('p-softclose'),
+    drawers:   p('p-drawers'),
+  };
+}
+
+// ═══ LABELS ═══
+const facLabels  = { dsp:'ДСП (ПДЧ)', pvc:'МДФ плёнка (PVC)', hpl:'МДФ-пластик (HPL)', enamel:'МДФ-эмаль (лак)' };
+const topLabels  = { pf:'Постформинг', tp:'Термоплот (ДСП)', hpl:'HPL-панель', quartz:'Кварцевый агломерат' };
+const backLabels = { tg:'Термогръб (ДСП)', glass:'Закалённое стекло', tile:'Плитка (керамика)', hpl:'HPL-панель' };
+
+// ═══ FORMAT ═══
+function fmt(v){ return v > 0 ? v.toFixed(0)+' €' : '—'; }
+function fmtR(min,max){ return min===max ? min.toFixed(0)+' €' : min.toFixed(0)+'–'+max.toFixed(0)+' €'; }
+
+// ═══ CALC ═══
+function calc(){
+  const len = parseFloat(document.getElementById('c-len').value)||0;
+  if(len <= 0){ document.getElementById('result-area').innerHTML='<div class="alert">Введите длину кухни</div>'; return; }
+
+  const pr = getPrices();
+
+  // CORPUS per l.m
+  let corpBaseLm = pr.corpLow + (state.upH==='920' ? pr.corpUp920 : pr.corpUp720);
+  let corpSurcharge = 0;
+  if(state.corp==='color') corpSurcharge = corpBaseLm * pr.corpColorPct / 100;
+  let corpLm = corpBaseLm + corpSurcharge;
+
+  // FACADE per l.m (min/max range)
+  const facPr = pr.fac[state.fac];
+  let facMinLm = facPr.min, facMaxLm = facPr.max;
+
+  // COUNTERTOP per l.m
+  let topLm = pr.top[state.top];
+
+  // BACKSPLASH per l.m
+  let backLm = pr.back[state.back];
+
+  // EXTRAS per l.m
+  let extraLm = 0;
+  const extraRows = [];
+  if(document.getElementById('x-led').checked){      extraLm += pr.led;       if(pr.led>0)       extraRows.push(['LED подсветка', pr.led]); }
+  if(document.getElementById('x-handles').checked){  extraLm += pr.handles;   if(pr.handles>0)   extraRows.push(['Ручки', pr.handles]); }
+  if(document.getElementById('x-softclose').checked){extraLm += pr.softclose; if(pr.softclose>0) extraRows.push(['Доводчики soft-close', pr.softclose]); }
+  if(document.getElementById('x-drawers').checked){  extraLm += pr.drawers;   if(pr.drawers>0)   extraRows.push(['Выдвижные ящики', pr.drawers]); }
+
+  // TOTALS per l.m
+  const totalMinLm = corpLm + facMinLm + topLm + backLm + extraLm;
+  const totalMaxLm = corpLm + facMaxLm + topLm + backLm + extraLm;
+
+  // TOTALS for full kitchen
+  const totalMin = totalMinLm * len;
+  const totalMax = totalMaxLm * len;
+
+  // BUILD TABLE
+  let rows = '';
+
+  rows += `<div class="br-row head"><span>Статья</span><span class="val">€ / л.м</span><span class="val">€ итого (${len} л.м)</span></div>`;
+
+  // corpus
+  rows += `<div class="br-row"><span class="name">Корпус${state.corp==='color'?' (цветной)':''} — низы H=720мм + верха H=${state.upH}мм</span><span class="val">${fmt(corpBaseLm)}</span><span class="val">${fmt(corpBaseLm*len)}</span></div>`;
+  if(corpSurcharge>0)
+    rows += `<div class="br-row sub"><span class="name">↳ наценка цветной корпус (+${pr.corpColorPct}%)</span><span class="val">+${fmt(corpSurcharge)}</span><span class="val">+${fmt(corpSurcharge*len)}</span></div>`;
+
+  // facade
+  rows += `<div class="br-row"><span class="name">Фасады — ${facLabels[state.fac]}</span><span class="val">${fmtR(facMinLm,facMaxLm)}</span><span class="val">${fmtR(facMinLm*len,facMaxLm*len)}</span></div>`;
+
+  // countertop
+  rows += `<div class="br-row"><span class="name">Столешница — ${topLabels[state.top]}</span><span class="val">${topLm>0?fmt(topLm):'—'}</span><span class="val">${topLm>0?fmt(topLm*len):'—'}</span></div>`;
+
+  // backsplash
+  rows += `<div class="br-row"><span class="name">Фартук — ${backLabels[state.back]}</span><span class="val">${backLm>0?fmt(backLm):'—'}</span><span class="val">${backLm>0?fmt(backLm*len):'—'}</span></div>`;
+
+  // extras
+  extraRows.forEach(([name, price])=>{
+    rows += `<div class="br-row sub"><span class="name">↳ ${name}</span><span class="val">${fmt(price)}</span><span class="val">${fmt(price*len)}</span></div>`;
+  });
+
+  // total
+  rows += `<div class="br-row total-row"><span class="name">ИТОГО</span><span class="val">${fmtR(totalMinLm,totalMaxLm)}</span><span class="val">${fmtR(totalMin,totalMax)}</span></div>`;
+
+  // SUMMARY BOXES
+  const boxes = `
+    <div class="summary-boxes">
+      <div class="sum-box">
+        <div class="sb-val">${len} л.м</div>
+        <div class="sb-label">Длина кухни</div>
+      </div>
+      <div class="sum-box">
+        <div class="sb-val">${fmtR(totalMinLm,totalMaxLm)}</div>
+        <div class="sb-label">Цена за 1 л.м</div>
+      </div>
+      <div class="sum-box">
+        <div class="sb-val">${fmtR(totalMin,totalMax)}</div>
+        <div class="sb-label">Общая стоимость</div>
+      </div>
+    </div>`;
+
+  document.getElementById('result-area').innerHTML =
+    `<div class="breakdown">${rows}</div>${boxes}`;
+}
+
+// ═══ SAVE / LOAD ═══
+function savePrices(){
+  const ids = ['p-corp-low','p-corp-up720','p-corp-up920','p-corp-color-pct',
+    'p-fac-dsp-min','p-fac-dsp-max','p-fac-pvc-min','p-fac-pvc-max',
+    'p-fac-hpl-min','p-fac-hpl-max','p-fac-enamel-min','p-fac-enamel-max',
+    'p-top-pf','p-top-tp','p-top-hpl','p-top-quartz',
+    'p-back-tg','p-back-glass','p-back-tile','p-back-hpl',
+    'p-led','p-handles','p-softclose','p-drawers'];
+  const saved = {};
+  ids.forEach(id => saved[id] = document.getElementById(id).value);
+  localStorage.setItem('kitchen-calc-prices', JSON.stringify(saved));
+  const msg = document.getElementById('saved-msg');
+  msg.textContent = '✓ Сохранено';
+  msg.style.opacity = '1';
+  setTimeout(()=>msg.style.opacity='0', 2000);
+}
+
+function loadPrices(){
+  const saved = JSON.parse(localStorage.getItem('kitchen-calc-prices')||'{}');
+  Object.entries(saved).forEach(([id,val])=>{
+    const el = document.getElementById(id);
+    if(el) el.value = val;
+  });
+}
+
+// ═══ INIT ═══
+loadPrices();
+// recalc on any price change
+document.querySelectorAll('.p-input').forEach(el => el.addEventListener('input', calc));
+calc();
+</script>
+</body>
+</html>
