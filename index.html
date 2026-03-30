@@ -328,6 +328,19 @@
             .btn-p,.btn-o{width:100%;justify-content:center}
         }
     </style>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+  const _fbApp = firebase.initializeApp({
+    apiKey: "AIzaSyCmujgnZNVUmtytCkkZk2f9RwhSRwU_ecs",
+    authDomain: "aaa-mebeli.firebaseapp.com",
+    projectId: "aaa-mebeli",
+    storageBucket: "aaa-mebeli.firebasestorage.app",
+    messagingSenderId: "75065828058",
+    appId: "1:75065828058:web:0b908e805f3f8a088fbbe3"
+  });
+  const _db = firebase.firestore();
+</script>
 </head>
 <body>
     <div class="mobile-overlay" id="mo"></div>
@@ -834,8 +847,10 @@ document.getElementById('conSubmit').addEventListener('click',async()=>{
             message: '📋 Нова заявка — Кухня!\n\n👤 Име: '+cName+'\n📞 Телефон: '+cPhone+'\n\n🏷 Фасади: '+facadeData[cFacade][curLang]+'\n📏 Дължина: '+cLen+(a?' п.м':' л.м')+'\n🔧 Допълнения: '+extStr+'\n🎨 Цвят: '+ct+'\n\n💰 Цена/л.м: '+p.perLmMin+'–'+p.perLmMax+' €\n💰 Обща цена: '+p.min+'–'+p.max+' €'
         };
         await fetch(TG_BOT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:TG_CHAT,text:orderData.message,parse_mode:'HTML'})});
+        const _fbOrder={...orderData,id:Date.now(),source:'сайт'};
+        try{ await _db.collection('orders').add(_fbOrder); }catch(e){ console.warn('Firebase:',e); }
         const _orders=JSON.parse(localStorage.getItem('aaa-orders')||'[]');
-        _orders.unshift({...orderData,id:Date.now()});
+        _orders.unshift(_fbOrder);
         localStorage.setItem('aaa-orders',JSON.stringify(_orders.slice(0,200)));
     }catch(e){}
     alert((a?'Спасибо, '+cName+'! Запрос отправлен':'Благодарим, '+cName+'! Заявката е изпратена')+':\n\n'+(a?'Фасады':'Фасади')+': '+facadeData[cFacade][curLang]+'\n'+(a?'Длина':'Дължина')+': '+cLen+(a?' п.м':' л.м')+'\n'+(a?'Дополнения':'Допълнения')+': '+extStr+'\n'+(a?'Цвет':'Цвят')+': '+ct+'\n\n'+(a?'Цена':'Цена')+': '+p.min+'–'+p.max+' €\n\n'+(a?'Мы свяжемся с Вами!':'Ще се свържем с Вас!'));

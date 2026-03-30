@@ -100,6 +100,19 @@ td .ts{color:var(--t3);font-size:.72rem}
   .calc-frame-wrap{height:80vh}
 }
 </style>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+  firebase.initializeApp({
+    apiKey: "AIzaSyCmujgnZNVUmtytCkkZk2f9RwhSRwU_ecs",
+    authDomain: "aaa-mebeli.firebaseapp.com",
+    projectId: "aaa-mebeli",
+    storageBucket: "aaa-mebeli.firebasestorage.app",
+    messagingSenderId: "75065828058",
+    appId: "1:75065828058:web:0b908e805f3f8a088fbbe3"
+  });
+  const _db = firebase.firestore();
+</script>
 </head>
 <body>
 
@@ -205,7 +218,7 @@ function showErr(msg){ document.getElementById('login-err').textContent=msg; }
 function showCabinet(){
   document.getElementById('login-screen').style.display='none';
   document.getElementById('cabinet').style.display='flex';
-  renderOrders();
+  loadOrdersFromFirebase();
 }
 
 // ═══ PAGES ═══
@@ -217,10 +230,22 @@ function switchPage(tab){
 }
 
 // ═══ ORDERS ═══
-function getOrders(){ return JSON.parse(localStorage.getItem('aaa-orders')||'[]'); }
+let _allOrders = [];
+
+function loadOrdersFromFirebase(){
+  _db.collection('orders').orderBy('id','desc').onSnapshot(snap => {
+    _allOrders = snap.docs.map(d => d.data());
+    renderOrders();
+  }, err => {
+    console.warn('Firebase read error:', err);
+    // Резервно из localStorage
+    _allOrders = JSON.parse(localStorage.getItem('aaa-orders')||'[]');
+    renderOrders();
+  });
+}
 
 function renderOrders(){
-  const orders = getOrders();
+  const orders = _allOrders;
   const search = document.getElementById('search-input').value.toLowerCase();
   const facFilter = document.getElementById('facade-filter').value;
 
@@ -280,14 +305,21 @@ function renderOrders(){
 
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-function clearOrders(){
+async function clearOrders(){
   if(!confirm('Удалить все заявки? Это действие нельзя отменить.')) return;
+  // Удаляем из Firebase
+  const snap = await _db.collection('orders').get();
+  const batch = _db.batch();
+  snap.docs.forEach(d => batch.delete(d.ref));
+  await batch.commit();
+  // Удаляем из localStorage
   localStorage.removeItem('aaa-orders');
+  _allOrders = [];
   renderOrders();
 }
 
 function exportCSV(){
-  const orders = getOrders();
+  const orders = _allOrders;
   if(!orders.length){ alert('Нет заявок для экспорта'); return; }
   const header = ['Статус','Имя','Телефон','Фасады','Длина','Цвет','Допол.','Цена','Дата'];
   const rows = orders.map(o=>[

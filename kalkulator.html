@@ -136,6 +136,19 @@ body{background:var(--bg);color:var(--t1);font-family:'Segoe UI',system-ui,sans-
   .calc-grid{grid-template-columns:1fr}
 }
 </style>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+  const _fbApp = firebase.initializeApp({
+    apiKey: "AIzaSyCmujgnZNVUmtytCkkZk2f9RwhSRwU_ecs",
+    authDomain: "aaa-mebeli.firebaseapp.com",
+    projectId: "aaa-mebeli",
+    storageBucket: "aaa-mebeli.firebasestorage.app",
+    messagingSenderId: "75065828058",
+    appId: "1:75065828058:web:0b908e805f3f8a088fbbe3"
+  });
+  const _db = firebase.firestore();
+</script>
 </head>
 <body>
 <div class="app">
@@ -623,7 +636,12 @@ async function saveOrder(){
     message: '📋 Нова заявка — Калкулатор!\n\n👤 Ime: '+name+'\n📞 Телефон: '+phone+'\n\n🏷 Фасади: '+facLbl[state.fac]+'\n📏 Дължина: '+len+' л.м\n🎨 Цвят: '+colorStr+'\n🔧 Допълнения: '+extrasStr+'\n🍽 Плот: '+topLbl[state.top]+'\n🧱 Гръб: '+backLbl[state.back]+(note?'\n📝 Бележка: '+note:'')+'\n\n💰 Обща цена: '+priceStr
   };
 
-  // Сохраняем локально
+  // Сохраняем в Firebase
+  try {
+    await _db.collection('orders').add(order);
+  } catch(e) { console.warn('Firebase error:', e); }
+
+  // Сохраняем локально (резерв)
   const orders = JSON.parse(localStorage.getItem('aaa-orders')||'[]');
   orders.unshift(order);
   localStorage.setItem('aaa-orders', JSON.stringify(orders.slice(0,200)));
