@@ -566,12 +566,18 @@ function loadPrices(){
 }
 
 // ═══ SAVE ORDER ═══
-function saveOrder(){
+const N8N = 'https://alexiiasa.app.n8n.cloud/webhook/furniture-order';
+
+async function saveOrder(){
   const name  = (document.getElementById('of-name')?.value||'').trim();
   const phone = (document.getElementById('of-phone')?.value||'').trim();
   const note  = (document.getElementById('of-note')?.value||'').trim();
   const len   = parseFloat(document.getElementById('c-len').value)||0;
   const pr    = getPrices();
+
+  if(!name){ alert('Укажите имя!'); return; }
+  if(!phone){ alert('Укажите телефон!'); return; }
+  if(!len){ alert('Укажите длину кухни!'); return; }
 
   // remember name/phone across recalc
   sessionStorage.setItem('of-name-tmp', name);
@@ -595,26 +601,40 @@ function saveOrder(){
 
   const totalMin = (corpLm+facPr.min+topPr+backPr+extraLm)*len;
   const totalMax = (corpLm+facPr.max+topPr+backPr+extraLm)*len;
+  const priceStr = totalMin.toFixed(0)+'–'+totalMax.toFixed(0)+' €';
+  const extrasStr = extras.length?extras.join(', '):'—';
+  const colorStr = 'Корпус '+(state.corp==='color'?'цветной':'белый')+', верха '+state.upH+'мм';
 
   const order = {
     id: Date.now(),
-    name: name||'—',
-    phone: phone||'—',
+    name: name,
+    phone: phone,
     facade: facLbl[state.fac],
     length: len+' л.м',
-    color: 'Корпус '+(state.corp==='color'?'цветной':'белый')+', верха '+state.upH+'мм',
-    extras: extras.length?extras.join(', '):'—',
-    price_total: totalMin.toFixed(0)+'–'+totalMax.toFixed(0)+' €',
+    color: colorStr,
+    extras: extrasStr,
+    price_total: priceStr,
     countertop: topLbl[state.top],
     backsplash: backLbl[state.back],
     note: note||'',
     timestamp: new Date().toLocaleString('ru-RU'),
-    source: 'калькулятор'
+    source: 'калькулятор',
+    message: '📋 Нова заявка — Калкулатор!\n\n👤 Ime: '+name+'\n📞 Телефон: '+phone+'\n\n🏷 Фасади: '+facLbl[state.fac]+'\n📏 Дължина: '+len+' л.м\n🎨 Цвят: '+colorStr+'\n🔧 Допълнения: '+extrasStr+'\n🍽 Плот: '+topLbl[state.top]+'\n🧱 Гръб: '+backLbl[state.back]+(note?'\n📝 Бележка: '+note:'')+'\n\n💰 Обща цена: '+priceStr
   };
 
+  // Сохраняем локально
   const orders = JSON.parse(localStorage.getItem('aaa-orders')||'[]');
   orders.unshift(order);
   localStorage.setItem('aaa-orders', JSON.stringify(orders.slice(0,200)));
+
+  // Отправляем на сервер (n8n → Telegram)
+  try {
+    await fetch(N8N, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(order)
+    });
+  } catch(e) { console.warn('Webhook error:', e); }
 
   const msg = document.getElementById('of-msg');
   if(msg){ msg.style.opacity='1'; setTimeout(()=>msg.style.opacity='0',2500); }
