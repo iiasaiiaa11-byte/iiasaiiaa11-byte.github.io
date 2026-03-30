@@ -804,7 +804,8 @@ function updSum(){
 }
 
 
-const N8N='https://alexiiasa.app.n8n.cloud/webhook/furniture-order';
+const TG_BOT='https://api.telegram.org/bot8490237117:AAE2RnZCjAosmkCLCM5DfFcdPqgXDMIZcvQ/sendMessage';
+const TG_CHAT='668971890';
 document.getElementById('conSubmit').addEventListener('click',async()=>{
     const a=curLang==='ru';
     if(!cFacade){alert(a?'Выберите тип фасада!':'Моля, изберете тип фасади!');return;}
@@ -832,7 +833,7 @@ document.getElementById('conSubmit').addEventListener('click',async()=>{
             language: a?'Русский':'Български',
             message: '📋 Нова заявка — Кухня!\n\n👤 Име: '+cName+'\n📞 Телефон: '+cPhone+'\n\n🏷 Фасади: '+facadeData[cFacade][curLang]+'\n📏 Дължина: '+cLen+(a?' п.м':' л.м')+'\n🔧 Допълнения: '+extStr+'\n🎨 Цвят: '+ct+'\n\n💰 Цена/л.м: '+p.perLmMin+'–'+p.perLmMax+' €\n💰 Обща цена: '+p.min+'–'+p.max+' €'
         };
-        await fetch(N8N,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(orderData)});
+        await fetch(TG_BOT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:TG_CHAT,text:orderData.message,parse_mode:'HTML'})});
         const _orders=JSON.parse(localStorage.getItem('aaa-orders')||'[]');
         _orders.unshift({...orderData,id:Date.now()});
         localStorage.setItem('aaa-orders',JSON.stringify(_orders.slice(0,200)));

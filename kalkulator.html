@@ -566,7 +566,8 @@ function loadPrices(){
 }
 
 // ═══ SAVE ORDER ═══
-const N8N = 'https://alexiiasa.app.n8n.cloud/webhook/furniture-order';
+const TG_BOT = 'https://api.telegram.org/bot8490237117:AAE2RnZCjAosmkCLCM5DfFcdPqgXDMIZcvQ/sendMessage';
+const TG_CHAT = '668971890';
 
 async function saveOrder(){
   const name  = (document.getElementById('of-name')?.value||'').trim();
@@ -627,14 +628,18 @@ async function saveOrder(){
   orders.unshift(order);
   localStorage.setItem('aaa-orders', JSON.stringify(orders.slice(0,200)));
 
-  // Отправляем на сервер (n8n → Telegram)
+  // Отправляем напрямую в Telegram
   try {
-    await fetch(N8N, {
+    await fetch(TG_BOT, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(order)
+      body: JSON.stringify({
+        chat_id: TG_CHAT,
+        text: order.message,
+        parse_mode: 'HTML'
+      })
     });
-  } catch(e) { console.warn('Webhook error:', e); }
+  } catch(e) { console.warn('Telegram error:', e); }
 
   const msg = document.getElementById('of-msg');
   if(msg){ msg.style.opacity='1'; setTimeout(()=>msg.style.opacity='0',2500); }
