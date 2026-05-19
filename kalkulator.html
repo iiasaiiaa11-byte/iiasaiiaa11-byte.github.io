@@ -11,325 +11,407 @@
   --brd:#2e2e2e;--brd2:#3a3a3a;
   --t1:#f0f0f0;--t2:#b0b0b0;--t3:#707070;
   --gold:#c9a84c;--gold2:#e8c86a;--gold-bg:rgba(201,168,76,.1);
-  --green:#4a9c6e;--green-bg:rgba(74,156,110,.1);
-  --red:#c0504a;--red-bg:rgba(192,80,74,.1);
-  --blue:#4a7cbc;--blue-bg:rgba(74,124,188,.1);
+  --green:#4a9c6e;--red:#c0504a;--blue:#4a7cbc;--blue-bg:rgba(74,124,188,.1);
+  --orange:#d4804a;--purple:#9b59b6;
   --r:4px;--tr:.2s ease;
 }
-body{background:var(--bg);color:var(--t1);font-family:'Segoe UI',system-ui,sans-serif;font-size:14px;min-height:100vh}
+body{background:var(--bg);color:var(--t1);font-family:'Segoe UI',system-ui,sans-serif;font-size:14px;padding-bottom:62px}
 
-/* LAYOUT */
-.app{display:grid;grid-template-columns:340px 1fr;min-height:100vh}
-.sidebar{background:var(--bg2);border-right:1px solid var(--brd);overflow-y:auto;padding:0}
-.main{padding:24px;overflow-y:auto}
+.app{display:grid;grid-template-columns:310px 1fr;min-height:100vh}
+.sidebar{background:var(--bg2);border-right:1px solid var(--brd);overflow-y:auto;position:sticky;top:0;align-self:start;max-height:100vh}
+.main{padding:20px}
 
-/* HEADER */
-.sidebar-header{padding:20px;border-bottom:1px solid var(--brd);position:sticky;top:0;background:var(--bg2);z-index:10}
-.sidebar-header h1{font-size:1rem;font-weight:700;color:var(--t1);letter-spacing:.03em}
-.sidebar-header p{color:var(--t3);font-size:.75rem;margin-top:3px}
+.sidebar-header{padding:14px 18px;border-bottom:1px solid var(--brd)}
+.sidebar-header h1{font-size:.9rem;font-weight:700}
+.sidebar-header p{color:var(--t3);font-size:.7rem;margin-top:2px}
 
-/* SECTION */
 .s-section{border-bottom:1px solid var(--brd)}
-.s-section-head{padding:12px 20px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none;transition:background var(--tr)}
+.s-section-head{padding:9px 18px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none;transition:background var(--tr)}
 .s-section-head:hover{background:var(--bg3)}
-.s-section-head h2{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t3)}
-.s-section-head .arr{color:var(--t3);transition:transform var(--tr);font-size:.7rem}
+.s-section-head h2{font-size:.67rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t3)}
+.arr{color:var(--t3);transition:transform var(--tr);font-size:.6rem}
 .s-section.open .arr{transform:rotate(180deg)}
-.s-section-body{display:none;padding:4px 20px 16px}
+.s-section-body{display:none;padding:4px 18px 12px}
 .s-section.open .s-section-body{display:block}
 
-/* PRICE ROW */
-.p-row{display:grid;grid-template-columns:1fr 90px;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--brd)}
+.p-row{display:grid;grid-template-columns:1fr 72px;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid var(--brd)}
 .p-row:last-child{border-bottom:none}
-.p-row label{color:var(--t2);font-size:.82rem;line-height:1.3}
-.p-row .unit{color:var(--t3);font-size:.7rem;display:block;margin-top:1px}
-.p-input{background:var(--bg4);border:1px solid var(--brd2);color:var(--t1);padding:5px 8px;font-size:.82rem;width:100%;text-align:right;border-radius:var(--r);transition:border-color var(--tr)}
+.p-row label{color:var(--t2);font-size:.77rem;line-height:1.3}
+.p-row .unit{color:var(--t3);font-size:.65rem;display:block}
+.p-input{background:var(--bg4);border:1px solid var(--brd2);color:var(--t1);padding:4px 6px;font-size:.77rem;width:100%;text-align:right;border-radius:var(--r);transition:border-color var(--tr)}
 .p-input:focus{outline:none;border-color:var(--gold)}
-.p-row-full{padding:6px 0;border-bottom:1px solid var(--brd)}
+.p-input-wide{text-align:left}
+.p-row-full{padding:5px 0;border-bottom:1px solid var(--brd)}
 .p-row-full:last-child{border-bottom:none}
-.p-row-full label{color:var(--t2);font-size:.82rem;display:block;margin-bottom:4px}
-.p-row-2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.p-sub{color:var(--t3);font-size:.7rem;margin-bottom:3px}
+.p-row-full label{color:var(--t2);font-size:.77rem;display:block;margin-bottom:3px}
+.p-row-2{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.p-sub{color:var(--t3);font-size:.65rem;margin-bottom:2px}
 
-/* MAIN */
-.main-title{font-size:1.1rem;font-weight:700;margin-bottom:20px;color:var(--t1)}
+.main-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px;flex-wrap:wrap}
+.main-title{font-size:1rem;font-weight:700}
+.sidebar-toggle{background:var(--bg2);border:1px solid var(--brd2);color:var(--t2);padding:6px 12px;border-radius:var(--r);cursor:pointer;font-size:.75rem;font-weight:600;transition:all var(--tr);display:flex;align-items:center;gap:6px}
+.sidebar-toggle:hover{border-color:var(--gold);color:var(--gold)}
+.sidebar-toggle.active{background:var(--gold-bg);border-color:var(--gold);color:var(--gold)}
+.app.no-sidebar{grid-template-columns:1fr}
+.app.no-sidebar .sidebar{display:none}
+.tr-enable-row{background:var(--bg3);padding:8px 11px;border-radius:var(--r);margin:2px 0 0;transition:background var(--tr)}
+.tr-enable-row:hover{background:var(--bg4)}
+.tr-enable-row span{font-weight:600;font-size:.82rem;color:var(--t1)}
+.tr-custom-row{display:grid;grid-template-columns:28px 1fr 70px;align-items:center;gap:7px;margin-top:8px;padding:8px 10px;background:var(--bg3);border-radius:var(--r)}
+.tr-custom-row .lbl{font-size:.72rem;color:var(--t3);text-align:center}
+.calc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:14px}
+.card{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--r);padding:13px}
+.card.full{grid-column:1/-1}
+.card-title{font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);margin-bottom:9px;display:flex;align-items:center;gap:5px}
 
-/* CALC GRID */
-.calc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:20px}
+/* SHAPE */
+.shape-btns{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:10px}
+.shape-btn{background:var(--bg3);border:1px solid var(--brd2);color:var(--t2);padding:10px 4px 9px;cursor:pointer;font-size:.82rem;border-radius:var(--r);transition:all var(--tr);text-align:center;line-height:1.35;font-weight:500}
+.shape-btn:hover{border-color:var(--gold);color:var(--t1)}
+.shape-btn.sel{background:var(--gold-bg);border-color:var(--gold);color:var(--gold)}
+.shape-btn svg{display:block;margin:0 auto 5px;width:44px;height:28px}
+.shape-pct{display:block;font-size:.7rem;color:var(--gold);margin-top:3px;font-weight:600;min-height:.85rem}
+.shape-pct:empty{visibility:hidden}
+.opt-btn svg{display:block;margin:0 auto 2px}
+.sc-swatch{display:block;width:22px;height:22px;border-radius:3px;border:1px solid rgba(0,0,0,.35);margin:0 auto 3px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}
+.sc-color-btn.sel .sc-swatch{box-shadow:0 0 0 2px var(--gold),inset 0 0 0 1px rgba(255,255,255,.1)}
+.sc-color-row{flex-wrap:wrap}
+.sc-prof-row{gap:8px}
+.sc-prof-row .sc-prof-btn{min-width:160px;padding:8px 8px;align-items:center}
+.sc-prof-trio{display:flex;gap:3px;justify-content:center;align-items:center;background:#fff;padding:4px;border-radius:4px;margin-bottom:6px;border:1px solid rgba(0,0,0,.15);min-height:62px}
+.sc-prof-trio img{height:54px;width:auto;max-width:48px;object-fit:contain;display:block}
+.sc-prof-trio.single img{height:64px;max-width:90px}
+.sc-prof-sub{font-size:.68rem;color:var(--t3);line-height:1.1;margin:1px 0 2px;letter-spacing:.02em;text-align:center}
+.sc-prof-btn.sel .sc-prof-sub{color:var(--gold);opacity:.9}
+.sc-prof-btn .bn{text-align:center;width:100%}
+.sc-qty-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:6px}
+.sc-qty-group{display:flex;align-items:center;gap:6px}
+.sc-qty-group label{font-size:.78rem;color:var(--t3);white-space:nowrap}
+.sc-qty-group input{background:var(--bg3);border:1px solid var(--brd2);color:var(--t1);padding:5px 7px;border-radius:4px;font-size:.85rem;width:70px}
 
-/* CARD */
-.card{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--r);padding:16px}
-.card-title{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);margin-bottom:12px}
+.walls-grid{display:grid;gap:8px}
+.wall-row{display:grid;grid-template-columns:22px 1fr 62px;align-items:center;gap:7px}
+.wall-label{font-size:.8rem;font-weight:700;color:var(--gold);text-align:center}
+.wall-slider{-webkit-appearance:none;appearance:none;width:100%;height:3px;background:var(--brd2);border-radius:2px;outline:none;cursor:pointer}
+.wall-slider::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;background:var(--gold);border-radius:50%;cursor:pointer}
+.wall-slider::-moz-range-thumb{width:13px;height:13px;background:var(--gold);border-radius:50%;cursor:pointer;border:none}
+.wall-num{background:var(--bg4);border:1px solid var(--brd2);color:var(--t1);padding:4px 4px;font-size:.82rem;font-weight:700;width:100%;text-align:center;border-radius:var(--r)}
+.wall-num:focus{outline:none;border-color:var(--gold)}
+.total-lm{margin-top:8px;padding:7px 10px;background:var(--bg4);border-radius:var(--r);display:flex;justify-content:space-between;align-items:center}
+.total-lm .tl-lbl{color:var(--t3);font-size:.71rem}
+.total-lm .tl-val{color:var(--gold);font-weight:700;font-size:.9rem}
 
-/* OPTION BUTTONS */
-.opt-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
-.opt-btn{background:var(--bg3);border:1px solid var(--brd2);color:var(--t2);padding:6px 12px;cursor:pointer;font-size:.8rem;border-radius:var(--r);transition:all var(--tr);white-space:nowrap}
+/* OPT BUTTONS */
+.opt-row{display:flex;flex-wrap:wrap;gap:5px}
+.opt-btn{background:var(--bg3);border:1px solid var(--brd2);color:var(--t2);padding:6px 9px;cursor:pointer;border-radius:var(--r);transition:all var(--tr);display:flex;flex-direction:column;align-items:flex-start;gap:1px}
 .opt-btn:hover{border-color:var(--gold);color:var(--t1)}
 .opt-btn.sel{background:var(--gold-bg);border-color:var(--gold);color:var(--gold)}
+.opt-btn .bn{font-size:.77rem;line-height:1.2;white-space:nowrap}
+.opt-btn .bd{font-size:.62rem;color:var(--t3);transition:color var(--tr)}
+.opt-btn.sel .bd{color:var(--gold2)}
+.bd-base{color:var(--green)!important}
+.bd-plus{color:var(--red)!important}
 
-/* LENGTH INPUT */
-.len-wrap{display:flex;align-items:center;gap:8px}
-.len-input{background:var(--bg3);border:1px solid var(--brd2);color:var(--t1);padding:8px 12px;font-size:1.1rem;font-weight:700;width:100px;text-align:center;border-radius:var(--r);transition:border-color var(--tr)}
-.len-input:focus{outline:none;border-color:var(--gold)}
-.len-unit{color:var(--t3);font-size:.85rem}
+/* TOOLTIP */
+.tip{display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;background:var(--bg4);border:1px solid var(--brd2);border-radius:50%;color:var(--t3);font-size:.6rem;cursor:help;flex-shrink:0;line-height:1}
+.tip:hover{border-color:var(--gold);color:var(--gold)}
+#tip-popup{position:fixed;background:#1c1c1c;border:1px solid var(--brd2);border-radius:var(--r);padding:8px 11px;color:var(--t2);font-size:.72rem;line-height:1.55;max-width:230px;z-index:300;pointer-events:none;display:none;box-shadow:0 4px 18px rgba(0,0,0,.7);white-space:pre-line}
 
 /* CHECKBOX */
-.chk-row{display:flex;align-items:center;gap:8px;padding:4px 0;cursor:pointer}
-.chk-row input{accent-color:var(--gold);width:15px;height:15px;cursor:pointer}
-.chk-row span{color:var(--t2);font-size:.82rem}
+.chk-row{display:flex;align-items:center;gap:7px;padding:4px 0;cursor:pointer}
+.chk-row input{accent-color:var(--gold);width:13px;height:13px;cursor:pointer}
+.chk-row span{color:var(--t2);font-size:.77rem}
 
 /* RESULTS */
-.results{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--r);padding:20px;margin-top:0}
-.results-title{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);margin-bottom:16px}
-
-.breakdown{display:grid;gap:0;margin-bottom:16px;border:1px solid var(--brd);border-radius:var(--r);overflow:hidden}
-.br-row{display:grid;grid-template-columns:1fr 90px 90px;padding:8px 12px;border-bottom:1px solid var(--brd);font-size:.82rem}
+.results{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--r);padding:16px}
+.results-title{font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);margin-bottom:12px}
+.breakdown{border:1px solid var(--brd);border-radius:var(--r);overflow:hidden;margin-bottom:14px}
+.br-row{display:grid;grid-template-columns:1fr 86px 90px;padding:7px 11px;border-bottom:1px solid var(--brd);font-size:.78rem}
 .br-row:last-child{border-bottom:none}
-.br-row.head{background:var(--bg3);color:var(--t3);font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
-.br-row.sub{background:var(--bg);padding-left:24px;color:var(--t2)}
-.br-row.sep{background:var(--bg3);padding:4px 12px}
+.br-row.head{background:var(--bg3);color:var(--t3);font-size:.63rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.br-row.sub{background:var(--bg);padding-left:20px;color:var(--t2)}
 .br-row .name{color:var(--t2)}
 .br-row .val{text-align:right;color:var(--t1)}
-.br-row .val.muted{color:var(--t3)}
-.br-row.total-row{background:var(--gold-bg);border-top:2px solid var(--gold)}
-.br-row.total-row .name{color:var(--gold);font-weight:700;font-size:.9rem}
-.br-row.total-row .val{color:var(--gold);font-weight:700;font-size:.9rem}
+.br-row.tr{background:var(--gold-bg);border-top:2px solid var(--gold)}
+.br-row.tr .name{color:var(--gold);font-weight:700;font-size:.85rem}
+.br-row.tr .val{color:var(--gold);font-weight:700;font-size:.85rem}
 
-.summary-boxes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
-.sum-box{background:var(--bg3);border:1px solid var(--brd);border-radius:var(--r);padding:14px;text-align:center}
-.sum-box .sb-val{font-size:1.4rem;font-weight:800;color:var(--gold);letter-spacing:-.02em}
-.sum-box .sb-label{color:var(--t3);font-size:.72rem;margin-top:3px;line-height:1.3}
+/* CHART */
+.chart-wrap{margin-bottom:14px}
+.chart-lbl{font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);margin-bottom:7px}
+.chart-bar{height:18px;border-radius:var(--r);overflow:hidden;display:flex;background:var(--bg3)}
+.cb-seg{height:100%;transition:width .3s ease;cursor:default}
+.chart-legend{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.cl-item{display:flex;align-items:center;gap:4px;font-size:.7rem;color:var(--t2)}
+.cl-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 
-.alert{background:var(--bg3);border:1px solid var(--brd2);border-radius:var(--r);padding:16px;color:var(--t3);text-align:center;font-size:.85rem}
+/* SUMMARY */
+.sum-boxes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.sum-box{background:var(--bg3);border:1px solid var(--brd);border-radius:var(--r);padding:10px;text-align:center}
+.sum-box .sv{font-size:1.15rem;font-weight:800;color:var(--gold)}
+.sum-box .sl{color:var(--t3);font-size:.67rem;margin-top:2px;line-height:1.35}
 
-/* ORDER FORM */
-.order-form{margin-top:16px;background:var(--bg3);border:1px solid var(--brd2);border-radius:var(--r);padding:16px}
-.order-form-title{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);margin-bottom:12px}
-.order-form-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px}
-.of-input{background:var(--bg4);border:1px solid var(--brd2);color:var(--t1);padding:8px 10px;font-size:.82rem;width:100%;border-radius:var(--r);transition:border-color var(--tr)}
-.of-input:focus{outline:none;border-color:var(--gold)}
-.of-input::placeholder{color:var(--t3)}
-.of-row{display:flex;align-items:center;gap:10px}
-.save-order-btn{padding:9px 20px;background:var(--gold-bg);border:1px solid var(--gold);color:var(--gold);font-size:.8rem;font-weight:700;cursor:pointer;letter-spacing:.05em;border-radius:var(--r);transition:all var(--tr);white-space:nowrap}
-.save-order-btn:hover{background:var(--gold);color:var(--bg)}
-.save-order-msg{font-size:.78rem;color:var(--green);opacity:0;transition:opacity .3s}
-@media(max-width:600px){.order-form-grid{grid-template-columns:1fr}}
+.alert{background:var(--bg3);border:1px solid var(--brd2);border-radius:var(--r);padding:14px;color:var(--t3);text-align:center;font-size:.82rem}
 
-/* SAVE BTN */
-.save-btn{width:100%;padding:9px;background:var(--gold-bg);border:1px solid var(--gold);color:var(--gold);font-size:.8rem;font-weight:700;cursor:pointer;letter-spacing:.05em;border-radius:var(--r);margin-top:12px;transition:all var(--tr)}
+/* ACTION BTNS */
+.action-btns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.action-btn{flex:1;min-width:110px;padding:9px 12px;border:1px solid;font-size:.77rem;font-weight:700;cursor:pointer;border-radius:var(--r);transition:all var(--tr);text-decoration:none;display:flex;align-items:center;justify-content:center;gap:5px;text-align:center;background:transparent}
+.btn-wa{border-color:#25d366;color:#25d366}
+.btn-wa:hover{background:#25d366;color:#000}
+.btn-print{border-color:var(--blue);color:var(--blue)}
+.btn-print:hover{background:var(--blue);color:#fff}
+.btn-tg{border-color:#2ca5e0;color:#2ca5e0}
+.btn-tg:hover{background:#2ca5e0;color:#fff}
+
+/* SAVE */
+.save-btn{width:100%;padding:8px;background:var(--gold-bg);border:1px solid var(--gold);color:var(--gold);font-size:.75rem;font-weight:700;cursor:pointer;border-radius:var(--r);transition:all var(--tr)}
 .save-btn:hover{background:var(--gold);color:var(--bg)}
-.saved-msg{color:var(--green);font-size:.75rem;text-align:center;margin-top:6px;height:16px;transition:opacity .3s}
+.saved-msg{color:var(--green);font-size:.7rem;text-align:center;margin-top:4px;height:14px;transition:opacity .3s}
 
-/* DIVIDER */
-.divider{height:1px;background:var(--brd);margin:8px 0}
+/* STICKY BAR */
+#sticky-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(22,22,22,.97);border-top:2px solid var(--gold);padding:9px 20px;display:flex;align-items:center;gap:14px;z-index:100;backdrop-filter:blur(6px)}
+#sticky-bar .sb-lbl{color:var(--t3);font-size:.67rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+#sticky-bar .sb-total{color:var(--gold);font-size:1rem;font-weight:800}
+#sticky-bar .sb-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+#sticky-bar .sb-shape{color:var(--t3);font-size:.7rem;background:var(--bg3);padding:2px 8px;border-radius:10px}
+#sticky-bar .sb-lm{color:var(--t3);font-size:.73rem}
 
-/* NOTE */
-.note{color:var(--t3);font-size:.75rem;font-style:italic;line-height:1.5;margin-top:8px}
+.note{color:var(--t3);font-size:.7rem;font-style:italic;line-height:1.5;margin-top:5px}
 
-@media(max-width:900px){
-  .app{grid-template-columns:1fr}
-  .sidebar{border-right:none;border-bottom:1px solid var(--brd)}
-  .summary-boxes{grid-template-columns:repeat(3,1fr)}
+.btn-save{border-color:var(--gold);color:var(--gold)}
+.btn-save:hover{background:var(--gold);color:var(--bg)}
+#toast{position:fixed;bottom:72px;left:50%;transform:translateX(-50%) translateY(16px);background:#162016;border:1px solid var(--green);color:var(--green);padding:9px 22px;border-radius:24px;font-size:.8rem;font-weight:700;z-index:500;opacity:0;transition:all .28s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 18px rgba(0,0,0,.6)}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#toast.err{background:#201616;border-color:var(--red);color:var(--red)}
+
+@media print{
+  #sticky-bar,#tip-popup,#toast,.action-btns,.sidebar{display:none!important}
+  .app{grid-template-columns:1fr!important;display:block!important}
+  body{background:#fff!important;color:#000!important;padding-bottom:0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .card,.results,.breakdown,.br-row,.sum-box,.sum-boxes,.chart-wrap{background:#fff!important;border-color:#ccc!important}
+  .br-row .name,.br-row .val,.card-title{color:#333!important}
+  .t1,.t2{color:#111!important}
+  .br-row.tr{background:#fdf8ec!important}
+  .br-row.tr .name,.br-row.tr .val,.sum-box .sv{color:#a07830!important}
+  .sum-box{background:#f9f9f9!important}
+  .chart-bar{border:1px solid #ddd}
 }
-@media(max-width:500px){
-  .summary-boxes{grid-template-columns:1fr 1fr}
-  .calc-grid{grid-template-columns:1fr}
-}
+@media(max-width:900px){.app{grid-template-columns:1fr}.sidebar{border-right:none;border-bottom:1px solid var(--brd);position:static;max-height:none}}
+@media(max-width:580px){.sum-boxes{grid-template-columns:1fr 1fr}.shape-btns{grid-template-columns:repeat(2,1fr)}.calc-grid{grid-template-columns:1fr}}
 </style>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-<script>
-  const _fbApp = firebase.initializeApp({
-    apiKey: "AIzaSyCmujgnZNVUmtytCkkZk2f9RwhSRwU_ecs",
-    authDomain: "aaa-mebeli.firebaseapp.com",
-    projectId: "aaa-mebeli",
-    storageBucket: "aaa-mebeli.firebasestorage.app",
-    messagingSenderId: "75065828058",
-    appId: "1:75065828058:web:0b908e805f3f8a088fbbe3"
-  });
-  const _db = firebase.firestore();
-</script>
 </head>
 <body>
+
+<div id="tip-popup"></div>
+<div id="toast"></div>
+
 <div class="app">
 
-<!-- ═══ SIDEBAR: SETTINGS ═══ -->
+<!-- ═══ SIDEBAR ═══ -->
 <div class="sidebar">
   <div class="sidebar-header">
     <h1>⚙ Настройки цен</h1>
-    <p>Цены в € за 1 погонный метр</p>
+    <p>€ за 1 погонный метр</p>
   </div>
 
-  <!-- CORPUS -->
+  <div class="s-section open" id="sec-company">
+    <div class="s-section-head" onclick="toggleSec('sec-company')"><h2>Компания</h2><span class="arr">▼</span></div>
+    <div class="s-section-body">
+      <div class="p-row" style="grid-template-columns:1fr 110px">
+        <label>Название компании</label>
+        <input class="p-input p-input-wide" id="p-company" type="text" value="AAA Мебели">
+      </div>
+      <div class="p-row" style="grid-template-columns:1fr 110px">
+        <label>WhatsApp<span class="unit">без + (пр: 359XXXXXXXXX)</span></label>
+        <input class="p-input p-input-wide" id="p-whatsapp" type="text" placeholder="359XXXXXXXXX">
+      </div>
+    </div>
+  </div>
+
+  <div class="s-section" id="sec-telegram">
+    <div class="s-section-head" onclick="toggleSec('sec-telegram')"><h2>Telegram 🔒</h2><span class="arr">▼</span></div>
+    <div class="s-section-body">
+      <div class="p-row" style="grid-template-columns:1fr 130px">
+        <label>Токен бота<span class="unit">от @BotFather</span></label>
+        <input class="p-input p-input-wide" id="p-tg-token" type="password" value="8490237117:AAE2RnZCjAosmkCLCM5DfFcdPqgXDMIZcvQ">
+      </div>
+      <div class="p-row" style="grid-template-columns:1fr 130px">
+        <label>Chat ID<span class="unit">ваш личный ID</span></label>
+        <input class="p-input p-input-wide" id="p-tg-chatid" type="text" value="668971890">
+      </div>
+    </div>
+  </div>
+
   <div class="s-section open" id="sec-corpus">
-    <div class="s-section-head" onclick="toggleSection('sec-corpus')">
-      <h2>Корпус (ДСП 18мм)</h2>
-      <span class="arr">▼</span>
-    </div>
+    <div class="s-section-head" onclick="toggleSec('sec-corpus')"><h2>Корпус (ДСП 18мм, петли Hettich)</h2><span class="arr">▼</span></div>
     <div class="s-section-body">
-      <div class="p-row">
-        <label>Низы H=720мм<span class="unit">корпус + задняя стенка</span></label>
-        <input class="p-input" id="p-corp-low" type="number" value="120" min="0">
-      </div>
-      <div class="p-row">
-        <label>Верха H=720мм</label>
-        <input class="p-input" id="p-corp-up720" type="number" value="80" min="0">
-      </div>
-      <div class="p-row">
-        <label>Верха H=920мм</label>
-        <input class="p-input" id="p-corp-up920" type="number" value="95" min="0">
-      </div>
-      <div class="p-row">
-        <label>Наценка цветной корпус<span class="unit">% от стоимости корпуса</span></label>
-        <input class="p-input" id="p-corp-color-pct" type="number" value="15" min="0">
-      </div>
+      <div class="p-row"><label>Низы H=720мм<span class="unit">корпус + задняя стенка</span></label><input class="p-input" id="p-corp-low" type="number" value="120" min="0"></div>
+      <div class="p-row"><label>Верха H=720мм</label><input class="p-input" id="p-corp-up720" type="number" value="80" min="0"></div>
+      <div class="p-row"><label>Верха H=920мм</label><input class="p-input" id="p-corp-up920" type="number" value="95" min="0"></div>
+      <div class="p-row"><label>Наценка цветной корпус<span class="unit">% от стоимости корпуса</span></label><input class="p-input" id="p-corp-color-pct" type="number" value="15" min="0"></div>
     </div>
   </div>
 
-  <!-- FACADES -->
+  <div class="s-section" id="sec-shape">
+    <div class="s-section-head" onclick="toggleSec('sec-shape')"><h2>Наценка за форму (%)</h2><span class="arr">▼</span></div>
+    <div class="s-section-body">
+      <div class="p-row"><label>Прямая<span class="unit">база, без наценки</span></label><input class="p-input" id="p-shape-straight" type="number" value="0" min="0"></div>
+      <div class="p-row"><label>Г-образная<span class="unit">один угол, +сложность</span></label><input class="p-input" id="p-shape-L" type="number" value="8" min="0"></div>
+      <div class="p-row"><label>П-образная<span class="unit">два угла, макс. сложность</span></label><input class="p-input" id="p-shape-U" type="number" value="15" min="0"></div>
+      <div class="p-row"><label>Параллельная<span class="unit">2 секции, разделители</span></label><input class="p-input" id="p-shape-parallel" type="number" value="0" min="0"></div>
+      <p class="note">* Наценка применяется к сумме (корпус + фасады + плот + гръб + допы). Ящики и витрины — без наценки.</p>
+    </div>
+  </div>
+
+  <div class="s-section open" id="sec-thirdrow">
+    <div class="s-section-head" onclick="toggleSec('sec-thirdrow')"><h2>Третий ряд (антресоли)</h2><span class="arr">▼</span></div>
+    <div class="s-section-body">
+      <div class="p-row"><label>Корпус H=360мм<span class="unit">глубина 560мм</span></label><input class="p-input" id="p-tr-360" type="number" value="60" min="0"></div>
+      <div class="p-row"><label>Корпус H=460мм</label><input class="p-input" id="p-tr-460" type="number" value="75" min="0"></div>
+      <div class="p-row"><label>Корпус нестандарт<span class="unit">для своих размеров</span></label><input class="p-input" id="p-tr-custom" type="number" value="90" min="0"></div>
+      <div class="p-row"><label>Наценка фасад 20мм<span class="unit">% к цене фасада</span></label><input class="p-input" id="p-tr-fac-pct" type="number" value="10" min="0"></div>
+    </div>
+  </div>
+
   <div class="s-section open" id="sec-facades">
-    <div class="s-section-head" onclick="toggleSection('sec-facades')">
-      <h2>Фасады</h2>
-      <span class="arr">▼</span>
-    </div>
+    <div class="s-section-head" onclick="toggleSec('sec-facades')"><h2>Фасады</h2><span class="arr">▼</span></div>
     <div class="s-section-body">
-      <div class="p-row-full">
-        <label>ДСП (ПДЧ)</label>
-        <div class="p-row-2">
-          <div><div class="p-sub">мин</div><input class="p-input" id="p-fac-dsp-min" type="number" value="535" min="0"></div>
-          <div><div class="p-sub">макс</div><input class="p-input" id="p-fac-dsp-max" type="number" value="646" min="0"></div>
-        </div>
-      </div>
-      <div class="p-row-full">
-        <label>МДФ плёнка (PVC)</label>
-        <div class="p-row-2">
-          <div><div class="p-sub">мин</div><input class="p-input" id="p-fac-pvc-min" type="number" value="638" min="0"></div>
-          <div><div class="p-sub">макс</div><input class="p-input" id="p-fac-pvc-max" type="number" value="860" min="0"></div>
-        </div>
-      </div>
-      <div class="p-row-full">
-        <label>МДФ-пластик (HPL/акрил)</label>
-        <div class="p-row-2">
-          <div><div class="p-sub">мин</div><input class="p-input" id="p-fac-hpl-min" type="number" value="714" min="0"></div>
-          <div><div class="p-sub">макс</div><input class="p-input" id="p-fac-hpl-max" type="number" value="1014" min="0"></div>
-        </div>
-      </div>
-      <div class="p-row-full">
-        <label>МДФ-эмаль (лак/краска)</label>
-        <div class="p-row-2">
-          <div><div class="p-sub">мин</div><input class="p-input" id="p-fac-enamel-min" type="number" value="842" min="0"></div>
-          <div><div class="p-sub">макс</div><input class="p-input" id="p-fac-enamel-max" type="number" value="1320" min="0"></div>
-        </div>
-      </div>
-      <p class="note">* Цены фасадов уже включают петли Hettich и корпус. Если корпус считается отдельно — укажите только стоимость фасадов.</p>
+      <div class="p-row-full"><label>ДСП (ПДЧ) — стандарт</label><div class="p-row-2"><div><div class="p-sub">мин</div><input class="p-input" id="p-fac-dsp-min" type="number" value="180" min="0"></div><div><div class="p-sub">макс</div><input class="p-input" id="p-fac-dsp-max" type="number" value="260" min="0"></div></div></div>
+      <div class="p-row-full"><label>МДФ плёнка (PVC)</label><div class="p-row-2"><div><div class="p-sub">мин</div><input class="p-input" id="p-fac-pvc-min" type="number" value="320" min="0"></div><div><div class="p-sub">макс</div><input class="p-input" id="p-fac-pvc-max" type="number" value="490" min="0"></div></div></div>
+      <div class="p-row-full"><label>МДФ-пластик (Salex Exclusive)</label><div class="p-row-2"><div><div class="p-sub">мин</div><input class="p-input" id="p-fac-hpl-min" type="number" value="460" min="0"></div><div><div class="p-sub">макс</div><input class="p-input" id="p-fac-hpl-max" type="number" value="680" min="0"></div></div></div>
+      <div class="p-row-full"><label>МДФ-эмаль мат</label><div class="p-row-2"><div><div class="p-sub">мин</div><input class="p-input" id="p-fac-enamel-m-min" type="number" value="620" min="0"></div><div><div class="p-sub">макс</div><input class="p-input" id="p-fac-enamel-m-max" type="number" value="870" min="0"></div></div></div>
+      <div class="p-row-full"><label>МДФ-эмаль глянец</label><div class="p-row-2"><div><div class="p-sub">мин</div><input class="p-input" id="p-fac-enamel-g-min" type="number" value="720" min="0"></div><div><div class="p-sub">макс</div><input class="p-input" id="p-fac-enamel-g-max" type="number" value="1050" min="0"></div></div></div>
+      <p class="note">* Цены за фасады, без корпуса. Петли Hettich включены в корпус.</p>
     </div>
   </div>
 
-  <!-- COUNTERTOP -->
   <div class="s-section open" id="sec-top">
-    <div class="s-section-head" onclick="toggleSection('sec-top')">
-      <h2>Столешница</h2>
-      <span class="arr">▼</span>
-    </div>
+    <div class="s-section-head" onclick="toggleSec('sec-top')"><h2>Столешница</h2><span class="arr">▼</span></div>
     <div class="s-section-body">
-      <div class="p-row">
-        <label>Постформинг</label>
-        <input class="p-input" id="p-top-pf" type="number" value="90" min="0">
-      </div>
-      <div class="p-row">
-        <label>Термоплот (ДСП)</label>
-        <input class="p-input" id="p-top-tp" type="number" value="60" min="0">
-      </div>
-      <div class="p-row">
-        <label>HPL-панель</label>
-        <input class="p-input" id="p-top-hpl" type="number" value="180" min="0">
-      </div>
-      <div class="p-row">
-        <label>Кварцевый агломерат</label>
-        <input class="p-input" id="p-top-quartz" type="number" value="320" min="0">
-      </div>
+      <div class="p-row"><label>Термоплот (ДСП)</label><input class="p-input" id="p-top-tp" type="number" value="60" min="0"></div>
+      <div class="p-row"><label>HPL-панель</label><input class="p-input" id="p-top-hpl" type="number" value="180" min="0"></div>
+      <div class="p-row"><label>Камень</label><input class="p-input" id="p-top-quartz" type="number" value="320" min="0"></div>
     </div>
   </div>
 
-  <!-- BACKSPLASH -->
   <div class="s-section open" id="sec-back">
-    <div class="s-section-head" onclick="toggleSection('sec-back')">
-      <h2>Фартук / стеновая панель</h2>
-      <span class="arr">▼</span>
-    </div>
+    <div class="s-section-head" onclick="toggleSec('sec-back')"><h2>Фартук / стеновая панель</h2><span class="arr">▼</span></div>
     <div class="s-section-body">
-      <div class="p-row">
-        <label>Термогръб (ДСП)</label>
-        <input class="p-input" id="p-back-tg" type="number" value="40" min="0">
-      </div>
-      <div class="p-row">
-        <label>Закалённое стекло</label>
-        <input class="p-input" id="p-back-glass" type="number" value="110" min="0">
-      </div>
-      <div class="p-row">
-        <label>Плитка (керамика)</label>
-        <input class="p-input" id="p-back-tile" type="number" value="60" min="0">
-      </div>
-      <div class="p-row">
-        <label>HPL-панель</label>
-        <input class="p-input" id="p-back-hpl" type="number" value="90" min="0">
-      </div>
+      <div class="p-row"><label>Термогръб (ДСП)</label><input class="p-input" id="p-back-tg" type="number" value="45" min="0"></div>
+      <div class="p-row"><label>Закалённое стекло</label><input class="p-input" id="p-back-glass" type="number" value="130" min="0"></div>
+      <div class="p-row"><label>HPL-панель</label><input class="p-input" id="p-back-hpl" type="number" value="90" min="0"></div>
     </div>
   </div>
 
-  <!-- EXTRAS -->
   <div class="s-section" id="sec-extras">
-    <div class="s-section-head" onclick="toggleSection('sec-extras')">
-      <h2>Дополнения</h2>
-      <span class="arr">▼</span>
-    </div>
+    <div class="s-section-head" onclick="toggleSec('sec-extras')"><h2>Дополнения</h2><span class="arr">▼</span></div>
     <div class="s-section-body">
-      <div class="p-row">
-        <label>LED подсветка</label>
-        <input class="p-input" id="p-led" type="number" value="60" min="0">
-      </div>
-      <div class="p-row">
-        <label>Ручки (средние)</label>
-        <input class="p-input" id="p-handles" type="number" value="25" min="0">
-      </div>
-      <div class="p-row">
-        <label>Доводчики (soft-close)</label>
-        <input class="p-input" id="p-softclose" type="number" value="20" min="0">
-      </div>
-      <div class="p-row">
-        <label>Выдвижные ящики (за л.м)</label>
-        <input class="p-input" id="p-drawers" type="number" value="80" min="0">
-      </div>
+      <div class="p-row"><label>LED подсветка</label><input class="p-input" id="p-led" type="number" value="55" min="0"></div>
+      <div class="p-row"><label>Ручки (средние)</label><input class="p-input" id="p-handles" type="number" value="25" min="0"></div>
     </div>
   </div>
 
-  <div style="padding:16px 20px">
+  <div class="s-section" id="sec-drawers">
+    <div class="s-section-head" onclick="toggleSec('sec-drawers')"><h2>Ящики (€/шт)</h2><span class="arr">▼</span></div>
+    <div class="s-section-body">
+      <div class="p-row"><label>ДСП + Quadro V6 Hettich<span class="unit">бюджет</span></label><input class="p-input" id="p-drw-quadro" type="number" value="32" min="0"></div>
+      <div class="p-row"><label>Hettich Atira<span class="unit">среднее</span></label><input class="p-input" id="p-drw-atira" type="number" value="45" min="0"></div>
+      <div class="p-row"><label>Hettich AvanTech YOU<span class="unit">премиум, антрацит</span></label><input class="p-input" id="p-drw-avantech" type="number" value="75" min="0"></div>
+      <p class="note">* Цены на комплект ящика (направляющие + царги, ср.высота). ДСП + резка для Quadro включены в цену.</p>
+    </div>
+  </div>
+
+  <div class="s-section" id="sec-showcase">
+    <div class="s-section-head" onclick="toggleSec('sec-showcase')"><h2>Витрины (стекл. фасады)</h2><span class="arr">▼</span></div>
+    <div class="s-section-body">
+      <p class="note" style="margin:0 0 8px;color:var(--gold)">Профиль (€/л.м рамки)</p>
+      <div class="p-row"><label>Группа 1<span class="unit">Plus 6 / 7 / 10</span></label><input class="p-input" id="p-sc-prof-g1" type="number" value="16" min="0"></div>
+      <div class="p-row"><label>Группа 2<span class="unit">Plus 4 / 11 / 15 / 20</span></label><input class="p-input" id="p-sc-prof-g2" type="number" value="20" min="0"></div>
+      <div class="p-row"><label>Группа 3<span class="unit">Plus 2</span></label><input class="p-input" id="p-sc-prof-g3" type="number" value="12" min="0"></div>
+      <p class="note" style="margin:10px 0 8px;color:var(--gold)">Стекло (€/м²)</p>
+      <div class="p-row"><label>Прозрачное флоат 4мм</label><input class="p-input" id="p-sc-glass-clear" type="number" value="25" min="0"></div>
+      <div class="p-row"><label>Матовое (сатиниран) 4мм</label><input class="p-input" id="p-sc-glass-matte" type="number" value="38" min="0"></div>
+      <div class="p-row"><label>Бронза / дымное 4мм</label><input class="p-input" id="p-sc-glass-bronze" type="number" value="45" min="0"></div>
+      <div class="p-row"><label>Лакобел (глухой, RAL)</label><input class="p-input" id="p-sc-glass-lacobel" type="number" value="110" min="0"></div>
+      <p class="note">* Цена за дверь = периметр × профиль + площадь × стекло. Цвет не влияет на цену.</p>
+    </div>
+  </div>
+
+  <div style="padding:13px 18px">
     <button class="save-btn" onclick="savePrices()">💾 Сохранить настройки</button>
     <div class="saved-msg" id="saved-msg" style="opacity:0"></div>
   </div>
 </div>
 
-<!-- ═══ MAIN: CALCULATOR ═══ -->
+<!-- ═══ MAIN ═══ -->
 <div class="main">
-  <div class="main-title">Калькулятор Кухни</div>
+  <div class="main-header">
+    <div class="main-title">Калькулятор Кухни</div>
+    <button class="sidebar-toggle" id="sidebar-toggle-btn" onclick="toggleSidebar()" title="Показать / скрыть настройки цен">⚙ Настройки цен</button>
+  </div>
 
   <div class="calc-grid">
 
-    <!-- LENGTH -->
-    <div class="card">
-      <div class="card-title">Длина кухни</div>
-      <div class="len-wrap">
-        <input class="len-input" id="c-len" type="number" value="3.0" min="0.5" max="20" step="0.1" oninput="calc()">
-        <span class="len-unit">погонных метров</span>
+    <!-- SHAPE + WALLS -->
+    <div class="card full">
+      <div class="card-title">Форма кухни и размеры</div>
+      <div class="shape-btns">
+        <button class="shape-btn sel" data-shape="straight" onclick="setShape('straight')">
+          <svg width="36" height="22" viewBox="0 0 36 22" fill="none">
+            <rect x="2" y="8" width="32" height="6" rx="1" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="1.4"/>
+            <line x1="13" y1="8" x2="13" y2="14" stroke="currentColor" stroke-width="0.7" opacity="0.6"/>
+            <line x1="23" y1="8" x2="23" y2="14" stroke="currentColor" stroke-width="0.7" opacity="0.6"/>
+          </svg>Прямая
+          <span class="shape-pct" id="d-shape-straight"></span>
+        </button>
+        <button class="shape-btn" data-shape="L" onclick="setShape('L')">
+          <svg width="36" height="22" viewBox="0 0 36 22" fill="none">
+            <rect x="2" y="3" width="22" height="6" rx="1" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="1.4"/>
+            <rect x="2" y="9" width="6" height="11" rx="1" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="1.4"/>
+            <line x1="9" y1="3" x2="9" y2="9" stroke="currentColor" stroke-width="0.7" opacity="0.6"/>
+            <line x1="16" y1="3" x2="16" y2="9" stroke="currentColor" stroke-width="0.7" opacity="0.6"/>
+          </svg>Г-образная
+          <span class="shape-pct" id="d-shape-L"></span>
+        </button>
+        <button class="shape-btn" data-shape="U" onclick="setShape('U')">
+          <svg width="36" height="22" viewBox="0 0 36 22" fill="none">
+            <rect x="2" y="3" width="6" height="17" rx="1" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="1.4"/>
+            <rect x="28" y="3" width="6" height="17" rx="1" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="1.4"/>
+            <rect x="8" y="14" width="20" height="6" rx="1" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="1.4"/>
+            <line x1="2" y1="11" x2="8" y2="11" stroke="currentColor" stroke-width="0.7" opacity="0.6"/>
+            <line x1="28" y1="11" x2="34" y2="11" stroke="currentColor" stroke-width="0.7" opacity="0.6"/>
+            <line x1="17" y1="14" x2="17" y2="20" stroke="currentColor" stroke-width="0.7" opacity="0.6"/>
+          </svg>П-образная
+          <span class="shape-pct" id="d-shape-U"></span>
+        </button>
+        <button class="shape-btn" data-shape="parallel" onclick="setShape('parallel')">
+          <svg width="36" height="22" viewBox="0 0 36 22" fill="none">
+            <rect x="2" y="3" width="32" height="5" rx="1" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="1.4"/>
+            <rect x="2" y="14" width="32" height="5" rx="1" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="1.4"/>
+            <line x1="13" y1="3" x2="13" y2="8" stroke="currentColor" stroke-width="0.7" opacity="0.6"/>
+            <line x1="23" y1="3" x2="23" y2="8" stroke="currentColor" stroke-width="0.7" opacity="0.6"/>
+            <line x1="18" y1="14" x2="18" y2="19" stroke="currentColor" stroke-width="0.7" opacity="0.6"/>
+          </svg>Параллельная
+          <span class="shape-pct" id="d-shape-parallel"></span>
+        </button>
+      </div>
+      <div class="walls-grid" id="walls-grid"></div>
+      <div class="total-lm">
+        <span class="tl-lbl">Итого погонных метров:</span>
+        <span class="tl-val" id="total-lm-val">—</span>
       </div>
     </div>
 
-    <!-- CORPUS TYPE -->
+    <!-- CORPUS -->
     <div class="card">
       <div class="card-title">Материал корпуса</div>
       <div class="opt-row">
-        <button class="opt-btn sel" data-g="corp" data-v="white" onclick="sel(this,'corp')">Белый (стандарт)</button>
-        <button class="opt-btn" data-g="corp" data-v="color" onclick="sel(this,'corp')">Цветной (+%)</button>
+        <button class="opt-btn sel" data-g="corp" data-v="white" onclick="sel(this,'corp')">
+          <span class="bn">Белый (стандарт)</span><span class="bd bd-base" id="d-corp-white">БАЗА</span>
+        </button>
+        <button class="opt-btn" data-g="corp" data-v="color" onclick="sel(this,'corp')">
+          <span class="bn">Цветной</span><span class="bd bd-plus" id="d-corp-color">+%</span>
+        </button>
       </div>
     </div>
 
@@ -337,42 +419,85 @@ body{background:var(--bg);color:var(--t1);font-family:'Segoe UI',system-ui,sans-
     <div class="card">
       <div class="card-title">Высота верхних шкафов</div>
       <div class="opt-row">
-        <button class="opt-btn sel" data-g="upH" data-v="720" onclick="sel(this,'upH')">720 мм</button>
-        <button class="opt-btn" data-g="upH" data-v="920" onclick="sel(this,'upH')">920 мм</button>
+        <button class="opt-btn sel" data-g="upH" data-v="720" onclick="sel(this,'upH')">
+          <span class="bn">720 мм</span><span class="bd bd-base" id="d-uph-720">БАЗА</span>
+        </button>
+        <button class="opt-btn" data-g="upH" data-v="920" onclick="sel(this,'upH')">
+          <span class="bn">920 мм</span><span class="bd bd-plus" id="d-uph-920">+XX</span>
+        </button>
       </div>
       <p class="note">Нижние всегда H=720мм</p>
     </div>
 
+    <!-- THIRD ROW (антресоли) -->
+    <div class="card">
+      <div class="card-title">
+        Третий ряд (под потолком)
+        <span class="tip" data-tip="Антресоли под потолком, глубина 560мм, фасад 20мм. Используется для редко нужных вещей и для использования всей высоты помещения.">i</span>
+      </div>
+      <label class="chk-row tr-enable-row">
+        <input type="checkbox" id="tr-enabled" onchange="toggleTrEnabled()">
+        <span>Добавить третий ряд</span>
+      </label>
+      <div id="tr-config" style="display:none;margin-top:8px">
+        <div class="opt-row">
+          <button class="opt-btn sel" data-trh="360" onclick="setTrH('360')">
+            <span class="bn">H=360 мм</span><span class="bd bd-base" id="d-tr-360b">БАЗА</span>
+          </button>
+          <button class="opt-btn" data-trh="460" onclick="setTrH('460')">
+            <span class="bn">H=460 мм</span><span class="bd bd-plus" id="d-tr-460b">+XX</span>
+          </button>
+          <button class="opt-btn" data-trh="custom" onclick="setTrH('custom')">
+            <span class="bn">Свой размер</span><span class="bd bd-plus" id="d-tr-customb">+XX</span>
+          </button>
+        </div>
+        <div id="tr-custom-row" class="tr-custom-row" style="display:none">
+          <span class="lbl">мм</span>
+          <input type="range" id="tr-custom-slider" class="wall-slider" min="200" max="900" step="10" value="500" oninput="trCustomChange(this.value, true)">
+          <input type="number" id="tr-custom-mm" class="wall-num" min="200" max="900" step="10" value="500" oninput="trCustomChange(this.value, false)">
+        </div>
+      </div>
+      <p class="note">Глубина 560мм, фасад 20мм</p>
+    </div>
+
     <!-- FACADE -->
     <div class="card">
-      <div class="card-title">Тип фасадов</div>
+      <div class="card-title">
+        Тип фасадов
+        <span class="tip" data-tip="ДСП (ПДЧ) — стандарт, ламинированная ДСП.\nМДФ-PVC — плёнка на МДФ, влагостойкий.\nМДФ-пластик (Salex Exclusive) — акрил/HPL, премиум поверхность.\nМДФ-эмаль мат — лак/краска матовый, любой RAL.\nМДФ-эмаль глянец — высокий блеск, любой RAL.">i</span>
+      </div>
       <div class="opt-row">
-        <button class="opt-btn sel" data-g="fac" data-v="dsp" onclick="sel(this,'fac')">ДСП (ПДЧ)</button>
-        <button class="opt-btn" data-g="fac" data-v="pvc" onclick="sel(this,'fac')">МДФ-PVC</button>
-        <button class="opt-btn" data-g="fac" data-v="hpl" onclick="sel(this,'fac')">МДФ-HPL</button>
-        <button class="opt-btn" data-g="fac" data-v="enamel" onclick="sel(this,'fac')">МДФ-эмаль</button>
+        <button class="opt-btn sel" data-g="fac" data-v="dsp" onclick="sel(this,'fac')"><span class="bn">ДСП (ПДЧ)</span><span class="bd bd-base" id="d-fac-dsp">БАЗА</span></button>
+        <button class="opt-btn" data-g="fac" data-v="pvc" onclick="sel(this,'fac')"><span class="bn">МДФ-PVC</span><span class="bd bd-plus" id="d-fac-pvc">+XX</span></button>
+        <button class="opt-btn" data-g="fac" data-v="hpl" onclick="sel(this,'fac')"><span class="bn">МДФ-пластик</span><span class="bd bd-plus" id="d-fac-hpl">+XX</span></button>
+        <button class="opt-btn" data-g="fac" data-v="enamel_m" onclick="sel(this,'fac')"><span class="bn">Эмаль мат</span><span class="bd bd-plus" id="d-fac-enamel_m">+XX</span></button>
+        <button class="opt-btn" data-g="fac" data-v="enamel_g" onclick="sel(this,'fac')"><span class="bn">Эмаль глянец</span><span class="bd bd-plus" id="d-fac-enamel_g">+XX</span></button>
       </div>
     </div>
 
     <!-- COUNTERTOP -->
     <div class="card">
-      <div class="card-title">Столешница</div>
+      <div class="card-title">
+        Столешница
+        <span class="tip" data-tip="Термоплот — бюджетная ДСП столешница.\nHPL — высококачественный пластик, долговечный.\nКамень — натуральный или искусственный камень, премиум класс.">i</span>
+      </div>
       <div class="opt-row">
-        <button class="opt-btn sel" data-g="top" data-v="pf" onclick="sel(this,'top')">Постформинг</button>
-        <button class="opt-btn" data-g="top" data-v="tp" onclick="sel(this,'top')">Термоплот</button>
-        <button class="opt-btn" data-g="top" data-v="hpl" onclick="sel(this,'top')">HPL</button>
-        <button class="opt-btn" data-g="top" data-v="quartz" onclick="sel(this,'top')">Кварц</button>
+        <button class="opt-btn sel" data-g="top" data-v="tp" onclick="sel(this,'top')"><span class="bn">Термоплот</span><span class="bd bd-base" id="d-top-tp">БАЗА</span></button>
+        <button class="opt-btn" data-g="top" data-v="hpl" onclick="sel(this,'top')"><span class="bn">HPL</span><span class="bd" id="d-top-hpl">+XX</span></button>
+        <button class="opt-btn" data-g="top" data-v="quartz" onclick="sel(this,'top')"><span class="bn">Камень</span><span class="bd" id="d-top-quartz">+XX</span></button>
       </div>
     </div>
 
     <!-- BACKSPLASH -->
     <div class="card">
-      <div class="card-title">Фартук / стеновая панель</div>
+      <div class="card-title">
+        Фартук / стеновая панель
+        <span class="tip" data-tip="Термогръб — ДСП с защитным покрытием, бюджетный.\nСтекло — закалённое стекло, современный вид.\nПлитка — керамика, классика.\nHPL — высококачественный пластик, практичный.">i</span>
+      </div>
       <div class="opt-row">
-        <button class="opt-btn sel" data-g="back" data-v="tg" onclick="sel(this,'back')">Термогръб</button>
-        <button class="opt-btn" data-g="back" data-v="glass" onclick="sel(this,'back')">Стекло</button>
-        <button class="opt-btn" data-g="back" data-v="tile" onclick="sel(this,'back')">Плитка</button>
-        <button class="opt-btn" data-g="back" data-v="hpl" onclick="sel(this,'back')">HPL</button>
+        <button class="opt-btn sel" data-g="back" data-v="tg" onclick="sel(this,'back')"><span class="bn">Термогръб</span><span class="bd" id="d-back-tg">БАЗА</span></button>
+        <button class="opt-btn" data-g="back" data-v="glass" onclick="sel(this,'back')"><span class="bn">Стекло</span><span class="bd" id="d-back-glass">+XX</span></button>
+        <button class="opt-btn" data-g="back" data-v="hpl" onclick="sel(this,'back')"><span class="bn">HPL</span><span class="bd" id="d-back-hpl">+XX</span></button>
       </div>
     </div>
 
@@ -381,8 +506,149 @@ body{background:var(--bg);color:var(--t1);font-family:'Segoe UI',system-ui,sans-
       <div class="card-title">Дополнения</div>
       <label class="chk-row"><input type="checkbox" id="x-led" onchange="calc()"><span>LED подсветка</span></label>
       <label class="chk-row"><input type="checkbox" id="x-handles" onchange="calc()"><span>Ручки</span></label>
-      <label class="chk-row"><input type="checkbox" id="x-softclose" onchange="calc()"><span>Доводчики soft-close</span></label>
-      <label class="chk-row"><input type="checkbox" id="x-drawers" onchange="calc()"><span>Выдвижные ящики</span></label>
+    </div>
+
+    <!-- DRAWERS -->
+    <div class="card">
+      <div class="card-title">
+        Ящики
+        <span class="tip" data-tip="ДСП + Quadro V6 — бюджет, направляющие Hettich.\nAtira — металлические царги Hettich, средний сегмент.\nAvanTech YOU — премиум, тонкие антрацитные царги, soft-close встроен.">i</span>
+      </div>
+      <div class="opt-row">
+        <button class="opt-btn sel" data-g="drw" data-v="quadro" onclick="sel(this,'drw')"><span class="bn">ДСП + Quadro V6</span><span class="bd bd-base" id="d-drw-quadro">БАЗА</span></button>
+        <button class="opt-btn" data-g="drw" data-v="atira" onclick="sel(this,'drw')"><span class="bn">Atira</span><span class="bd bd-plus" id="d-drw-atira">+XX</span></button>
+        <button class="opt-btn" data-g="drw" data-v="avantech" onclick="sel(this,'drw')"><span class="bn">AvanTech YOU</span><span class="bd bd-plus" id="d-drw-avantech">+XX</span></button>
+      </div>
+      <div class="tr-custom-row" style="display:flex;margin-top:8px">
+        <span class="lbl">шт</span>
+        <input type="range" id="drw-qty-slider" class="wall-slider" min="0" max="20" step="1" value="0" oninput="drwQtyChange(this.value, true)">
+        <input type="number" id="drw-qty-num" class="wall-num" min="0" max="50" step="1" value="0" oninput="drwQtyChange(this.value, false)">
+      </div>
+      <p class="note">Количество ящиков × цена за штуку</p>
+    </div>
+
+    <!-- SHOWCASE -->
+    <div class="card full">
+      <div class="card-title">
+        Витрины (стеклянные фасады)
+        <span class="tip" data-tip="Витрина = алюминиевая рамка + стекло.\nЦена = периметр × профиль + площадь × стекло.\nЦвет профиля только косметика — на цену не влияет.">i</span>
+      </div>
+      <label class="chk-row tr-enable-row">
+        <input type="checkbox" id="sc-enabled" onchange="toggleScEnabled()">
+        <span>Добавить витрины</span>
+      </label>
+      <div id="sc-config" style="display:none;margin-top:8px">
+        <!-- Profile -->
+        <div style="font-size:.75rem;color:var(--t3);margin:4px 0 4px">Профиль</div>
+        <div class="opt-row sc-prof-row">
+          <!-- Группа 1: Plus 6 / 7 / 10 -->
+          <button class="opt-btn sel sc-prof-btn" data-g="scProf" data-v="g1" onclick="sel(this,'scProf')" title="Группа 1: Plus 6, Plus 7, Plus 10">
+            <div class="sc-prof-trio">
+              <img src="profile_images/plus6.jpeg"  alt="Plus 6">
+              <img src="profile_images/plus7.jpeg"  alt="Plus 7">
+              <img src="profile_images/plus10.jpeg" alt="Plus 10">
+            </div>
+            <span class="bn">Группа 1</span>
+            <span class="sc-prof-sub">Plus 6 / 7 / 10</span>
+            <span class="bd bd-base" id="d-sc-prof-g1">БАЗА</span>
+          </button>
+
+          <!-- Группа 2: Plus 4 / 11 / 15 / 20 -->
+          <button class="opt-btn sc-prof-btn" data-g="scProf" data-v="g2" onclick="sel(this,'scProf')" title="Группа 2: Plus 4, Plus 11, Plus 15, Plus 20">
+            <div class="sc-prof-trio">
+              <img src="profile_images/plus4.jpg"   alt="Plus 4">
+              <img src="profile_images/plus11.jpeg" alt="Plus 11">
+              <img src="profile_images/plus15.jpeg" alt="Plus 15">
+              <img src="profile_images/plus20.jpeg" alt="Plus 20">
+            </div>
+            <span class="bn">Группа 2</span>
+            <span class="sc-prof-sub">Plus 4 / 11 / 15 / 20</span>
+            <span class="bd bd-plus" id="d-sc-prof-g2">+XX</span>
+          </button>
+
+          <!-- Группа 3: Plus 2 -->
+          <button class="opt-btn sc-prof-btn" data-g="scProf" data-v="g3" onclick="sel(this,'scProf')" title="Группа 3: Plus 2">
+            <div class="sc-prof-trio single">
+              <img src="profile_images/plus2.jpeg" alt="Plus 2">
+            </div>
+            <span class="bn">Группа 3</span>
+            <span class="sc-prof-sub">Plus 2</span>
+            <span class="bd bd-plus" id="d-sc-prof-g3">+XX</span>
+          </button>
+        </div>
+
+        <!-- Color -->
+        <div style="font-size:.75rem;color:var(--t3);margin:10px 0 4px">Цвет профиля</div>
+        <div class="opt-row sc-color-row">
+          <button class="opt-btn sel sc-color-btn" data-g="scColor" data-v="alu" onclick="sel(this,'scColor')" title="Алюминий (анодированный)">
+            <span class="sc-swatch" style="background:linear-gradient(135deg,#d0d0d0,#a8a8a8)"></span><span class="bn">Алюминий</span>
+          </button>
+          <button class="opt-btn sc-color-btn" data-g="scColor" data-v="black" onclick="sel(this,'scColor')" title="Чёрный мат">
+            <span class="sc-swatch" style="background:#2a2a2a"></span><span class="bn">Чёрный мат</span>
+          </button>
+          <button class="opt-btn sc-color-btn" data-g="scColor" data-v="inox" onclick="sel(this,'scColor')" title="Инокс (нержавейка)">
+            <span class="sc-swatch" style="background:linear-gradient(135deg,#bcbcbc,#8c8c8c,#bcbcbc);background-size:4px 4px"></span><span class="bn">Инокс</span>
+          </button>
+          <button class="opt-btn sc-color-btn" data-g="scColor" data-v="gold" onclick="sel(this,'scColor')" title="Золото">
+            <span class="sc-swatch" style="background:linear-gradient(135deg,#e8c878,#b8902c)"></span><span class="bn">Золото</span>
+          </button>
+          <button class="opt-btn sc-color-btn" data-g="scColor" data-v="champ" onclick="sel(this,'scColor')" title="Шампанское">
+            <span class="sc-swatch" style="background:linear-gradient(135deg,#e8dcb8,#cab784)"></span><span class="bn">Шампанское</span>
+          </button>
+        </div>
+
+        <!-- Glass -->
+        <div style="font-size:.75rem;color:var(--t3);margin:10px 0 4px">Стекло</div>
+        <div class="opt-row">
+          <button class="opt-btn sel" data-g="scGlass" data-v="clear" onclick="sel(this,'scGlass')">
+            <svg width="34" height="22" viewBox="0 0 34 22" fill="none">
+              <rect x="3" y="3" width="28" height="16" rx="1" fill="#b8d4e8" fill-opacity="0.35" stroke="currentColor" stroke-width="0.9"/>
+              <line x1="6" y1="6" x2="14" y2="14" stroke="#fff" stroke-width="0.6" opacity="0.9"/>
+            </svg>
+            <span class="bn">Прозрачное</span><span class="bd bd-base" id="d-sc-glass-clear">БАЗА</span>
+          </button>
+          <button class="opt-btn" data-g="scGlass" data-v="matte" onclick="sel(this,'scGlass')">
+            <svg width="34" height="22" viewBox="0 0 34 22" fill="none">
+              <defs><pattern id="frostMat" patternUnits="userSpaceOnUse" width="3" height="3"><line x1="0" y1="3" x2="3" y2="0" stroke="#fff" stroke-width="0.4" opacity="0.9"/></pattern></defs>
+              <rect x="3" y="3" width="28" height="16" rx="1" fill="#dde8ee" stroke="currentColor" stroke-width="0.9"/>
+              <rect x="3" y="3" width="28" height="16" rx="1" fill="url(#frostMat)"/>
+            </svg>
+            <span class="bn">Матовое</span><span class="bd bd-plus" id="d-sc-glass-matte">+XX</span>
+          </button>
+          <button class="opt-btn" data-g="scGlass" data-v="bronze" onclick="sel(this,'scGlass')">
+            <svg width="34" height="22" viewBox="0 0 34 22" fill="none">
+              <rect x="3" y="3" width="28" height="16" rx="1" fill="#8a6a3a" fill-opacity="0.55" stroke="currentColor" stroke-width="0.9"/>
+              <line x1="6" y1="6" x2="14" y2="14" stroke="#fff" stroke-width="0.6" opacity="0.5"/>
+            </svg>
+            <span class="bn">Бронза</span><span class="bd bd-plus" id="d-sc-glass-bronze">+XX</span>
+          </button>
+          <button class="opt-btn" data-g="scGlass" data-v="lacobel" onclick="sel(this,'scGlass')">
+            <svg width="34" height="22" viewBox="0 0 34 22" fill="none">
+              <rect x="3" y="3" width="28" height="16" rx="1" fill="#1a1a1a" stroke="currentColor" stroke-width="0.9"/>
+              <rect x="5" y="5" width="6" height="3" fill="#fff" opacity="0.15"/>
+            </svg>
+            <span class="bn">Лакобел</span><span class="bd bd-plus" id="d-sc-glass-lacobel">+XX</span>
+          </button>
+        </div>
+
+        <!-- Qty and size -->
+        <div style="font-size:.75rem;color:var(--t3);margin:10px 0 4px">Количество дверей и размеры</div>
+        <div class="sc-qty-row">
+          <div class="sc-qty-group">
+            <label for="sc-qty">Шт</label>
+            <input type="number" id="sc-qty" min="0" max="50" step="1" value="2" oninput="calc()">
+          </div>
+          <div class="sc-qty-group">
+            <label for="sc-h">Высота (мм)</label>
+            <input type="number" id="sc-h" min="200" max="2200" step="10" value="720" oninput="calc()">
+          </div>
+          <div class="sc-qty-group">
+            <label for="sc-w">Ширина (мм)</label>
+            <input type="number" id="sc-w" min="200" max="1200" step="10" value="400" oninput="calc()">
+          </div>
+        </div>
+        <p class="note" id="sc-info-line">Расчёт обновится автоматически</p>
+      </div>
     </div>
 
   </div>
@@ -390,282 +656,737 @@ body{background:var(--bg);color:var(--t1);font-family:'Segoe UI',system-ui,sans-
   <!-- RESULTS -->
   <div class="results">
     <div class="results-title">Расчёт</div>
-    <div id="result-area"><div class="alert">Выберите параметры — результат появится здесь</div></div>
+    <div id="result-area"><div class="alert">Настройте параметры — результат появится здесь</div></div>
+  </div>
+</div>
+</div>
+
+<!-- STICKY BAR -->
+<div id="sticky-bar">
+  <span class="sb-lbl">ИТОГО</span>
+  <span class="sb-total" id="sb-total">—</span>
+  <div class="sb-right">
+    <span class="sb-shape" id="sb-shape">—</span>
+    <span class="sb-lm" id="sb-lm">0 л.м</span>
   </div>
 </div>
 
-</div>
-
 <script>
+// ═══ TOOLTIPS ═══
+const tipPopup = document.getElementById('tip-popup');
+document.querySelectorAll('.tip').forEach(el => {
+  el.addEventListener('mouseenter', e => {
+    tipPopup.textContent = el.dataset.tip || '';
+    tipPopup.style.display = 'block';
+    moveTip(e);
+  });
+  el.addEventListener('mousemove', moveTip);
+  el.addEventListener('mouseleave', () => { tipPopup.style.display = 'none'; });
+});
+function moveTip(e) {
+  let x = e.clientX + 14, y = e.clientY + 14;
+  if (x + 240 > window.innerWidth) x = e.clientX - 244;
+  if (y + 160 > window.innerHeight) y = e.clientY - 140;
+  tipPopup.style.left = x + 'px';
+  tipPopup.style.top = y + 'px';
+}
+
 // ═══ STATE ═══
-const state = { corp:'white', upH:'720', fac:'dsp', top:'pf', back:'tg' };
+const state = { shape:'straight', walls:{A:2.4,B:1.8,C:1.6}, corp:'white', upH:'720', trEnabled:false, trH:'360', trCustomMm:500, fac:'dsp', top:'tp', back:'tg', drw:'quadro', drwQty:0, scEnabled:false, scProf:'g1', scColor:'alu', scGlass:'clear' };
+const SHAPE_WALLS  = { straight:['A'], L:['A','B'], U:['A','B','C'], parallel:['A','B'] };
+const SHAPE_LABELS = { straight:'Прямая', L:'Г-образная', U:'П-образная', parallel:'Параллельная' };
+const WALL_TIPS    = { A:'Основная стена', B:'Боковая стена', C:'Третья стена' };
+
+function getTotalLen() {
+  return SHAPE_WALLS[state.shape].reduce((s,w) => s + (parseFloat(state.walls[w]) || 0), 0);
+}
+
+// ═══ SHAPE ═══
+function setShape(shape) {
+  state.shape = shape;
+  document.querySelectorAll('.shape-btn').forEach(b => b.classList.toggle('sel', b.dataset.shape === shape));
+  renderWalls();
+  calc();
+}
+
+function renderWalls() {
+  const walls = SHAPE_WALLS[state.shape];
+  document.getElementById('walls-grid').innerHTML = walls.map(w => `
+    <div class="wall-row">
+      <span class="wall-label" title="${WALL_TIPS[w]}">${w}</span>
+      <input type="range" id="ws-${w}" class="wall-slider" min="0.5" max="6" step="0.1" value="${state.walls[w]}"
+        oninput="wallChange('${w}',this.value,true)">
+      <input type="number" id="wn-${w}" class="wall-num" min="0.5" max="6" step="0.1" value="${state.walls[w]}"
+        oninput="wallChange('${w}',this.value,false)">
+    </div>`).join('');
+  updateTotalLm();
+}
+
+function wallChange(wall, val, fromSlider) {
+  val = parseFloat(val) || 0.5;
+  val = Math.max(0.5, Math.min(6, val));
+  state.walls[wall] = val;
+  if (fromSlider) { const n = document.getElementById('wn-'+wall); if(n) n.value = val; }
+  else { const s = document.getElementById('ws-'+wall); if(s) s.value = val; }
+  updateTotalLm();
+  calc();
+}
+
+function updateTotalLm() {
+  document.getElementById('total-lm-val').textContent = getTotalLen().toFixed(1) + ' л.м';
+}
 
 // ═══ UI ═══
-function sel(btn, group){
-  document.querySelectorAll(`[data-g="${group}"]`).forEach(b=>b.classList.remove('sel'));
+function sel(btn, group) {
+  document.querySelectorAll(`[data-g="${group}"]`).forEach(b => b.classList.remove('sel'));
   btn.classList.add('sel');
   state[group] = btn.dataset.v;
   calc();
 }
+function toggleSec(id) { document.getElementById(id).classList.toggle('open'); }
 
-function toggleSection(id){
-  const s = document.getElementById(id);
-  s.classList.toggle('open');
+function toggleSidebar() {
+  const app = document.querySelector('.app');
+  const btn = document.getElementById('sidebar-toggle-btn');
+  app.classList.toggle('no-sidebar');
+  btn.classList.toggle('active', app.classList.contains('no-sidebar'));
+  btn.textContent = app.classList.contains('no-sidebar') ? '⚙ Показать настройки' : '⚙ Настройки цен';
 }
 
-// ═══ GET PRICE ═══
-function p(id){ return parseFloat(document.getElementById(id).value)||0; }
+// ═══ THIRD ROW ═══
+function toggleTrEnabled() {
+  state.trEnabled = document.getElementById('tr-enabled').checked;
+  document.getElementById('tr-config').style.display = state.trEnabled ? 'block' : 'none';
+  calc();
+}
 
-function getPrices(){
+function setTrH(h) {
+  state.trH = h;
+  document.querySelectorAll('[data-trh]').forEach(b => b.classList.toggle('sel', b.dataset.trh === h));
+  document.getElementById('tr-custom-row').style.display = h === 'custom' ? 'grid' : 'none';
+  calc();
+}
+
+function trCustomChange(val, fromSlider) {
+  val = parseInt(val) || 500;
+  val = Math.max(200, Math.min(900, val));
+  state.trCustomMm = val;
+  if (fromSlider) document.getElementById('tr-custom-mm').value = val;
+  else document.getElementById('tr-custom-slider').value = val;
+  calc();
+}
+
+function drwQtyChange(val, fromSlider) {
+  val = parseInt(val) || 0;
+  val = Math.max(0, Math.min(50, val));
+  state.drwQty = val;
+  if (fromSlider) document.getElementById('drw-qty-num').value = val;
+  else {
+    const slider = document.getElementById('drw-qty-slider');
+    slider.value = Math.min(val, parseInt(slider.max));
+  }
+  calc();
+}
+
+function toggleScEnabled() {
+  state.scEnabled = document.getElementById('sc-enabled').checked;
+  document.getElementById('sc-config').style.display = state.scEnabled ? 'block' : 'none';
+  calc();
+}
+
+function scDoorPrice(pr, profKey, glassKey, w, h) {
+  const perimeter = 2*(w+h)/1000;
+  const area = (w*h)/1000000;
+  return perimeter * (pr.sc.prof[profKey]||0) + area * (pr.sc.glass[glassKey]||0);
+}
+
+// ═══ PRICES ═══
+function p(id) { return parseFloat(document.getElementById(id).value) || 0; }
+function getPrices() {
   return {
-    corpLow:    p('p-corp-low'),
-    corpUp720:  p('p-corp-up720'),
-    corpUp920:  p('p-corp-up920'),
-    corpColorPct: p('p-corp-color-pct'),
-    fac: {
-      dsp:    { min:p('p-fac-dsp-min'),    max:p('p-fac-dsp-max') },
-      pvc:    { min:p('p-fac-pvc-min'),    max:p('p-fac-pvc-max') },
-      hpl:    { min:p('p-fac-hpl-min'),    max:p('p-fac-hpl-max') },
-      enamel: { min:p('p-fac-enamel-min'), max:p('p-fac-enamel-max') },
+    corpLow:p('p-corp-low'), corpUp720:p('p-corp-up720'), corpUp920:p('p-corp-up920'), corpColorPct:p('p-corp-color-pct'),
+    shapePct:{ straight:p('p-shape-straight'), L:p('p-shape-L'), U:p('p-shape-U'), parallel:p('p-shape-parallel') },
+    tr:{ '360':p('p-tr-360'), '460':p('p-tr-460'), 'custom':p('p-tr-custom'), facPct:p('p-tr-fac-pct') },
+    fac:{
+      dsp:     {min:p('p-fac-dsp-min'),     max:p('p-fac-dsp-max')},
+      pvc:     {min:p('p-fac-pvc-min'),     max:p('p-fac-pvc-max')},
+      hpl:     {min:p('p-fac-hpl-min'),     max:p('p-fac-hpl-max')},
+      enamel_m:{min:p('p-fac-enamel-m-min'),max:p('p-fac-enamel-m-max')},
+      enamel_g:{min:p('p-fac-enamel-g-min'),max:p('p-fac-enamel-g-max')},
     },
-    top:  { pf:p('p-top-pf'), tp:p('p-top-tp'), hpl:p('p-top-hpl'), quartz:p('p-top-quartz') },
-    back: { tg:p('p-back-tg'), glass:p('p-back-glass'), tile:p('p-back-tile'), hpl:p('p-back-hpl') },
-    led:       p('p-led'),
-    handles:   p('p-handles'),
-    softclose: p('p-softclose'),
-    drawers:   p('p-drawers'),
+    top:{ tp:p('p-top-tp'), hpl:p('p-top-hpl'), quartz:p('p-top-quartz') },
+    back:{ tg:p('p-back-tg'), glass:p('p-back-glass'), hpl:p('p-back-hpl') },
+    led:p('p-led'), handles:p('p-handles'),
+    drw:{ quadro:p('p-drw-quadro'), atira:p('p-drw-atira'), avantech:p('p-drw-avantech') },
+    sc:{
+      prof:{ g1:p('p-sc-prof-g1'), g2:p('p-sc-prof-g2'), g3:p('p-sc-prof-g3') },
+      glass:{ clear:p('p-sc-glass-clear'), matte:p('p-sc-glass-matte'), bronze:p('p-sc-glass-bronze'), lacobel:p('p-sc-glass-lacobel') },
+    },
   };
 }
 
 // ═══ LABELS ═══
-const facLabels  = { dsp:'ДСП (ПДЧ)', pvc:'МДФ плёнка (PVC)', hpl:'МДФ-пластик (HPL)', enamel:'МДФ-эмаль (лак)' };
-const topLabels  = { pf:'Постформинг', tp:'Термоплот (ДСП)', hpl:'HPL-панель', quartz:'Кварцевый агломерат' };
-const backLabels = { tg:'Термогръб (ДСП)', glass:'Закалённое стекло', tile:'Плитка (керамика)', hpl:'HPL-панель' };
+const FAC_L  = { dsp:'ДСП (ПДЧ)', pvc:'МДФ плёнка (PVC)', hpl:'МДФ-пластик (Salex Exclusive)', enamel_m:'МДФ-эмаль мат', enamel_g:'МДФ-эмаль глянец' };
+const TOP_L  = { tp:'Термоплот (ДСП)', hpl:'HPL-панель', quartz:'Камень' };
+const BACK_L = { tg:'Термогръб (ДСП)', glass:'Закалённое стекло', hpl:'HPL-панель' };
+const DRW_L  = { quadro:'ДСП + Quadro V6 Hettich', atira:'Hettich Atira', avantech:'Hettich AvanTech YOU' };
+const SC_PROF_L  = { g1:'Группа 1 (Plus 6/7/10)', g2:'Группа 2 (Plus 4/11/15/20)', g3:'Группа 3 (Plus 2)' };
+const SC_COLOR_L = { alu:'Алюминий', black:'Чёрный мат', inox:'Инокс', gold:'Золото', champ:'Шампанское' };
+const SC_GLASS_L = { clear:'Прозрачное', matte:'Матовое', bronze:'Бронза/дымное', lacobel:'Лакобел' };
 
 // ═══ FORMAT ═══
-function fmt(v){ return v > 0 ? v.toFixed(0)+' €' : '—'; }
-function fmtR(min,max){ return min===max ? min.toFixed(0)+' €' : min.toFixed(0)+'–'+max.toFixed(0)+' €'; }
+function fmt(v) { return v > 0 ? Math.round(v) + ' €' : '—'; }
+function fmtR(a,b) { return a===b ? Math.round(a)+' €' : Math.round(a)+'–'+Math.round(b)+' €'; }
 
-// ═══ CALC ═══
-function calc(){
-  const len = parseFloat(document.getElementById('c-len').value)||0;
-  if(len <= 0){ document.getElementById('result-area').innerHTML='<div class="alert">Введите длину кухни</div>'; return; }
+// ═══ DELTAS ═══
+function updateDeltas(pr) {
+  // Facades
+  const facBase = pr.fac.dsp.min;
+  ['dsp','pvc','hpl','enamel_m','enamel_g'].forEach(k => {
+    const el = document.getElementById('d-fac-'+k); if(!el) return;
+    const d = pr.fac[k].min - facBase;
+    el.textContent = d<=0 ? 'БАЗА' : '+'+Math.round(d)+' €/л.м';
+    el.className = 'bd ' + (d<=0 ? 'bd-base' : 'bd-plus');
+  });
+  // Countertops
+  const topBase = Math.min(pr.top.tp, pr.top.hpl, pr.top.quartz);
+  ['tp','hpl','quartz'].forEach(k => {
+    const el = document.getElementById('d-top-'+k); if(!el) return;
+    const d = pr.top[k] - topBase;
+    el.textContent = d<=0 ? 'БАЗА' : '+'+Math.round(d)+' €/л.м';
+    el.className = 'bd ' + (d<=0 ? 'bd-base' : 'bd-plus');
+  });
+  // Backsplash
+  const backBase = Math.min(pr.back.tg, pr.back.glass, pr.back.hpl);
+  ['tg','glass','hpl'].forEach(k => {
+    const el = document.getElementById('d-back-'+k); if(!el) return;
+    const d = pr.back[k] - backBase;
+    el.textContent = d<=0 ? 'БАЗА' : '+'+Math.round(d)+' €/л.м';
+    el.className = 'bd ' + (d<=0 ? 'bd-base' : 'bd-plus');
+  });
+  // Height delta
+  const hd = pr.corpUp920 - pr.corpUp720;
+  const el920 = document.getElementById('d-uph-920');
+  if (el920) { el920.textContent = hd<=0 ? 'БАЗА' : '+'+Math.round(hd)+' €/л.м'; el920.className = 'bd '+(hd<=0?'bd-base':'bd-plus'); }
+  // Third row deltas
+  const trBase = pr.tr['360'];
+  ['360','460','custom'].forEach(k => {
+    const el = document.getElementById('d-tr-'+k+'b'); if(!el) return;
+    const v = pr.tr[k];
+    const d = v - trBase;
+    if (k === '360') { el.textContent = 'БАЗА'; el.className = 'bd bd-base'; }
+    else { el.textContent = d<=0 ? Math.round(v)+' €/л.м' : '+'+Math.round(d)+' €/л.м'; el.className = 'bd '+(d<=0?'bd-base':'bd-plus'); }
+  });
+  // Color surcharge
+  const elColor = document.getElementById('d-corp-color');
+  if (elColor) {
+    const base = pr.corpLow + pr.corpUp720;
+    elColor.textContent = '+'+Math.round(base*pr.corpColorPct/100)+' €/л.м';
+  }
+  // Drawers
+  const drwBase = pr.drw.quadro;
+  ['quadro','atira','avantech'].forEach(k => {
+    const el = document.getElementById('d-drw-'+k); if(!el) return;
+    const d = pr.drw[k] - drwBase;
+    el.textContent = d<=0 ? Math.round(pr.drw[k])+' €/шт' : '+'+Math.round(d)+' €/шт';
+    el.className = 'bd ' + (d<=0 ? 'bd-base' : 'bd-plus');
+  });
+  // Showcase profiles
+  const scProfBase = Math.min(pr.sc.prof.g1, pr.sc.prof.g2, pr.sc.prof.g3);
+  ['g1','g2','g3'].forEach(k => {
+    const el = document.getElementById('d-sc-prof-'+k); if(!el) return;
+    const d = pr.sc.prof[k] - scProfBase;
+    el.textContent = d<=0 ? Math.round(pr.sc.prof[k])+' €/м' : '+'+Math.round(d)+' €/м';
+    el.className = 'bd ' + (d<=0 ? 'bd-base' : 'bd-plus');
+  });
+  // Showcase glass
+  const scGlassBase = pr.sc.glass.clear;
+  ['clear','matte','bronze','lacobel'].forEach(k => {
+    const el = document.getElementById('d-sc-glass-'+k); if(!el) return;
+    const d = pr.sc.glass[k] - scGlassBase;
+    el.textContent = d<=0 ? Math.round(pr.sc.glass[k])+' €/м²' : '+'+Math.round(d)+' €/м²';
+    el.className = 'bd ' + (d<=0 ? 'bd-base' : 'bd-plus');
+  });
+  // Shape surcharge labels on form buttons
+  ['straight','L','U','parallel'].forEach(k => {
+    const el = document.getElementById('d-shape-'+k); if(!el) return;
+    const pct = pr.shapePct[k] || 0;
+    el.textContent = pct > 0 ? '+'+pct+'%' : '';
+  });
+}
 
+// CHART COLORS
+const CC = { corp:'#4a7cbc', fac:'#c9a84c', top:'#4a9c6e', back:'#d4804a', extras:'#9b59b6', shape:'#cc6677', drw:'#6c7a89', sc:'#3b95a8' };
+
+// ═══ MAIN CALC ═══
+function calc() {
+  const len = getTotalLen();
   const pr = getPrices();
+  updateDeltas(pr);
 
-  // CORPUS per l.m
-  let corpBaseLm = pr.corpLow + (state.upH==='920' ? pr.corpUp920 : pr.corpUp720);
-  let corpSurcharge = 0;
-  if(state.corp==='color') corpSurcharge = corpBaseLm * pr.corpColorPct / 100;
-  let corpLm = corpBaseLm + corpSurcharge;
+  document.getElementById('sb-shape').textContent = SHAPE_LABELS[state.shape];
+  document.getElementById('sb-lm').textContent = len.toFixed(1) + ' л.м';
 
-  // FACADE per l.m (min/max range)
+  if (len <= 0) {
+    document.getElementById('result-area').innerHTML = '<div class="alert">Введите длину кухни</div>';
+    document.getElementById('sb-total').textContent = '—';
+    return;
+  }
+
+  // Corpus
+  const corpBaseLm = pr.corpLow + (state.upH==='920' ? pr.corpUp920 : pr.corpUp720);
+  const corpSurcharge = state.corp==='color' ? corpBaseLm * pr.corpColorPct / 100 : 0;
+  const corpLm = corpBaseLm + corpSurcharge;
+
+  // Third row (антресоли)
+  const trOn = state.trEnabled;
+  const trCorpLm = trOn ? pr.tr[state.trH] : 0;
+  const trHeightMm = trOn ? (state.trH === 'custom' ? state.trCustomMm : parseInt(state.trH)) : 0;
+
+  // Facade (range) + третий ряд фасад 20мм наценка
   const facPr = pr.fac[state.fac];
-  let facMinLm = facPr.min, facMaxLm = facPr.max;
+  const trFacMinLm = trOn ? facPr.min * pr.tr.facPct / 100 : 0;
+  const trFacMaxLm = trOn ? facPr.max * pr.tr.facPct / 100 : 0;
+  const facMinLm = facPr.min, facMaxLm = facPr.max;
 
-  // COUNTERTOP per l.m
-  let topLm = pr.top[state.top];
+  // Countertop
+  const topLm = pr.top[state.top];
 
-  // BACKSPLASH per l.m
-  let backLm = pr.back[state.back];
+  // Backsplash
+  const backLm = pr.back[state.back];
 
-  // EXTRAS per l.m
+  // Extras
   let extraLm = 0;
   const extraRows = [];
-  if(document.getElementById('x-led').checked){      extraLm += pr.led;       if(pr.led>0)       extraRows.push(['LED подсветка', pr.led]); }
-  if(document.getElementById('x-handles').checked){  extraLm += pr.handles;   if(pr.handles>0)   extraRows.push(['Ручки', pr.handles]); }
-  if(document.getElementById('x-softclose').checked){extraLm += pr.softclose; if(pr.softclose>0) extraRows.push(['Доводчики soft-close', pr.softclose]); }
-  if(document.getElementById('x-drawers').checked){  extraLm += pr.drawers;   if(pr.drawers>0)   extraRows.push(['Выдвижные ящики', pr.drawers]); }
+  const chk = id => document.getElementById(id).checked;
+  if (chk('x-led'))      { extraLm+=pr.led;       if(pr.led>0)       extraRows.push(['LED подсветка',pr.led]); }
+  if (chk('x-handles'))  { extraLm+=pr.handles;   if(pr.handles>0)   extraRows.push(['Ручки',pr.handles]); }
 
-  // TOTALS per l.m
-  const totalMinLm = corpLm + facMinLm + topLm + backLm + extraLm;
-  const totalMaxLm = corpLm + facMaxLm + topLm + backLm + extraLm;
+  // Drawers (qty × €/шт, не зависит от л.м)
+  const drwUnit = pr.drw[state.drw];
+  const drwQty = state.drwQty;
+  const drwTotal = drwUnit * drwQty;
 
-  // TOTALS for full kitchen
-  const totalMin = totalMinLm * len;
-  const totalMax = totalMaxLm * len;
+  // Showcases (витрины) — qty × (периметр×профиль + площадь×стекло)
+  const scOn = state.scEnabled;
+  const scQty = scOn ? Math.max(0, parseInt(document.getElementById('sc-qty').value)||0) : 0;
+  const scW = scOn ? Math.max(0, parseInt(document.getElementById('sc-w').value)||0) : 0;
+  const scH = scOn ? Math.max(0, parseInt(document.getElementById('sc-h').value)||0) : 0;
+  const scDoor = scOn && scW>0 && scH>0 ? scDoorPrice(pr, state.scProf, state.scGlass, scW, scH) : 0;
+  const scTotal = scDoor * scQty;
+  // Live info-line under showcase qty inputs
+  if (scOn) {
+    const elInfo = document.getElementById('sc-info-line');
+    if (elInfo) {
+      const perim = 2*(scW+scH)/1000;
+      const area = (scW*scH)/1000000;
+      elInfo.textContent = `1 дверь ${scW}×${scH}мм: периметр ${perim.toFixed(2)}м, площадь ${area.toFixed(3)}м² → ${Math.round(scDoor)} €/дверь`;
+    }
+  }
 
-  // BUILD TABLE
-  let rows = '';
+  const baseMinLm = corpLm + facMinLm + topLm + backLm + extraLm + trCorpLm + trFacMinLm;
+  const baseMaxLm = corpLm + facMaxLm + topLm + backLm + extraLm + trCorpLm + trFacMaxLm;
+  const shapePct = pr.shapePct[state.shape] || 0;
+  const shapeMult = 1 + shapePct/100;
+  const totalMinLm = baseMinLm * shapeMult;
+  const totalMaxLm = baseMaxLm * shapeMult;
+  const shapeSurchMinLm = baseMinLm * shapePct/100;
+  const shapeSurchMaxLm = baseMaxLm * shapePct/100;
+  const totalMin = totalMinLm * len + drwTotal + scTotal;
+  const totalMax = totalMaxLm * len + drwTotal + scTotal;
 
-  rows += `<div class="br-row head"><span>Статья</span><span class="val">€ / л.м</span><span class="val">€ итого (${len} л.м)</span></div>`;
+  document.getElementById('sb-total').textContent = fmtR(totalMin, totalMax);
 
-  // corpus
-  rows += `<div class="br-row"><span class="name">Корпус${state.corp==='color'?' (цветной)':''} — низы H=720мм + верха H=${state.upH}мм</span><span class="val">${fmt(corpBaseLm)}</span><span class="val">${fmt(corpBaseLm*len)}</span></div>`;
-  if(corpSurcharge>0)
-    rows += `<div class="br-row sub"><span class="name">↳ наценка цветной корпус (+${pr.corpColorPct}%)</span><span class="val">+${fmt(corpSurcharge)}</span><span class="val">+${fmt(corpSurcharge*len)}</span></div>`;
+  // CHART
+  const facMid = (facMinLm + facMaxLm) / 2;
+  const trFacMid = (trFacMinLm + trFacMaxLm) / 2;
+  const baseMidLm = corpLm + trCorpLm + facMid + trFacMid + topLm + backLm + extraLm;
+  const shapeSurchMid = baseMidLm * shapePct/100 * len;
+  const totalMid = baseMidLm * len + shapeSurchMid + drwTotal + scTotal;
+  const chartData = [
+    {k:'corp',  lbl:'Корпус'+(trOn?' + 3-й ряд':''), v:(corpLm + trCorpLm)*len},
+    {k:'fac',   lbl:'Фасады'+(trOn?' + 20мм':''),    v:(facMid + trFacMid)*len},
+    {k:'top',   lbl:'Столешница', v:topLm*len},
+    {k:'back',  lbl:'Фартук',     v:backLm*len},
+    {k:'extras',lbl:'Дополнения', v:extraLm*len},
+    {k:'shape', lbl:'Форма +'+shapePct+'%', v:shapeSurchMid},
+    {k:'drw',   lbl:'Ящики',      v:drwTotal},
+    {k:'sc',    lbl:'Витрины',    v:scTotal},
+  ].filter(d => d.v > 0);
 
-  // facade
-  rows += `<div class="br-row"><span class="name">Фасады — ${facLabels[state.fac]}</span><span class="val">${fmtR(facMinLm,facMaxLm)}</span><span class="val">${fmtR(facMinLm*len,facMaxLm*len)}</span></div>`;
+  const chartSegs = chartData.map(d => {
+    const pct = totalMid > 0 ? (d.v/totalMid*100).toFixed(1) : 0;
+    return `<div class="cb-seg" style="width:${pct}%;background:${CC[d.k]}" title="${d.lbl}: ${Math.round(d.v)} €"></div>`;
+  }).join('');
+  const legend = chartData.map(d => {
+    const pct = totalMid > 0 ? Math.round(d.v/totalMid*100) : 0;
+    return `<div class="cl-item"><div class="cl-dot" style="background:${CC[d.k]}"></div>${d.lbl} ${pct}%</div>`;
+  }).join('');
 
-  // countertop
-  rows += `<div class="br-row"><span class="name">Столешница — ${topLabels[state.top]}</span><span class="val">${topLm>0?fmt(topLm):'—'}</span><span class="val">${topLm>0?fmt(topLm*len):'—'}</span></div>`;
-
-  // backsplash
-  rows += `<div class="br-row"><span class="name">Фартук — ${backLabels[state.back]}</span><span class="val">${backLm>0?fmt(backLm):'—'}</span><span class="val">${backLm>0?fmt(backLm*len):'—'}</span></div>`;
-
-  // extras
-  extraRows.forEach(([name, price])=>{
-    rows += `<div class="br-row sub"><span class="name">↳ ${name}</span><span class="val">${fmt(price)}</span><span class="val">${fmt(price*len)}</span></div>`;
-  });
-
-  // total
-  rows += `<div class="br-row total-row"><span class="name">ИТОГО</span><span class="val">${fmtR(totalMinLm,totalMaxLm)}</span><span class="val">${fmtR(totalMin,totalMax)}</span></div>`;
+  // BREAKDOWN TABLE
+  const wallDesc = SHAPE_WALLS[state.shape].map(w => w+'='+state.walls[w]+'м').join(' + ');
+  let rows = `<div class="br-row head"><span>Статья</span><span class="val">€/л.м</span><span class="val">€ итого (${len.toFixed(1)} л.м)</span></div>`;
+  rows += `<div class="br-row"><span class="name">Корпус${state.corp==='color'?' (цветной)':''} — низы H=720 + верха H=${state.upH}мм</span><span class="val">${fmt(corpBaseLm)}</span><span class="val">${fmt(corpBaseLm*len)}</span></div>`;
+  if (corpSurcharge > 0)
+    rows += `<div class="br-row sub"><span class="name">↳ наценка цветной (+${pr.corpColorPct}%)</span><span class="val">+${fmt(corpSurcharge)}</span><span class="val">+${fmt(corpSurcharge*len)}</span></div>`;
+  if (trOn) {
+    rows += `<div class="br-row"><span class="name">Третий ряд — антресоли H=${trHeightMm}мм (глубина 560мм)</span><span class="val">${fmt(trCorpLm)}</span><span class="val">${fmt(trCorpLm*len)}</span></div>`;
+    rows += `<div class="br-row sub"><span class="name">↳ фасад 20мм (+${pr.tr.facPct}% к цене фасада)</span><span class="val">${fmtR(trFacMinLm,trFacMaxLm)}</span><span class="val">${fmtR(trFacMinLm*len,trFacMaxLm*len)}</span></div>`;
+  }
+  rows += `<div class="br-row"><span class="name">Фасады — ${FAC_L[state.fac]}</span><span class="val">${fmtR(facMinLm,facMaxLm)}</span><span class="val">${fmtR(facMinLm*len,facMaxLm*len)}</span></div>`;
+  rows += `<div class="br-row"><span class="name">Столешница — ${TOP_L[state.top]}</span><span class="val">${topLm>0?fmt(topLm):'—'}</span><span class="val">${topLm>0?fmt(topLm*len):'—'}</span></div>`;
+  rows += `<div class="br-row"><span class="name">Фартук — ${BACK_L[state.back]}</span><span class="val">${backLm>0?fmt(backLm):'—'}</span><span class="val">${backLm>0?fmt(backLm*len):'—'}</span></div>`;
+  extraRows.forEach(([n,pr2]) => { rows += `<div class="br-row sub"><span class="name">↳ ${n}</span><span class="val">${fmt(pr2)}</span><span class="val">${fmt(pr2*len)}</span></div>`; });
+  if (shapePct > 0) {
+    rows += `<div class="br-row"><span class="name">Наценка форма — ${SHAPE_LABELS[state.shape]} (+${shapePct}%)</span><span class="val">${fmtR(shapeSurchMinLm,shapeSurchMaxLm)}</span><span class="val">${fmtR(shapeSurchMinLm*len,shapeSurchMaxLm*len)}</span></div>`;
+  }
+  if (drwTotal > 0) {
+    rows += `<div class="br-row"><span class="name">Ящики — ${DRW_L[state.drw]} × ${drwQty} шт</span><span class="val">${Math.round(drwUnit)} €/шт</span><span class="val">${fmt(drwTotal)}</span></div>`;
+  }
+  if (scTotal > 0) {
+    rows += `<div class="br-row"><span class="name">Витрины — ${SC_PROF_L[state.scProf]}, ${SC_COLOR_L[state.scColor]}, ${SC_GLASS_L[state.scGlass]} × ${scQty} шт (${scW}×${scH}мм)</span><span class="val">${Math.round(scDoor)} €/дверь</span><span class="val">${fmt(scTotal)}</span></div>`;
+  }
+  const extras = (drwTotal>0?' + ящики':'') + (scTotal>0?' + витрины':'');
+  rows += `<div class="br-row tr"><span class="name">ИТОГО</span><span class="val">${fmtR(totalMinLm,totalMaxLm)}${extras}</span><span class="val">${fmtR(totalMin,totalMax)}</span></div>`;
 
   // SUMMARY BOXES
-  const boxes = `
-    <div class="summary-boxes">
-      <div class="sum-box">
-        <div class="sb-val">${len} л.м</div>
-        <div class="sb-label">Длина кухни</div>
-      </div>
-      <div class="sum-box">
-        <div class="sb-val">${fmtR(totalMinLm,totalMaxLm)}</div>
-        <div class="sb-label">Цена за 1 л.м</div>
-      </div>
-      <div class="sum-box">
-        <div class="sb-val">${fmtR(totalMin,totalMax)}</div>
-        <div class="sb-label">Общая стоимость</div>
-      </div>
-    </div>`;
+  const boxes = `<div class="sum-boxes">
+    <div class="sum-box"><div class="sv">${len.toFixed(1)} л.м</div><div class="sl">${SHAPE_LABELS[state.shape]}<br>${wallDesc}</div></div>
+    <div class="sum-box"><div class="sv">${fmtR(totalMinLm,totalMaxLm)}</div><div class="sl">Цена за 1 л.м</div></div>
+    <div class="sum-box"><div class="sv">${fmtR(totalMin,totalMax)}</div><div class="sl">Общая стоимость</div></div>
+  </div>`;
 
-  const orderForm = `
-    <div class="order-form">
-      <div class="order-form-title">Сохранить заявку в кабинет</div>
-      <div class="order-form-grid">
-        <input class="of-input" id="of-name" type="text" placeholder="Имя клиента">
-        <input class="of-input" id="of-phone" type="tel" placeholder="Телефон">
-        <input class="of-input" id="of-note" type="text" placeholder="Примечание (необязательно)">
-      </div>
-      <div class="of-row">
-        <button class="save-order-btn" onclick="saveOrder()">💾 Сохранить заявку</button>
-        <span class="save-order-msg" id="of-msg">✓ Заявка сохранена</span>
-      </div>
-    </div>`;
+  // WHATSAPP
+  const waNum = (document.getElementById('p-whatsapp').value||'').replace(/\D/g,'');
+  const company = document.getElementById('p-company').value.trim() || 'Калькулятор кухни';
+  const waText = encodeURIComponent(
+    `📐 Расчёт кухни — ${company}\n` +
+    `━━━━━━━━━━━━━━━━━━━━\n` +
+    `Форма: ${SHAPE_LABELS[state.shape]} (${wallDesc} = ${len.toFixed(1)} л.м)\n` +
+    `Корпус: ${state.corp==='white'?'Белый':'Цветной'}, верха H=${state.upH}мм\n` +
+    `Фасады: ${FAC_L[state.fac]}\n` +
+    `Столешница: ${TOP_L[state.top]}\n` +
+    `Фартук: ${BACK_L[state.back]}\n` +
+    (extraRows.length ? `Дополнения: ${extraRows.map(r=>r[0]).join(', ')}\n` : '') +
+    `━━━━━━━━━━━━━━━━━━━━\n` +
+    `💰 ИТОГО: ${fmtR(totalMin,totalMax)}`
+  );
+  const waHref = waNum ? `https://wa.me/${waNum}?text=${waText}` : '#';
+  const waStyle = !waNum ? 'style="opacity:.45;pointer-events:none" title="Укажите WhatsApp в настройках"' : '';
 
-  document.getElementById('result-area').innerHTML =
-    `<div class="breakdown">${rows}</div>${boxes}${orderForm}`;
+  const actions = `<div class="action-btns">
+    <button class="action-btn btn-tg" onclick="sendToTelegram()">✈️ Отправить в Telegram</button>
+    <button class="action-btn btn-print" onclick="window.print()">🖨 Распечатать / PDF</button>
+    <button class="action-btn btn-save" onclick="saveCalc()">💾 Сохранить расчёт</button>
+  </div>`;
 
-  // restore name/phone if filled
-  const _n = sessionStorage.getItem('of-name-tmp');
-  const _p = sessionStorage.getItem('of-phone-tmp');
-  if(_n) document.getElementById('of-name').value = _n;
-  if(_p) document.getElementById('of-phone').value = _p;
+  document.getElementById('result-area').innerHTML = `
+    <div class="chart-wrap">
+      <div class="chart-lbl">Структура стоимости</div>
+      <div class="chart-bar">${chartSegs}</div>
+      <div class="chart-legend">${legend}</div>
+    </div>
+    <div class="breakdown">${rows}</div>
+    ${boxes}${actions}`;
+}
+
+// ═══ TELEGRAM ═══
+async function sendToTelegram() {
+  const token  = (document.getElementById('p-tg-token').value  || '').trim();
+  const chatId = (document.getElementById('p-tg-chatid').value || '').trim();
+  if (!token || !chatId) { showToast('Укажите токен и Chat ID в настройках', true); return; }
+
+  const len = getTotalLen();
+  if (len <= 0) { showToast('Сначала введите размеры кухни', true); return; }
+
+  const pr = getPrices();
+  const wallDesc = SHAPE_WALLS[state.shape].map(w => w+'='+state.walls[w]+'м').join(' + ');
+  const corpBaseLm = pr.corpLow + (state.upH==='920' ? pr.corpUp920 : pr.corpUp720);
+  const corpSurcharge = state.corp==='color' ? corpBaseLm * pr.corpColorPct / 100 : 0;
+  const corpLm = corpBaseLm + corpSurcharge;
+  const facPr = pr.fac[state.fac];
+  const topLm = pr.top[state.top];
+  const backLm = pr.back[state.back];
+  const trOn = state.trEnabled;
+  const trCorpLm = trOn ? pr.tr[state.trH] : 0;
+  const trHeightMm = trOn ? (state.trH === 'custom' ? state.trCustomMm : parseInt(state.trH)) : 0;
+  const trFacMin = trOn ? facPr.min * pr.tr.facPct / 100 : 0;
+  const trFacMax = trOn ? facPr.max * pr.tr.facPct / 100 : 0;
+  let extraLm = 0;
+  const extraItems = [];
+  const chk = id => document.getElementById(id).checked;
+  if (chk('x-led'))       { extraLm+=pr.led;       if(pr.led>0)       extraItems.push('LED подсветка'); }
+  if (chk('x-handles'))   { extraLm+=pr.handles;   if(pr.handles>0)   extraItems.push('Ручки'); }
+  const drwUnit = pr.drw[state.drw];
+  const drwQty = state.drwQty;
+  const drwTotal = drwUnit * drwQty;
+  const scOn = state.scEnabled;
+  const scQty = scOn ? Math.max(0, parseInt(document.getElementById('sc-qty').value)||0) : 0;
+  const scW = scOn ? Math.max(0, parseInt(document.getElementById('sc-w').value)||0) : 0;
+  const scH = scOn ? Math.max(0, parseInt(document.getElementById('sc-h').value)||0) : 0;
+  const scDoor = scOn && scW>0 && scH>0 ? scDoorPrice(pr, state.scProf, state.scGlass, scW, scH) : 0;
+  const scTotal = scDoor * scQty;
+  const shapePct = pr.shapePct[state.shape] || 0;
+  const shapeMult = 1 + shapePct/100;
+  const totalMin = (corpLm + facPr.min + topLm + backLm + extraLm + trCorpLm + trFacMin) * len * shapeMult + drwTotal + scTotal;
+  const totalMax = (corpLm + facPr.max + topLm + backLm + extraLm + trCorpLm + trFacMax) * len * shapeMult + drwTotal + scTotal;
+  const company = (document.getElementById('p-company').value||'').trim() || 'AAA Мебели';
+  const rng = (a,b) => a===b ? Math.round(a)+' €' : Math.round(a)+'–'+Math.round(b)+' €';
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric'});
+  const timeStr = now.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
+
+  const text =
+    `📐 *Расчёт кухни — ${company}*\n` +
+    `🗓 ${dateStr}  ${timeStr}\n` +
+    `━━━━━━━━━━━━━━━━━━━━\n` +
+    `📏 Форма: ${SHAPE_LABELS[state.shape]} (${wallDesc} = ${len.toFixed(1)} л.м)${shapePct>0?` *+${shapePct}%*`:''}\n` +
+    `🗄 Корпус: ${state.corp==='white'?'Белый':'Цветной'}, верха H=${state.upH}мм\n` +
+    (trOn ? `🔺 Третий ряд: H=${trHeightMm}мм (560мм, фасад 20мм)\n` : '') +
+    `🚪 Фасады: ${FAC_L[state.fac]}\n` +
+    `🪨 Столешница: ${TOP_L[state.top]}\n` +
+    `🟫 Фартук: ${BACK_L[state.back]}\n` +
+    (extraItems.length ? `✨ Дополнения: ${extraItems.join(', ')}\n` : '') +
+    (drwQty > 0 ? `📦 Ящики: ${DRW_L[state.drw]} × ${drwQty} шт = ${Math.round(drwTotal)} €\n` : '') +
+    (scTotal > 0 ? `🪟 Витрины: ${SC_PROF_L[state.scProf]}, ${SC_COLOR_L[state.scColor]}, ${SC_GLASS_L[state.scGlass]} × ${scQty} шт ${scW}×${scH}мм = ${Math.round(scTotal)} €\n` : '') +
+    `━━━━━━━━━━━━━━━━━━━━\n` +
+    `💰 *ИТОГО: ${rng(totalMin, totalMax)}*`;
+
+  try {
+    const resp = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: chatId, text, parse_mode: 'Markdown' })
+    });
+    const data = await resp.json();
+    if (data.ok) {
+      showToast('✓ Отправлено в Telegram!');
+    } else {
+      showToast('Ошибка Telegram: ' + (data.description || 'неизвестная'), true);
+    }
+  } catch {
+    showToast('Нет интернета или ошибка соединения', true);
+  }
+}
+
+// ═══ TOAST ═══
+function showToast(msg, isErr) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'show' + (isErr ? ' err' : '');
+  clearTimeout(t._to);
+  t._to = setTimeout(() => { t.className = ''; }, 2800);
+}
+
+// ═══ INDEXEDDB (folder handle persistence) ═══
+const IDB = { name:'kitchen-calc-dir', store:'handles', key:'saveDir' };
+function idbOpen() {
+  return new Promise((res, rej) => {
+    const r = indexedDB.open(IDB.name, 1);
+    r.onupgradeneeded = e => e.target.result.createObjectStore(IDB.store);
+    r.onsuccess = e => res(e.target.result);
+    r.onerror = rej;
+  });
+}
+async function idbGet() {
+  try {
+    const db = await idbOpen();
+    return new Promise(res => {
+      const r = db.transaction(IDB.store,'readonly').objectStore(IDB.store).get(IDB.key);
+      r.onsuccess = e => res(e.target.result || null);
+      r.onerror = () => res(null);
+    });
+  } catch { return null; }
+}
+async function idbSet(val) {
+  try {
+    const db = await idbOpen();
+    return new Promise((res, rej) => {
+      const tx = db.transaction(IDB.store,'readwrite');
+      tx.objectStore(IDB.store).put(val, IDB.key);
+      tx.oncomplete = res; tx.onerror = rej;
+    });
+  } catch {}
+}
+
+let _dirHandle = null;
+
+async function ensureDir() {
+  if (!_dirHandle) _dirHandle = await idbGet();
+  if (_dirHandle) {
+    try {
+      const perm = await _dirHandle.queryPermission({ mode:'readwrite' });
+      if (perm === 'granted') return _dirHandle;
+      const perm2 = await _dirHandle.requestPermission({ mode:'readwrite' });
+      if (perm2 === 'granted') return _dirHandle;
+    } catch {}
+    _dirHandle = null;
+  }
+  if (!window.showDirectoryPicker) return null;
+  try {
+    _dirHandle = await window.showDirectoryPicker({ mode:'readwrite', startIn:'desktop' });
+    await idbSet(_dirHandle);
+    return _dirHandle;
+  } catch { return null; }
+}
+
+// ═══ GENERATE SAVE HTML ═══
+function generateCalcHTML() {
+  const len = getTotalLen();
+  const pr = getPrices();
+  const wallDesc = SHAPE_WALLS[state.shape].map(w => w+'='+state.walls[w]+'м').join(' + ');
+  const corpBaseLm = pr.corpLow + (state.upH==='920' ? pr.corpUp920 : pr.corpUp720);
+  const corpSurcharge = state.corp==='color' ? corpBaseLm * pr.corpColorPct / 100 : 0;
+  const corpLm = corpBaseLm + corpSurcharge;
+  const facPr = pr.fac[state.fac];
+  const topLm = pr.top[state.top];
+  const backLm = pr.back[state.back];
+  const trOn = state.trEnabled;
+  const trCorpLm = trOn ? pr.tr[state.trH] : 0;
+  const trHeightMm = trOn ? (state.trH === 'custom' ? state.trCustomMm : parseInt(state.trH)) : 0;
+  const trFacMinLm = trOn ? facPr.min * pr.tr.facPct / 100 : 0;
+  const trFacMaxLm = trOn ? facPr.max * pr.tr.facPct / 100 : 0;
+  let extraLm = 0;
+  const extraItems = [];
+  const chk = id => document.getElementById(id).checked;
+  if (chk('x-led'))       { extraLm+=pr.led;       if(pr.led>0)       extraItems.push(['LED подсветка', pr.led]); }
+  if (chk('x-handles'))   { extraLm+=pr.handles;   if(pr.handles>0)   extraItems.push(['Ручки', pr.handles]); }
+  const drwUnit = pr.drw[state.drw];
+  const drwQty = state.drwQty;
+  const drwTotal = drwUnit * drwQty;
+  const scOn = state.scEnabled;
+  const scQty = scOn ? Math.max(0, parseInt(document.getElementById('sc-qty').value)||0) : 0;
+  const scW = scOn ? Math.max(0, parseInt(document.getElementById('sc-w').value)||0) : 0;
+  const scH = scOn ? Math.max(0, parseInt(document.getElementById('sc-h').value)||0) : 0;
+  const scDoor = scOn && scW>0 && scH>0 ? scDoorPrice(pr, state.scProf, state.scGlass, scW, scH) : 0;
+  const scTotal = scDoor * scQty;
+  const shapePct = pr.shapePct[state.shape] || 0;
+  const shapeMult = 1 + shapePct/100;
+  const baseMinLm = corpLm + facPr.min + topLm + backLm + extraLm + trCorpLm + trFacMinLm;
+  const baseMaxLm = corpLm + facPr.max + topLm + backLm + extraLm + trCorpLm + trFacMaxLm;
+  const totalMinLm = baseMinLm * shapeMult;
+  const totalMaxLm = baseMaxLm * shapeMult;
+  const shapeSurchMinLm = baseMinLm * shapePct/100;
+  const shapeSurchMaxLm = baseMaxLm * shapePct/100;
+  const totalMin = totalMinLm * len + drwTotal + scTotal;
+  const totalMax = totalMaxLm * len + drwTotal + scTotal;
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('ru-RU', {year:'numeric',month:'long',day:'numeric'});
+  const timeStr = now.toLocaleTimeString('ru-RU', {hour:'2-digit',minute:'2-digit'});
+  const company = (document.getElementById('p-company').value||'').trim() || 'Калькулятор кухни';
+  const rng = (a,b) => a===b ? Math.round(a)+' €' : Math.round(a)+'–'+Math.round(b)+' €';
+
+  const extraRows = extraItems.map(([n,v]) =>
+    `<tr><td style="padding-left:24px;color:#666">↳ ${n}</td><td>${Math.round(v)} €/п.м</td><td>${Math.round(v*len)} €</td></tr>`).join('');
+
+  return `<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8">
+<title>Расчёт кухни ${dateStr}</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:720px;margin:40px auto;padding:24px;color:#222;background:#fff}
+h1{font-size:1.4rem;margin-bottom:4px;color:#222}
+.sub{color:#999;font-size:.82rem;margin-bottom:22px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.info-box{border:1px solid #e0e0e0;border-radius:6px;padding:11px 14px}
+.info-box .lbl{font-size:.67rem;text-transform:uppercase;color:#aaa;letter-spacing:.06em;margin-bottom:3px}
+.info-box .val{font-size:.97rem;font-weight:700;color:#333}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th,td{border:1px solid #e0e0e0;padding:8px 12px}
+th{background:#f7f7f7;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:#666}
+td:nth-child(2),td:nth-child(3){text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tr-total{background:#fdf8ec;font-weight:700}
+.tr-total td{font-size:1rem;border-top:2px solid #c9a84c;color:#7a5c1a}
+.footer{margin-top:28px;padding-top:14px;border-top:1px solid #eee;color:#bbb;font-size:.72rem;text-align:center}
+</style></head><body>
+<h1>Расчёт стоимости кухни — ${company}</h1>
+<div class="sub">Составлен ${dateStr} в ${timeStr}</div>
+<div class="info-grid">
+  <div class="info-box"><div class="lbl">Форма кухни</div><div class="val">${SHAPE_LABELS[state.shape]}</div></div>
+  <div class="info-box"><div class="lbl">Размеры (${wallDesc})</div><div class="val">${len.toFixed(1)} п.м</div></div>
+  <div class="info-box"><div class="lbl">Корпус</div><div class="val">${state.corp==='white'?'Белый (стандарт)':'Цветной'} / Верха H=${state.upH}мм</div></div>
+  <div class="info-box"><div class="lbl">Третий ряд</div><div class="val">${trOn?'H='+trHeightMm+'мм (глубина 560мм, фасад 20мм)':'нет'}</div></div>
+  <div class="info-box"><div class="lbl">Фасады</div><div class="val">${FAC_L[state.fac]}</div></div>
+  <div class="info-box"><div class="lbl">Столешница</div><div class="val">${TOP_L[state.top]}</div></div>
+  <div class="info-box"><div class="lbl">Фартук / стеновая панель</div><div class="val">${BACK_L[state.back]}</div></div>
+  ${drwQty>0?`<div class="info-box"><div class="lbl">Ящики</div><div class="val">${DRW_L[state.drw]} × ${drwQty} шт</div></div>`:''}
+  ${scTotal>0?`<div class="info-box"><div class="lbl">Витрины</div><div class="val">${SC_PROF_L[state.scProf]}, ${SC_COLOR_L[state.scColor]}, ${SC_GLASS_L[state.scGlass]} × ${scQty} шт (${scW}×${scH}мм)</div></div>`:''}
+</div>
+<table>
+<tr><th>Статья</th><th>€/п.м</th><th>Итого (${len.toFixed(1)} п.м)</th></tr>
+<tr><td>Корпус${state.corp==='color'?' (цветной)':''}, верха H=${state.upH}мм</td><td>${Math.round(corpBaseLm)} €</td><td>${Math.round(corpBaseLm*len)} €</td></tr>
+${corpSurcharge>0?`<tr><td style="padding-left:24px;color:#666">↳ Наценка цветной (+${pr.corpColorPct}%)</td><td>+${Math.round(corpSurcharge)} €</td><td>+${Math.round(corpSurcharge*len)} €</td></tr>`:''}
+${trOn?`<tr><td>Третий ряд — антресоли H=${trHeightMm}мм (560мм)</td><td>${Math.round(trCorpLm)} €</td><td>${Math.round(trCorpLm*len)} €</td></tr><tr><td style="padding-left:24px;color:#666">↳ Фасад 20мм (+${pr.tr.facPct}%)</td><td>${rng(trFacMinLm,trFacMaxLm)}</td><td>${rng(trFacMinLm*len,trFacMaxLm*len)}</td></tr>`:''}
+<tr><td>Фасады — ${FAC_L[state.fac]}</td><td>${rng(facPr.min,facPr.max)}</td><td>${rng(facPr.min*len,facPr.max*len)}</td></tr>
+<tr><td>Столешница — ${TOP_L[state.top]}</td><td>${Math.round(topLm)} €</td><td>${Math.round(topLm*len)} €</td></tr>
+<tr><td>Фартук — ${BACK_L[state.back]}</td><td>${Math.round(backLm)} €</td><td>${Math.round(backLm*len)} €</td></tr>
+${extraRows}
+${shapePct>0?`<tr><td>Наценка форма — ${SHAPE_LABELS[state.shape]} (+${shapePct}%)</td><td>${rng(shapeSurchMinLm,shapeSurchMaxLm)}</td><td>${rng(shapeSurchMinLm*len,shapeSurchMaxLm*len)}</td></tr>`:''}
+${drwQty>0?`<tr><td>Ящики — ${DRW_L[state.drw]} × ${drwQty} шт</td><td>${Math.round(drwUnit)} €/шт</td><td>${Math.round(drwTotal)} €</td></tr>`:''}
+${scTotal>0?`<tr><td>Витрины — ${SC_PROF_L[state.scProf]}, ${SC_COLOR_L[state.scColor]}, ${SC_GLASS_L[state.scGlass]} × ${scQty} шт ${scW}×${scH}мм</td><td>${Math.round(scDoor)} €/дверь</td><td>${Math.round(scTotal)} €</td></tr>`:''}
+<tr class="tr-total"><td>ИТОГО</td><td>${rng(totalMinLm,totalMaxLm)}${drwQty>0?' + ящики':''}${scTotal>0?' + витрины':''}</td><td>${rng(totalMin,totalMax)}</td></tr>
+</table>
+<div class="footer">Создано калькулятором кухни — ${company} — ${dateStr}</div>
+</body></html>`;
+}
+
+// ═══ SAVE CALCULATION TO FILE ═══
+async function saveCalc() {
+  const len = getTotalLen();
+  if (len <= 0) { showToast('Сначала введите размеры кухни', true); return; }
+  const now = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  const fname = `Кухня_${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}_${pad(now.getHours())}-${pad(now.getMinutes())}.html`;
+  const content = generateCalcHTML();
+
+  const dir = await ensureDir();
+  if (dir) {
+    try {
+      const fh = await dir.getFileHandle(fname, { create:true });
+      const wr = await fh.createWritable();
+      await wr.write(content);
+      await wr.close();
+      showToast('✓ Сохранено: ' + fname);
+      return;
+    } catch (e) { /* fall through */ }
+  }
+  // Fallback: browser download
+  const a = document.createElement('a');
+  a.href = 'data:text/html;charset=utf-8,' + encodeURIComponent(content);
+  a.download = fname;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  showToast('✓ Файл скачан: ' + fname);
 }
 
 // ═══ SAVE / LOAD ═══
-function savePrices(){
-  const ids = ['p-corp-low','p-corp-up720','p-corp-up920','p-corp-color-pct',
-    'p-fac-dsp-min','p-fac-dsp-max','p-fac-pvc-min','p-fac-pvc-max',
-    'p-fac-hpl-min','p-fac-hpl-max','p-fac-enamel-min','p-fac-enamel-max',
-    'p-top-pf','p-top-tp','p-top-hpl','p-top-quartz',
-    'p-back-tg','p-back-glass','p-back-tile','p-back-hpl',
-    'p-led','p-handles','p-softclose','p-drawers'];
-  const saved = {};
-  ids.forEach(id => saved[id] = document.getElementById(id).value);
-  localStorage.setItem('kitchen-calc-prices', JSON.stringify(saved));
+const SAVE_IDS = ['p-company','p-whatsapp','p-tg-token','p-tg-chatid','p-corp-low','p-corp-up720','p-corp-up920','p-corp-color-pct',
+  'p-shape-straight','p-shape-L','p-shape-U','p-shape-parallel',
+  'p-tr-360','p-tr-460','p-tr-custom','p-tr-fac-pct',
+  'p-fac-dsp-min','p-fac-dsp-max','p-fac-pvc-min','p-fac-pvc-max','p-fac-hpl-min','p-fac-hpl-max',
+  'p-fac-enamel-m-min','p-fac-enamel-m-max','p-fac-enamel-g-min','p-fac-enamel-g-max',
+  'p-top-tp','p-top-hpl','p-top-quartz','p-back-tg','p-back-glass','p-back-hpl',
+  'p-led','p-handles',
+  'p-drw-quadro','p-drw-atira','p-drw-avantech',
+  'p-sc-prof-g1','p-sc-prof-g2','p-sc-prof-g3',
+  'p-sc-glass-clear','p-sc-glass-matte','p-sc-glass-bronze','p-sc-glass-lacobel'];
+
+function savePrices() {
+  const data = {};
+  SAVE_IDS.forEach(id => { const el=document.getElementById(id); if(el) data[id]=el.value; });
+  localStorage.setItem('kitchen-calc-v2', JSON.stringify(data));
   const msg = document.getElementById('saved-msg');
-  msg.textContent = '✓ Сохранено';
-  msg.style.opacity = '1';
-  setTimeout(()=>msg.style.opacity='0', 2000);
+  msg.textContent = '✓ Сохранено'; msg.style.opacity='1';
+  setTimeout(() => msg.style.opacity='0', 2000);
 }
 
-function loadPrices(){
-  const saved = JSON.parse(localStorage.getItem('kitchen-calc-prices')||'{}');
-  Object.entries(saved).forEach(([id,val])=>{
-    const el = document.getElementById(id);
-    if(el) el.value = val;
-  });
-}
-
-// ═══ SAVE ORDER ═══
-const TG_BOT = 'https://api.telegram.org/bot8490237117:AAE2RnZCjAosmkCLCM5DfFcdPqgXDMIZcvQ/sendMessage';
-const TG_CHAT = '668971890';
-
-async function saveOrder(){
-  const name  = (document.getElementById('of-name')?.value||'').trim();
-  const phone = (document.getElementById('of-phone')?.value||'').trim();
-  const note  = (document.getElementById('of-note')?.value||'').trim();
-  const len   = parseFloat(document.getElementById('c-len').value)||0;
-  const pr    = getPrices();
-
-  if(!name){ alert('Укажите имя!'); return; }
-  if(!phone){ alert('Укажите телефон!'); return; }
-  if(!len){ alert('Укажите длину кухни!'); return; }
-
-  // remember name/phone across recalc
-  sessionStorage.setItem('of-name-tmp', name);
-  sessionStorage.setItem('of-phone-tmp', phone);
-
-  const facLbl = { dsp:'ДСП (ПДЧ)', pvc:'МДФ плёнка (PVC)', hpl:'МДФ-пластик (HPL)', enamel:'МДФ-эмаль (лак)' };
-  const topLbl = { pf:'Постформинг', tp:'Термоплот', hpl:'HPL', quartz:'Кварц' };
-  const backLbl= { tg:'Термогръб', glass:'Стекло', tile:'Плитка', hpl:'HPL' };
-
-  let corpLm = pr.corpLow + (state.upH==='920'?pr.corpUp920:pr.corpUp720);
-  if(state.corp==='color') corpLm *= (1 + pr.corpColorPct/100);
-  const facPr = pr.fac[state.fac];
-  const topPr = pr.top[state.top];
-  const backPr= pr.back[state.back];
-  let extraLm = 0;
-  const extras=[];
-  if(document.getElementById('x-led').checked){extraLm+=pr.led;extras.push('LED');}
-  if(document.getElementById('x-handles').checked){extraLm+=pr.handles;extras.push('Ручки');}
-  if(document.getElementById('x-softclose').checked){extraLm+=pr.softclose;extras.push('Soft-close');}
-  if(document.getElementById('x-drawers').checked){extraLm+=pr.drawers;extras.push('Ящики');}
-
-  const totalMin = (corpLm+facPr.min+topPr+backPr+extraLm)*len;
-  const totalMax = (corpLm+facPr.max+topPr+backPr+extraLm)*len;
-  const priceStr = totalMin.toFixed(0)+'–'+totalMax.toFixed(0)+' €';
-  const extrasStr = extras.length?extras.join(', '):'—';
-  const colorStr = 'Корпус '+(state.corp==='color'?'цветной':'белый')+', верха '+state.upH+'мм';
-
-  const order = {
-    id: Date.now(),
-    name: name,
-    phone: phone,
-    facade: facLbl[state.fac],
-    length: len+' л.м',
-    color: colorStr,
-    extras: extrasStr,
-    price_total: priceStr,
-    countertop: topLbl[state.top],
-    backsplash: backLbl[state.back],
-    note: note||'',
-    timestamp: new Date().toLocaleString('ru-RU'),
-    source: 'калькулятор',
-    message: '📋 Нова заявка — Калкулатор!\n\n👤 Ime: '+name+'\n📞 Телефон: '+phone+'\n\n🏷 Фасади: '+facLbl[state.fac]+'\n📏 Дължина: '+len+' л.м\n🎨 Цвят: '+colorStr+'\n🔧 Допълнения: '+extrasStr+'\n🍽 Плот: '+topLbl[state.top]+'\n🧱 Гръб: '+backLbl[state.back]+(note?'\n📝 Бележка: '+note:'')+'\n\n💰 Обща цена: '+priceStr
-  };
-
-  // Сохраняем в Firebase
-  try {
-    await _db.collection('orders').add(order);
-  } catch(e) { console.warn('Firebase error:', e); }
-
-  // Сохраняем локально (резерв)
-  const orders = JSON.parse(localStorage.getItem('aaa-orders')||'[]');
-  orders.unshift(order);
-  localStorage.setItem('aaa-orders', JSON.stringify(orders.slice(0,200)));
-
-  // Отправляем напрямую в Telegram
-  try {
-    await fetch(TG_BOT, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        chat_id: TG_CHAT,
-        text: order.message,
-        parse_mode: 'HTML'
-      })
-    });
-  } catch(e) { console.warn('Telegram error:', e); }
-
-  const msg = document.getElementById('of-msg');
-  if(msg){ msg.style.opacity='1'; setTimeout(()=>msg.style.opacity='0',2500); }
+function loadPrices() {
+  const data = JSON.parse(localStorage.getItem('kitchen-calc-v2') || '{}');
+  Object.entries(data).forEach(([id,val]) => { const el=document.getElementById(id); if(el) el.value=val; });
 }
 
 // ═══ INIT ═══
 loadPrices();
-// recalc on any price change
+renderWalls();
 document.querySelectorAll('.p-input').forEach(el => el.addEventListener('input', calc));
 calc();
 </script>
