@@ -3,6 +3,7 @@
 kalkulator_old_backup_*.html
 
 # Галерея: оригиналы храним только локально (бэкап у вас на Mac)
-gallery/
-_preview/
-logs/
+# ВАЖНО: ведущий слэш — игнорируем ТОЛЬКО корневую gallery/, а не img/gallery/
+/gallery/
+/_preview/
+/logs/
