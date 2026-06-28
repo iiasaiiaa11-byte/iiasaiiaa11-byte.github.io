@@ -1,3 +1,8 @@
 .DS_Store
 **/.DS_Store
 kalkulator_old_backup_*.html
+
+# Галерея: оригиналы храним только локально (бэкап у вас на Mac)
+gallery/
+_preview/
+logs/

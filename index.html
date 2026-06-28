@@ -417,18 +417,8 @@
                     <button class="cat-btn" data-cat="wardrobe" data-bg="Гардероби" data-ru="Гардеробы">Гардероби</button>
                     <button class="cat-btn" data-cat="closet" data-bg="Шкафове" data-ru="Шкафы">Шкафове</button>
                 </div>
-                <!-- GALLERY GRID -->
-                <div class="gal-g reveal" id="galGrid">
-                    <!-- TV ЗОНИ -->
-                    <div class="gal-i" data-cat="tv"><img src="IMG_3683.jpeg" alt="TV стена" loading="lazy"><div class="gal-ov"><h3 data-bg="TV Стена — Бежова" data-ru="ТВ-стена — Бежевая">TV Стена — Бежов</h3><p data-bg="Вградена стена с витрини и камина" data-ru="Встроенная стена с витринами и камином">Вградена стена с витрини и камина</p></div></div>
-                    <div class="gal-i" data-cat="tv"><img src="tv-wall-green.png" alt="TV стена зелена" loading="lazy"><div class="gal-ov"><h3 data-bg="TV Стена — Зелена" data-ru="ТВ-стена — Зелёная">TV Стена — Зелен</h3><p data-bg="Тъмнозелен МДФ с дървесни витрини" data-ru="Тёмно-зелёный МДФ с деревянными витринами">Тъмнозелен МДФ с дървесни витрини</p></div></div>
-                    <div class="gal-i" data-cat="tv"><img src="tv-wall-blue.png" alt="TV стена синя" loading="lazy"><div class="gal-ov"><h3 data-bg="TV Стена — Тъмносиня" data-ru="ТВ-стена — Тёмно-синяя">TV Стена — Тъмно Син</h3><p data-bg="Дървесни акценти и LED осветление" data-ru="Деревянные акценты и LED подсветка">Дървесни акценти и LED осветление</p></div></div>
-                    <div class="gal-i" data-cat="tv"><img src="tv-wall-white.png" alt="TV стена бяла" loading="lazy"><div class="gal-ov"><h3 data-bg="TV Стена — Светла" data-ru="ТВ-стена — Светлая">TV Стена — Светъл</h3><p data-bg="Светли тонове с дървесен акцент" data-ru="Светлые тона с деревянным акцентом">Светли тонове с дървесен акцент</p></div></div>
-                    <!-- КУХНИ -->
-                    <div class="gal-i" data-cat="kitchen"><img src="kitchen-island.png" alt="Кухня с остров" loading="lazy"><div class="gal-ov"><h3 data-bg="Кухня с Остров" data-ru="Кухня с Островом">Кухня с Остров</h3><p data-bg="Луксозна кухня с мраморен остров" data-ru="Роскошная кухня с мраморным островом">Луксозна кухня с мраморен остров</p></div></div>
-                    <!-- ГАРДЕРОБИ (placeholder) -->
-                    <!-- ШКАФОВЕ (placeholder) -->
-                </div>
+                <!-- GALLERY GRID — строится автоматически из gallery-manifest.json -->
+                <div class="gal-g reveal" id="galGrid"></div>
                 <p class="gal-empty" id="galEmpty" style="display:none;text-align:center;color:var(--t2);padding:3rem;font-style:italic" data-bg="Скоро ще добавим проекти в тази категория." data-ru="Скоро добавим проекты в эту категорию.">Скоро ще добавим проекти в тази категория.</p>
             </div>
         </section>
@@ -709,6 +699,35 @@ document.querySelectorAll('.cat-btn').forEach(btn => {
 });
 
 
+// ═══ GALLERY LOADER (динамически из gallery-manifest.json) ═══
+async function buildGallery(){
+    try{
+        const res = await fetch('gallery-manifest.json?v=' + Date.now());
+        if(!res.ok) throw new Error('manifest ' + res.status);
+        const data = await res.json();
+        const order = ['tv','kitchen','wardrobe','closet'];
+        let html = '';
+        order.forEach(cat => {
+            (data[cat] || []).forEach(src => {
+                html += '<div class="gal-i" data-cat="' + cat + '"><img src="' + src + '" loading="lazy" alt=""></div>';
+            });
+        });
+        galGrid.innerHTML = html;
+        // применить активный фильтр к новым элементам
+        galGrid.querySelectorAll('.gal-i').forEach(item => {
+            const show = activeCat === 'all' || item.dataset.cat === activeCat;
+            item.classList.toggle('hide', !show);
+        });
+        const visTotal = galGrid.querySelectorAll('.gal-i:not(.hide)').length;
+        galEmpty.style.display = visTotal === 0 ? 'block' : 'none';
+    }catch(e){
+        console.warn('Галерея: манифест не загружен —', e);
+        galEmpty.style.display = 'block';
+    }
+}
+buildGallery();
+
+
 // ═══ LIGHTBOX (dynamic) ═══
 const lb=document.getElementById('lb'),lbImg=document.getElementById('lb-img'),lbT=document.getElementById('lb-t'),lbD=document.getElementById('lb-d');
 let lbItems=[], lbIdx=0;
@@ -723,8 +742,9 @@ function lbOpen(el){
 function lbShow(){
     const item = lbItems[lbIdx];
     lbImg.src = item.querySelector('img').src;
-    lbT.textContent = item.querySelector('h3').textContent;
-    lbD.textContent = item.querySelector('.gal-ov p').textContent;
+    const h = item.querySelector('h3'), p = item.querySelector('.gal-ov p');
+    lbT.textContent = h ? h.textContent : '';
+    lbD.textContent = p ? p.textContent : '';
 }
 function lbClose(){lb.classList.remove('active');document.body.style.overflow='';}
 function lbNext(){lbIdx=(lbIdx+1)%lbItems.length;lbShow();}
