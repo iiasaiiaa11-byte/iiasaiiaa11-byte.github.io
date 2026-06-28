@@ -33,6 +33,28 @@ MANIFEST="$REPO/gallery-manifest.json"
 TMP="$(mktemp)"
 echo "{" > "$TMP"
 
+# Печатает пути фото категории (NUL-разделённые) в нужном порядке:
+#  • верхний уровень обходится по имени;
+#  • если это ПАПКА-проект (одна кухня) — все её фото идут подряд (по имени);
+#  • если это отдельный файл-фото — идёт как есть.
+# Так фото одного проекта не перемешиваются с другими.
+emit_sources(){
+    local base="$1"
+    [ -d "$base" ] || return 0
+    local entry
+    while IFS= read -r -d '' entry; do
+        if [ -d "$entry" ]; then
+            # Папка-проект: все фото внутри, по имени
+            find "$entry" -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' -o -iname '*.heic' \) ! -name '.*' -print0 | sort -z
+        else
+            # Отдельный файл прямо в категории
+            case "$entry" in
+                *.jpg|*.JPG|*.jpeg|*.JPEG|*.png|*.PNG|*.webp|*.WEBP|*.heic|*.HEIC) printf '%s\0' "$entry";;
+            esac
+        fi
+    done < <(find "$base" -mindepth 1 -maxdepth 1 ! -name '.*' -print0 | sort -z)
+}
+
 first_cat=1
 for pair in "${CATS[@]}"; do
     folder="${pair%%:*}"
@@ -50,22 +72,20 @@ for pair in "${CATS[@]}"; do
 
     n=0
     first_img=1
-    if [ -d "$src_dir" ]; then
-        # Собираем картинки по расширению, сортируем по имени
-        while IFS= read -r -d '' f; do
-            n=$((n+1))
-            out="$dst_dir/${cat}-$(printf '%02d' "$n").jpg"
-            # Уменьшаем до MAX_PX по длинной стороне и сжимаем в JPEG
-            if sips -s format jpeg -s formatOptions "$JPEG_QUALITY" -Z "$MAX_PX" "$f" --out "$out" >/dev/null 2>&1; then
-                rel="img/gallery/${cat}/${cat}-$(printf '%02d' "$n").jpg"
-                [ $first_img -eq 1 ] && first_img=0 || printf ',' >> "$TMP"
-                printf '"%s"' "$rel" >> "$TMP"
-            else
-                log "  ⚠ не удалось обработать: $f"
-                n=$((n-1))
-            fi
-        done < <(find "$src_dir" -maxdepth 1 -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' -o -iname '*.heic' \) ! -name '.*' -print0 | sort -z)
-    fi
+    # Фото в порядке проектов (см. emit_sources): фото одной кухни идут подряд
+    while IFS= read -r -d '' f; do
+        n=$((n+1))
+        out="$dst_dir/${cat}-$(printf '%02d' "$n").jpg"
+        # Уменьшаем до MAX_PX по длинной стороне и сжимаем в JPEG
+        if sips -s format jpeg -s formatOptions "$JPEG_QUALITY" -Z "$MAX_PX" "$f" --out "$out" >/dev/null 2>&1; then
+            rel="img/gallery/${cat}/${cat}-$(printf '%02d' "$n").jpg"
+            [ $first_img -eq 1 ] && first_img=0 || printf ',' >> "$TMP"
+            printf '"%s"' "$rel" >> "$TMP"
+        else
+            log "  ⚠ не удалось обработать: $f"
+            n=$((n-1))
+        fi
+    done < <(emit_sources "$src_dir")
 
     printf ']' >> "$TMP"
     log "  $folder → $cat: $n фото"
