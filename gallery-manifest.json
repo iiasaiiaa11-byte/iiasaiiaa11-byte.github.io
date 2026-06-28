@@ -1,6 +1,6 @@
 {
   "kitchen": [],
-  "tv": [],
+  "tv": ["img/gallery/tv/tv-01.jpg","img/gallery/tv/tv-02.jpg","img/gallery/tv/tv-03.jpg","img/gallery/tv/tv-04.jpg","img/gallery/tv/tv-05.jpg","img/gallery/tv/tv-06.jpg","img/gallery/tv/tv-07.jpg"],
   "wardrobe": [],
   "closet": []
 }
